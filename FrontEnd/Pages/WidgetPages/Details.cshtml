@@ -1,0 +1,75 @@
+﻿@page
+@model ManufacturerManager.FrontEnd.WidgetPages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Widget</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.Manufacturer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.Manufacturer.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.Colour)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.Colour.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.ColourJustification)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.ColourJustification.Justification)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.WidgetStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.WidgetStatus.StatusName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.Created)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.Created)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.StaffMemberCreated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.StaffMemberCreated.FirstName)
+            @Html.DisplayFor(model => model.Widget.StaffMemberCreated.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.LastUpdated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.LastUpdated)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Widget.StaffMemberUpdated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Widget.StaffMemberUpdated.FirstName)
+            @Html.DisplayFor(model => model.Widget.StaffMemberUpdated.LastName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Widget.WidgetId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
