@@ -26,7 +26,8 @@ namespace ManufacturerManager.FrontEnd.ManufacturerPages
             Manufacturer = await _context.Manufacturer
                 .Include(m => m.ManufacturerStatus)
                 .Include(m => m.StaffMemberCreated)
-                .Include(m => m.StaffMemberUpdated).FirstOrDefaultAsync(m => m.ManufacturerId == id);
+                .Include(m => m.StaffMemberUpdated)
+                .FirstOrDefaultAsync(m => m.ManufacturerId == id);
 
             if (Manufacturer == null)
             {

@@ -16,6 +16,8 @@ namespace ManufacturerManager.DataAccess
 
         #region DbSets
 
+        public DbSet<Colour> Colour { get; set; }
+
         public DbSet<ColourJustification> ColourJustification { get; set; }
 
         public DbSet<Manufacturer> Manufacturer { get; set; }
@@ -25,8 +27,6 @@ namespace ManufacturerManager.DataAccess
         public DbSet<StaffMember> StaffMember { get; set; }
 
         public DbSet<Widget> Widget { get; set; }
-
-        public DbSet<Colour> Colour { get; set; }
 
         public DbSet<WidgetStatus> WidgetStatus { get; set; }
 
