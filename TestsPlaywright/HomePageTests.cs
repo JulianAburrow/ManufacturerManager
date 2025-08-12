@@ -11,5 +11,7 @@ public class HomePageTests
         var title = await page.TitleAsync();
 
         Assert.Equal("Manufacturer Manager", title);
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 }

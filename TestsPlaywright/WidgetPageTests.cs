@@ -20,6 +20,8 @@ public class WidgetPageTests : BaseTestClass
         await widgetsLink.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Widgets'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
@@ -40,6 +42,8 @@ public class WidgetPageTests : BaseTestClass
         await createButton.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Widget'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
@@ -47,10 +51,10 @@ public class WidgetPageTests : BaseTestClass
     {
         var manufacturerId = AddManufacturer();
         var widgetId = AddWidget(manufacturerId);
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widgets/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Widgets'");
 
@@ -68,6 +72,7 @@ public class WidgetPageTests : BaseTestClass
         {
             RemoveWidget(widgetId);
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -76,9 +81,10 @@ public class WidgetPageTests : BaseTestClass
     {
         var manufacturerId = AddManufacturer();
         var widgetId = AddWidget(manufacturerId);
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widgets/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Widgets'");
 
@@ -96,6 +102,7 @@ public class WidgetPageTests : BaseTestClass
         {
             RemoveWidget(widgetId);
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -104,6 +111,7 @@ public class WidgetPageTests : BaseTestClass
     {
         var manufacturerId = AddManufacturer();
         var widget = new WidgetModel();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
@@ -117,7 +125,6 @@ public class WidgetPageTests : BaseTestClass
             var initialCount = _context.Widgets.Count();
             var manufacturer = _context.Manufacturers.First(m => m.ManufacturerId == manufacturerId);
 
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widget/create", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Create Widget'");
             var widgetName = $"Test Widget {Guid.NewGuid()}";
@@ -165,6 +172,7 @@ public class WidgetPageTests : BaseTestClass
             }
             _context.ChangeTracker.Clear();
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -174,6 +182,7 @@ public class WidgetPageTests : BaseTestClass
         var manufacturerId = AddManufacturer();
         var newManufacturerId = AddManufacturer();
         var widgetId = AddWidget(manufacturerId);
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
@@ -186,7 +195,6 @@ public class WidgetPageTests : BaseTestClass
             var stockLevel = 5;
             var newManufacturer = _context.Manufacturers.First(m => m.ManufacturerId == newManufacturerId);
 
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widget/edit/{widgetId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Widget'");
 
@@ -227,6 +235,7 @@ public class WidgetPageTests : BaseTestClass
             _context.ChangeTracker.Clear();
             RemoveManufacturer(manufacturerId);
             RemoveManufacturer(newManufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -246,6 +255,8 @@ public class WidgetPageTests : BaseTestClass
         }
         await cancelButton.First.ClickAsync();
         await page.WaitForFunctionAsync("document.title === 'Widgets'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
@@ -253,10 +264,10 @@ public class WidgetPageTests : BaseTestClass
     {
         var manufacturerId = AddManufacturer();
         var widgetId = AddWidget(manufacturerId);
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widget/edit/{widgetId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Widget'");
 
@@ -275,6 +286,7 @@ public class WidgetPageTests : BaseTestClass
             RemoveWidget(widgetId);
             _context.ChangeTracker.Clear();
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -283,10 +295,10 @@ public class WidgetPageTests : BaseTestClass
     {
         var manufacturerId = AddManufacturer();
         var widgetId = AddWidget(manufacturerId);
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widget/view/{widgetId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Widget'");
 
@@ -305,6 +317,7 @@ public class WidgetPageTests : BaseTestClass
             RemoveWidget(widgetId);
             _context.ChangeTracker.Clear();
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 

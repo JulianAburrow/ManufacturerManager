@@ -15,7 +15,6 @@ public class PlaywrightTestHelperTests
         var url = page.Url;
         Assert.Equal("about:blank", url);
 
-        await page.Context.Browser.CloseAsync();
-        await page.Context.DisposeAsync();
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 }

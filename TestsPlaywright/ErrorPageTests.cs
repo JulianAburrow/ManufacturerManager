@@ -33,16 +33,18 @@ public class ErrorPageTests : BaseTestClass
         await errorsLink.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Errors'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task ViewButtonOnIndexPageNavigatesToViewErrorPage()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/errors/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Errors'");
 
@@ -59,6 +61,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -66,10 +69,10 @@ public class ErrorPageTests : BaseTestClass
     public async Task EditButtonOnIndexPageNavigatesToEditErrorPage()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/errors/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Errors'");
 
@@ -86,6 +89,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -93,10 +97,10 @@ public class ErrorPageTests : BaseTestClass
     public async Task DeleteButtonOnIndexPageNavigatesToDeleteErrorPage()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/errors/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Errors'");
             
@@ -113,6 +117,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -120,11 +125,10 @@ public class ErrorPageTests : BaseTestClass
     public async Task CanEditError()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/edit/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Error'");
 
@@ -153,6 +157,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -161,10 +166,10 @@ public class ErrorPageTests : BaseTestClass
     {
         var newError = AddError();
         var shouldReattemptDelete = false;
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/delete/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Error'");
 
@@ -194,6 +199,7 @@ public class ErrorPageTests : BaseTestClass
             {
                 RemoveError(newError.ErrorId);
             }
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -201,10 +207,10 @@ public class ErrorPageTests : BaseTestClass
     public async Task CancelButtonOnEditPageNavigatesToIndex()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/edit/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Error'");
 
@@ -221,6 +227,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -228,10 +235,10 @@ public class ErrorPageTests : BaseTestClass
     public async Task CancelButtonOnViewPageNavigatesToIndex()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/view/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Error'");
 
@@ -248,6 +255,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -255,10 +263,10 @@ public class ErrorPageTests : BaseTestClass
     public async Task CancelButtonOnDeletePageNavigatesToIndex()
     {
         var newError = AddError();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/delete/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Error'");
 
@@ -275,6 +283,7 @@ public class ErrorPageTests : BaseTestClass
         finally
         {
             RemoveError(newError.ErrorId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
