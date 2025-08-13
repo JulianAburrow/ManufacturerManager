@@ -20,6 +20,8 @@ public class ManufacturerPageTests : BaseTestClass
         await manufacturersLink.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
@@ -40,17 +42,18 @@ public class ManufacturerPageTests : BaseTestClass
         await createButton.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Manufacturer'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task ViewButtonOnIndexPageNavigatesToViewManufacturerPage()
     {
         var manufacturerId = AddManufacturer();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturers/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
 
@@ -67,6 +70,7 @@ public class ManufacturerPageTests : BaseTestClass
         finally
         {
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -74,11 +78,10 @@ public class ManufacturerPageTests : BaseTestClass
     public async Task EditButtonOnIndexPageNavigatesToEditManufacturerPage()
     {
         var manufacturerId = AddManufacturer();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturers/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
 
@@ -95,6 +98,7 @@ public class ManufacturerPageTests : BaseTestClass
         finally
         {
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -102,12 +106,11 @@ public class ManufacturerPageTests : BaseTestClass
     public async Task CanCreateManufacturer()
     {
         var manufacturer = new ManufacturerModel();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
             var initialCount = _context.Manufacturers.Count();
-
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/create", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Create Manufacturer'");
 
@@ -138,7 +141,8 @@ public class ManufacturerPageTests : BaseTestClass
             if (manufacturer != null)
             {
                 RemoveManufacturer(manufacturer.ManufacturerId);
-            }                
+            }
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }        
     }
 
@@ -146,10 +150,10 @@ public class ManufacturerPageTests : BaseTestClass
     public async Task CanEditManufacturer()
     {
         var manufacturerId = AddManufacturer();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/edit/{manufacturerId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Manufacturer'");
 
@@ -177,6 +181,7 @@ public class ManufacturerPageTests : BaseTestClass
         finally
         {
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -196,17 +201,18 @@ public class ManufacturerPageTests : BaseTestClass
         }
         await cancelButton.First.ClickAsync();
         await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task CancelButtonOnEditPageNavigatesToIndex()
     {
         var manufacturerId = AddManufacturer();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/edit/{manufacturerId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Manufacturer'");
 
@@ -223,6 +229,7 @@ public class ManufacturerPageTests : BaseTestClass
         finally
         {
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -230,11 +237,10 @@ public class ManufacturerPageTests : BaseTestClass
     public async Task CancelButtonOnViewPageNavigatesToIndex()
     {
         var manufacturerId = AddManufacturer();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/view/{manufacturerId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Manufacturer'");
 
@@ -251,6 +257,7 @@ public class ManufacturerPageTests : BaseTestClass
         finally
         {
             RemoveManufacturer(manufacturerId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 

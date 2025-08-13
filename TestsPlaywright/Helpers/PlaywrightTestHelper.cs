@@ -23,4 +23,24 @@ public static class PlaywrightTestHelper
                 options => options.EnableRetryOnFailure())
             .Options;
     }
+
+    public static async Task DisposeBrowserAndContext(IPage page)
+    {
+        if (page != null)
+        {
+            await page.CloseAsync();            
+        }
+
+        var context = page?.Context;
+        if (context != null)
+        {
+            await context.CloseAsync();
+        }
+
+        var browser = context?.Browser;
+        if (browser != null)
+        {
+            await browser.CloseAsync();
+        }
+    }
 }

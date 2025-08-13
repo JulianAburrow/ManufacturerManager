@@ -34,6 +34,8 @@ public class ColourPageTests : BaseTestClass
         await coloursLink.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Colours'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
@@ -54,16 +56,18 @@ public class ColourPageTests : BaseTestClass
         await createButton.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Colour'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task ViewButtonOnIndexPageNavigatesToViewColourPage()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colours/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
@@ -79,6 +83,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -86,10 +91,10 @@ public class ColourPageTests : BaseTestClass
     public async Task EditButtonOnIndexPageNavigatesToEditColourPage()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colours/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
@@ -106,6 +111,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -113,10 +119,10 @@ public class ColourPageTests : BaseTestClass
     public async Task DeleteButtonOnIndexPageNavigatesToDeleteColourPage()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colours/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
@@ -133,6 +139,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -140,12 +147,12 @@ public class ColourPageTests : BaseTestClass
     public async Task CanCreateColour()
     {
         var colour = new ColourModel();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
             var initialCount = _context.Colours.Count();
 
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/create", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Create Colour'");
 
@@ -174,6 +181,7 @@ public class ColourPageTests : BaseTestClass
             {
                 RemoveColour(colour.ColourId);
             }
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -181,11 +189,10 @@ public class ColourPageTests : BaseTestClass
     public async Task CanEditColour()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/edit/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Colour'");
 
@@ -209,6 +216,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }    
     }
 
@@ -217,10 +225,10 @@ public class ColourPageTests : BaseTestClass
     {
         var colourId = AddColour();
         var shouldReattemptDelete = false;
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/delete/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Colour'");
             
@@ -249,7 +257,8 @@ public class ColourPageTests : BaseTestClass
             if (shouldReattemptDelete)
             {
                 RemoveColour(colourId);
-            }            
+            }
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -270,16 +279,18 @@ public class ColourPageTests : BaseTestClass
         await cancelButton.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Colours'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task CancelButtonOnEditPageNavigatesToIndex()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/edit/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Colour'");
 
@@ -296,6 +307,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -303,10 +315,10 @@ public class ColourPageTests : BaseTestClass
     public async Task CancelButtonOnViewPageNavigatesToIndex()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/view/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Colour'");
 
@@ -323,6 +335,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -330,10 +343,10 @@ public class ColourPageTests : BaseTestClass
     public async Task CancelButtonOnDeletePageNavigatesToIndex()
     {
         var colourId = AddColour();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/delete/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Colour'");
 
@@ -350,6 +363,7 @@ public class ColourPageTests : BaseTestClass
         finally
         {
             RemoveColour(colourId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 

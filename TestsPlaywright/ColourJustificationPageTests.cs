@@ -34,6 +34,8 @@ public class ColourJustificationPageTests : BaseTestClass
         await colourJustificationsLink.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
@@ -54,16 +56,18 @@ public class ColourJustificationPageTests : BaseTestClass
         await createButton.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Colour Justification'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task ViewButtonOnIndexPageNavigatesToViewColourJustificationPage()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustifications/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
@@ -79,6 +83,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -86,10 +91,10 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task EditButtonOnIndexPageNavigatesToEditColourJustificationPage()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustifications/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
@@ -106,6 +111,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -113,9 +119,10 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task DeleteButtonOnIndexPageNavigatesToDeleteColourJustificationPage()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustifications/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
@@ -132,6 +139,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -139,11 +147,12 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task CanCreateColourJustification()
     {
         var colourJustification = new ColourJustificationModel();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
             var initialCount = _context.ColourJustifications.Count();
 
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/create", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Create Colour Justification'");
 
@@ -172,6 +181,7 @@ public class ColourJustificationPageTests : BaseTestClass
             {
                 RemoveColourJustification(colourJustification.ColourJustificationId);
             }
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -179,10 +189,10 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task CanEditColourJustification()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/edit/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Colour Justification'");
 
@@ -206,6 +216,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -213,11 +224,11 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task CanDeleteColourJustification()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
         var shouldReattemptDelete = false;
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/delete/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Colour Justification'");
 
@@ -246,7 +257,8 @@ public class ColourJustificationPageTests : BaseTestClass
             if (shouldReattemptDelete)
             {
                 RemoveColourJustification(colourJustificationId);
-            }            
+            }
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -267,16 +279,18 @@ public class ColourJustificationPageTests : BaseTestClass
         await cancelButton.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
+
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
     public async Task CancelButtonOnEditPageNavigatesToIndex()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/edit/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Colour Justification'");
 
@@ -293,6 +307,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -300,10 +315,10 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task CancelButtonOnViewPageNavigatesToIndex()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
-
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/view/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Colour Justification'");
 
@@ -320,6 +335,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
@@ -327,9 +343,10 @@ public class ColourJustificationPageTests : BaseTestClass
     public async Task CancelButtonOnDeletePageNavigatesToIndex()
     {
         var colourJustificationId = AddColourJustification();
+        var page = await PlaywrightTestHelper.CreatePageAsync();
+
         try
         {
-            var page = await PlaywrightTestHelper.CreatePageAsync();
 
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/delete/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Colour Justification'");
@@ -347,6 +364,7 @@ public class ColourJustificationPageTests : BaseTestClass
         finally
         {
             RemoveColourJustification(colourJustificationId);
+            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
         }
     }
 
