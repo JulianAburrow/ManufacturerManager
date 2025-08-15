@@ -14,4 +14,11 @@
 <br />
 <br />
 
+@if (Manufacturers.Count == 0)
+{
+    <NoResultsComponent ObjectType="@ManufacturerPlural" />
+    return;
+}
+)
+
 <ManufacturerGridViewComponent Manufacturers="@Manufacturers" />

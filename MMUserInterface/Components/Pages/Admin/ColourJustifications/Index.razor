@@ -14,42 +14,10 @@
 <br />
 <br />
 
-@if (ColourJustifications == null)
+@if (ColourJustifications.Count == 0)
 {
-    <p>No Colour Justifications found.</p>
+    <NoResultsComponent ObjectType="@ColourJustificationPlural" />
     return;
 }
 
-<MudTable
-Items="ColourJustifications"
-    SortLabel="SortBy"
-    Hover
-    RowsPerPage="10"
-    FixedHeader
-    Height="500px">
-    <HeaderContent>
-        <MudTh title="Sort by Justification">
-            <MudTableSortLabel SortBy="new Func<ColourJustificationModel, object>(x => x.Justification)">
-                Justification
-            </MudTableSortLabel>
-        </MudTh>
-        <MudTh></MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd>@context.Justification</MudTd>
-        <MudTd>
-            <a class="btn btn-primary" href="/colourjustification/view/@context.ColourJustificationId">View</a>
-            &nbsp;
-            <a class="btn btn-primary" href="/colourjustification/edit/@context.ColourJustificationId">Edit</a>
-            @if (context.Widgets.Count == 0)
-            {
-                @:&nbsp;
-                <a class="btn btn-danger" href="/colourjustification/delete/@context.ColourJustificationId">Delete</a>
-            }
-        </MudTd>
-     </RowTemplate>
-     <PagerContent>
-         <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
-     </PagerContent>
-</MudTable>
-
+<ColourJustificationGridViewComponent ColourJustifications="ColourJustifications" />
