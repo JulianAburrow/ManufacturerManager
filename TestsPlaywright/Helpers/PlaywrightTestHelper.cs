@@ -13,7 +13,10 @@ public static class PlaywrightTestHelper
         {
             IgnoreHTTPSErrors = true
         });
-        return await context.NewPageAsync();
+
+        var page = await context.NewPageAsync();
+        page.SetDefaultTimeout(GlobalValues.GlobalTimeOut);
+        return page;
     }
 
     public static DbContextOptions<ManufacturerManagerContext> GetContextOptions()

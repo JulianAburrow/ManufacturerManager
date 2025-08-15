@@ -85,6 +85,8 @@ public class WidgetPageTests : BaseTestClass
 
         try
         {
+            var targetPage = $"{GlobalValues.BaseUrl}/widgets/index";
+
             await page.GotoAsync($"{GlobalValues.BaseUrl}/widgets/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Widgets'");
 
