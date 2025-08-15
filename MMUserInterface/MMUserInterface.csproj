@@ -21,13 +21,5 @@
   <ItemGroup>
     <ProjectReference Include="..\MMDataAccess\MMDataAccess.csproj" />
   </ItemGroup>
-  
-  <Target Name="PrePublishScript" BeforeTargets="BeforePublish">
-    <Exec Command="powershell -ExecutionPolicy Bypass -File Scripts\PrePublish.ps1" />
-  </Target>
-
-  <Target Name="PostPublishScript" AfterTargets="AfterPublish">
-    <Exec Command="powershell -ExecutionPolicy Bypass -File Scripts\PostPublish.ps1" />
-  </Target>
 
 </Project>
