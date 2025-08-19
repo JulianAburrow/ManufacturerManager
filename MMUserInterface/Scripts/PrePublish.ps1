@@ -1,11 +1,11 @@
 param (
-    [string]$AppPoolName = "ManufacturerManager",
-    [string]$SiteName = "ManufacturerManager"
+    [string]$AppPoolName = "ManufacturerManagerDev",
+    [string]$SiteName = "ManufacturerManagerDev"
 )
 
 Import-Module WebAdministration
 $ScriptFailed = $false
-$LogPath = "C:\inetpub\ManufacturerManager\PrePublish.log"
+$LogPath = "C:\inetpub\ManufacturerManagerDev\PrePublish.log"
 
 function Log($message) {
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"

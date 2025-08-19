@@ -1,7 +1,7 @@
 param (
-    [string]$AppPoolName = "ManufacturerManager",
-    [string]$SiteName = "ManufacturerManager",
-    [string]$PublishDir = "C:\inetpub\ManufacturerManager"
+    [string]$AppPoolName = "ManufacturerManagerDev",
+    [string]$SiteName = "ManufacturerManagerDev",
+    [string]$PublishDir = "C:\inetpub\ManufacturerManagerDev"
 )
 
 Import-Module WebAdministration
@@ -50,7 +50,7 @@ try {
 }
 
 # Set BASE_URL for Playwright
-$env:BASE_URL = "https://localhost:8080"
+$env:BASE_URL = "https://localhost:8090"
 Log "Set BASE_URL to $env:BASE_URL"
 
 # Run Playwright tests
@@ -83,3 +83,19 @@ try {
 
 Log "PostPublish completed."
 if ($ScriptFailed) { exit 1 }
+
+# Trigger Jenkins job after successful publish
+$jenkinsUrl = "http://localhost:8080/job/ManufacturerManager-DeployDevToTest/buildWithParameters?DryRun=false"
+$jenkinsUser = "julianaburrow"
+$jenkinsToken = "113abbf294bdd2bc810f2893b954cc0deb"
+
+$headers = @{
+    Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${jenkinsUser}:${jenkinsToken}"))
+}
+
+try {
+    Invoke-RestMethod -Uri $jenkinsUrl -Method Post -Headers $headers
+    Write-Host "Triggered Jenkins deployment to Test successfully."
+} catch {
+    Write-Host "Failed to trigger Jenkins job: $_"
+}
