@@ -4,7 +4,7 @@ public partial class Edit
 {
     protected override async Task OnInitializedAsync()
     {
-        ColourJustificationModel = await ColourJustificationHandler.GetColourJustificationAsync(ColourJustificationId);
+        ColourJustificationModel = await ColourJustificationQueryHandler.GetColourJustificationAsync(ColourJustificationId);
         ColourJustificationDisplayModel.Justification = ColourJustificationModel.Justification;
         MainLayout.SetHeaderValue("Edit Colour Justification");
     }
@@ -25,14 +25,14 @@ public partial class Edit
 
         try
         {
-            await ColourJustificationHandler.UpdateColourJustificationAsync(ColourJustificationModel, true);
+            await ColourJustificationCommandHandler.UpdateColourJustificationAsync(ColourJustificationModel, true);
             Snackbar.Add($"Colour Justification {ColourJustificationModel.Justification} successfully updated.", Severity.Success);
             NavigationManager.NavigateTo("/colourjustifications/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred updating Colour Justification {ColourJustificationModel.Justification}. Please try again", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

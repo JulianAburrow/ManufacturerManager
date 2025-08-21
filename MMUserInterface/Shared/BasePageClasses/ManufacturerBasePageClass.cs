@@ -2,9 +2,11 @@
 
 public class ManufacturerBasePageClass : BasePageClass
 {
-    [Inject] protected IManufacturerHandler ManufacturerHandler { get; set; } = default!;
+    [Inject] protected IManufacturerQueryHandler ManufacturerQueryHandler { get; set; } = default!;
 
-    [Inject] protected IManufacturerStatusHandler ManufacturerStatusHandler { get; set; } = default!;
+    [Inject] protected IManufacturerCommandHandler ManufacturerCommandHandler { get; set; } = default!;
+
+    [Inject] protected IManufacturerStatusQueryHandler ManufacturerStatusQueryHandler { get; set; } = default!;
 
     [Parameter] public int ManufacturerId { get; set; }
 

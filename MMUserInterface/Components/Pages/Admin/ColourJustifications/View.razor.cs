@@ -4,7 +4,7 @@ public partial class View
 {
     protected override async Task OnInitializedAsync()
     {
-        ColourJustificationModel = await ColourJustificationHandler.GetColourJustificationAsync(ColourJustificationId);
+        ColourJustificationModel = await ColourJustificationQueryHandler.GetColourJustificationAsync(ColourJustificationId);
         MainLayout.SetHeaderValue("View Colour Justification");
     }
 

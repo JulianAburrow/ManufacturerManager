@@ -6,7 +6,7 @@ public partial class Edit
 {
     protected override async Task OnInitializedAsync()
     {
-        ErrorModel = await ErrorHandler.GetErrorAsync(ErrorId);
+        ErrorModel = await ErrorQueryHandler.GetErrorAsync(ErrorId);
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Error");
     }
@@ -33,14 +33,14 @@ public partial class Edit
         CopyDisplayModelToModel();
         try
         {
-            await ErrorHandler.UpdateErrorAsync(ErrorModel, true);
+            await ErrorCommandHandler.UpdateErrorAsync(ErrorModel, true);
             Snackbar.Add($"Error {ErrorModel.ErrorId} successfully updated.", Severity.Success);
             NavigationManager.NavigateTo("/errors/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred updating error {ErrorModel.ErrorId}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

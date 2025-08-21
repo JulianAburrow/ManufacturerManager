@@ -4,8 +4,8 @@ public partial class Edit
 {
     protected override async Task OnInitializedAsync()
     {
-        ManufacturerStatuses = await ManufacturerStatusHandler.GetManufacturerStatusesAsync();
-        ManufacturerModel = await ManufacturerHandler.GetManufacturerAsync(ManufacturerId);
+        ManufacturerStatuses = await ManufacturerStatusQueryHandler.GetManufacturerStatusesAsync();
+        ManufacturerModel = await ManufacturerQueryHandler.GetManufacturerAsync(ManufacturerId);
         ManufacturerDisplayModel.ManufacturerId = ManufacturerId;
         ManufacturerDisplayModel.Name = ManufacturerModel.Name;
         ManufacturerDisplayModel.StatusId = ManufacturerModel.StatusId;
@@ -27,14 +27,14 @@ public partial class Edit
         try
         {
             CopyDisplayModelToModel();
-            await ManufacturerHandler.UpdateManufacturerAsync(ManufacturerModel, true);
+            await ManufacturerCommandHandler.UpdateManufacturerAsync(ManufacturerModel, true);
             Snackbar.Add($"Manufacturer {ManufacturerModel.Name} successfully updated.", Severity.Success);
             NavigationManager.NavigateTo("/manufacturers/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred updating manufacturer {ManufacturerModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

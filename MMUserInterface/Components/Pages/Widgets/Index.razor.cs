@@ -6,7 +6,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        Widgets = await WidgetHandler.GetWidgetsAsync();
+        Widgets = await WidgetQueryHandler.GetWidgetsAsync();
         Snackbar.Add($"{Widgets.Count} item(s) found.", Widgets.Count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Widgets");
     }

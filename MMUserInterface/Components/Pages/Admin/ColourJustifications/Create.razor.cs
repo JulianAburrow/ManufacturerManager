@@ -22,14 +22,14 @@ public partial class Create
 
         try
         {
-            await ColourJustificationHandler.CreateColourJustificationAsync(ColourJustificationModel, true);
+            await ColourJustificationCommandHandler.CreateColourJustificationAsync(ColourJustificationModel, true);
             Snackbar.Add($"Colour Justification {ColourJustificationModel.Justification} successfully created.", Severity.Success);
             NavigationManager.NavigateTo("/colourjustifications/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred creating Colour Justification {ColourJustificationModel.Justification}. Please try again", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

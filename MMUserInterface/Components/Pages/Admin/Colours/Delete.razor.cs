@@ -4,7 +4,7 @@ public partial class Delete
 {
     protected override async Task OnInitializedAsync()
     {
-        ColourModel = await ColourHandler.GetColourAsync(ColourId);
+        ColourModel = await ColourQueryHandler.GetColourAsync(ColourId);
         MainLayout.SetHeaderValue("Delete Colour");
         OkToDelete = ColourModel.Widgets.Count == 0;
     }
@@ -23,14 +23,14 @@ public partial class Delete
     {
         try
         {
-            await ColourHandler.DeleteColourAsync(ColourId, true);
+            await ColourCommandHandler.DeleteColourAsync(ColourId, true);
             Snackbar.Add($"Colour {ColourModel.Name} successfully deleted", Severity.Success);
             NavigationManager.NavigateTo("/colours/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred deleting colour {ColourModel.Name}. Please try again", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }
