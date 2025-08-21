@@ -2,15 +2,17 @@
 
 public abstract class WidgetBasePageClass : BasePageClass
 {
-    [Inject] protected IWidgetHandler WidgetHandler { get; set; } = default!;
+    [Inject] protected IWidgetQueryHandler WidgetQueryHandler { get; set; } = default!;
 
-    [Inject] protected IWidgetStatusHandler WidgetStatusHandler { get; set; } = default!;
+    [Inject] protected IWidgetCommandHandler WidgetCommandHandler { get; set; } = default!;
 
-    [Inject] protected IColourHandler ColourHandler { get; set; } = default!;
+    [Inject] protected IWidgetStatusQueryHandler WidgetStatusQueryHandler { get; set; } = default!;
 
-    [Inject] protected IColourJustificationHandler ColourJustificationHandler { get; set; } = default!;
+    [Inject] protected IColourQueryHandler ColourHandler { get; set; } = default!;
 
-    [Inject] protected IManufacturerHandler ManufacturerHandler { get; set; } = default!;
+    [Inject] protected IColourJustificationQueryHandler ColourJustificationHandler { get; set; } = default!;
+
+    [Inject] protected IManufacturerQueryHandler ManufacturerHandler { get; set; } = default!;
 
     [Parameter] public int WidgetId { get; set; }
 

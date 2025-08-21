@@ -4,7 +4,7 @@ public partial class Edit
 {
     protected override async Task OnInitializedAsync()
     {
-        ColourModel = await ColourHandler.GetColourAsync(ColourId);
+        ColourModel = await ColourQueryHandler.GetColourAsync(ColourId);
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Colour");
     }
@@ -25,14 +25,14 @@ public partial class Edit
 
         try
         {
-            await ColourHandler.UpdateColourAsync(ColourModel, true);
+            await ColourCommandHandler.UpdateColourAsync(ColourModel, true);
             Snackbar.Add($"Colour {ColourModel.Name} successfully updated.", Severity.Success);
             NavigationManager.NavigateTo("/colours/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred updating colour {ColourModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

@@ -4,7 +4,7 @@ public partial class View
 {
     protected override async Task OnInitializedAsync()
     {
-        ManufacturerModel = await ManufacturerHandler.GetManufacturerAsync(ManufacturerId);
+        ManufacturerModel = await ManufacturerQueryHandler.GetManufacturerAsync(ManufacturerId);
         MainLayout.SetHeaderValue("View Manufacturer");
     }
 

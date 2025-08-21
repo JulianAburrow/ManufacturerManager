@@ -2,7 +2,9 @@
 
 public class ColourJustificationBasePageClass : BasePageClass
 {
-    [Inject] protected IColourJustificationHandler ColourJustificationHandler { get; set; } = default!;
+    [Inject] protected IColourJustificationCommandHandler ColourJustificationCommandHandler { get; set; } = default!;
+
+    [Inject] protected IColourJustificationQueryHandler ColourJustificationQueryHandler { get; set; } = default!;
 
     [Parameter] public int ColourJustificationId {  get; set; }
 

@@ -1,8 +1,10 @@
 ﻿global using Microsoft.AspNetCore.Components;
 global using Microsoft.EntityFrameworkCore;
 global using MMDataAccess.Data;
-global using MMDataAccess.Handlers;
-global using MMDataAccess.Interfaces;
+global using MMDataAccess.Handlers.CommandHandlers;
+global using MMDataAccess.Handlers.QueryHandlers;
+global using MMDataAccess.Interfaces.CommandHandlers;
+global using MMDataAccess.Interfaces.QueryHandlers;
 global using MMDataAccess.Models;
 global using MMUserInterface.Components;
 global using MMUserInterface.Components.Layout;

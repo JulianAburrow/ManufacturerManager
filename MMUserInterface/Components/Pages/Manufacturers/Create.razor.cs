@@ -4,7 +4,7 @@ public partial class Create
 {
     protected override async Task OnInitializedAsync()
     {
-        ManufacturerStatuses = await ManufacturerStatusHandler.GetManufacturerStatusesAsync();
+        ManufacturerStatuses = await ManufacturerStatusQueryHandler.GetManufacturerStatusesAsync();
         ManufacturerStatuses.Insert(0, new ManufacturerStatusModel
         {
             StatusId = SharedValues.PleaseSelectValue,
@@ -29,14 +29,14 @@ public partial class Create
         try
         {
             CopyDisplayModelToModel();
-            await ManufacturerHandler.CreateManufacturerAsync(ManufacturerModel, true);
+            await ManufacturerCommandHandler.CreateManufacturerAsync(ManufacturerModel, true);
             Snackbar.Add($"Manufacturer {ManufacturerModel.Name} successfully created.", Severity.Success);
             NavigationManager.NavigateTo("/manufacturers/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred creating manufacturer {ManufacturerModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

@@ -4,7 +4,7 @@ public partial class View
 {
     protected override async Task OnInitializedAsync()
     {
-        WidgetModel = await WidgetHandler.GetWidgetAsync(WidgetId);
+        WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
         MainLayout.SetHeaderValue("View Widget");
     }
 

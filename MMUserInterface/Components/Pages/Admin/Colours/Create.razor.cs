@@ -20,14 +20,14 @@ public partial class Create
 
         try
         {
-            await ColourHandler.CreateColourAsync(ColourModel, true);
+            await ColourCommandHandler.CreateColourAsync(ColourModel, true);
             Snackbar.Add($"Colour {ColourModel.Name} successfully created.", Severity.Success);
             NavigationManager.NavigateTo("/colours/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred creating colour {ColourModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }

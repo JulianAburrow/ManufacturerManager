@@ -4,7 +4,7 @@ public partial class Delete
 {
     protected override async Task OnInitializedAsync()
     {
-        ErrorModel = await ErrorHandler.GetErrorAsync(ErrorId);
+        ErrorModel = await ErrorQueryHandler.GetErrorAsync(ErrorId);
         MainLayout.SetHeaderValue("Delete Error");
     }
 
@@ -22,14 +22,14 @@ public partial class Delete
     {
         try
         {
-            await ErrorHandler.DeleteErrorAsync(ErrorId, true);
+            await ErrorCommandHandler.DeleteErrorAsync(ErrorId, true);
             Snackbar.Add($"Error {ErrorModel.ErrorMessage} successfully deleted", Severity.Success);
             NavigationManager.NavigateTo("/errors/index");
         }
         catch (Exception ex)
         {
             Snackbar.Add($"An error occurred deleting error {ErrorModel.ErrorMessage}. Please try again", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
+            await ErrorCommandHandler.CreateErrorAsync(ex, true);
         }
     }
 }
