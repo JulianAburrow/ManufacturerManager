@@ -20,4 +20,14 @@ public class ColourJustificationBasePageClass : BasePageClass
     {
         return new ("ColourJustifications", "/colourjustifications/index", isDisabled);
     }
+
+    protected void CopyModelToDisplayModel()
+    {
+        ColourJustificationDisplayModel.Justification = ColourJustificationModel.Justification;
+    }
+
+    protected void CopyDisplayModelToModel()
+    {
+        ColourJustificationModel.Justification = ColourJustificationDisplayModel.Justification;
+    }
 }

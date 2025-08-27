@@ -14,6 +14,7 @@ public static class ServiceExtensions
         services.AddTransient<IColourQueryHandler, ColourQueryHandler>();
         services.AddTransient<IColourJustificationCommandHandler, ColourJustificationCommandHandler>();
         services.AddTransient<IColourJustificationQueryHandler, ColourJustificationQueryHandler>();
+        services.AddTransient<ICrudWithErrorHandlingHelper, CrudWithErrorHandlingHelper>();
         services.AddTransient<IErrorCommandHandler, ErrorCommandHandler>();
         services.AddTransient<IErrorQueryHandler, ErrorQueryHandler>();
         services.AddTransient<IManufacturerCommandHandler, ManufacturerCommandHandler>();

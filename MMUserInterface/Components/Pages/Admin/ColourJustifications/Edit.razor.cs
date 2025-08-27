@@ -21,18 +21,15 @@ public partial class Edit
 
     private async Task UpdateColourJustification()
     {
-        ColourJustificationModel.Justification = ColourJustificationDisplayModel.Justification;
+        CopyDisplayModelToModel();
 
-        try
-        {
-            await ColourJustificationCommandHandler.UpdateColourJustificationAsync(ColourJustificationModel, true);
-            Snackbar.Add($"Colour Justification {ColourJustificationModel.Justification} successfully updated.", Severity.Success);
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ColourJustificationCommandHandler.UpdateColourJustificationAsync(ColourJustificationModel, true),
+            $"Colour Justification {ColourJustificationModel.Justification} successfully updated.",
+            $"An error occurred updating Colour Justification {ColourJustificationModel.Justification}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/colourjustifications/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred updating Colour Justification {ColourJustificationModel.Justification}. Please try again", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }
