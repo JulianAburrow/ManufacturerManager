@@ -58,17 +58,15 @@ public partial class Edit
 
     private async void UpdateWidget()
     {
-        try
-        {
-            CopyDisplayModelToModel();
-            await WidgetCommandHandler.UpdateWidgetAsync(WidgetModel, true);
-            Snackbar.Add($"Widget {WidgetModel.Name} successfully updated.", Severity.Success);
+        CopyDisplayModelToModel();
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await WidgetCommandHandler.UpdateWidgetAsync(WidgetModel, true),
+            $"Widget {WidgetModel.Name} successfully updated.",
+            $"An error occurred updating widget {WidgetModel.Name}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/widgets/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred updating {WidgetModel.Name}. Please try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

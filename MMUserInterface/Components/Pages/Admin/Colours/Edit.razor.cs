@@ -23,16 +23,12 @@ public partial class Edit
     {
         CopyDisplayModelToModel();
 
-        try
-        {
-            await ColourCommandHandler.UpdateColourAsync(ColourModel, true);
-            Snackbar.Add($"Colour {ColourModel.Name} successfully updated.", Severity.Success);
-            NavigationManager.NavigateTo("/colours/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred updating colour {ColourModel.Name}. Please try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
+       await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ColourCommandHandler.UpdateColourAsync(ColourModel, true),
+            $"Colour {ColourModel.Name} successfully updated.",
+            $"An error occurred updating colour {ColourModel.Name}. Please try again."
+        );
+
+        NavigationManager.NavigateTo("/colours/index");
     }
 }

@@ -26,17 +26,15 @@ public partial class Create
 
     private async Task CreateManufacturer()
     {
-        try
-        {
-            CopyDisplayModelToModel();
-            await ManufacturerCommandHandler.CreateManufacturerAsync(ManufacturerModel, true);
-            Snackbar.Add($"Manufacturer {ManufacturerModel.Name} successfully created.", Severity.Success);
+        CopyDisplayModelToModel();
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ManufacturerCommandHandler.CreateManufacturerAsync(ManufacturerModel, true),
+            $"Manufacturer {ManufacturerModel.Name} successfully created.",
+            $"An error occurred creating manufacturer {ManufacturerModel.Name}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/manufacturers/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred creating manufacturer {ManufacturerModel.Name}. Please try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

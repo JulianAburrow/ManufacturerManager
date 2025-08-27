@@ -15,21 +15,15 @@ public partial class Create
 
     private async Task CreateColourJustification()
     {
-        ColourJustificationModel = new ColourJustificationModel
-        {
-            Justification = ColourJustificationDisplayModel.Justification,
-        };
+        CopyDisplayModelToModel();
 
-        try
-        {
-            await ColourJustificationCommandHandler.CreateColourJustificationAsync(ColourJustificationModel, true);
-            Snackbar.Add($"Colour Justification {ColourJustificationModel.Justification} successfully created.", Severity.Success);
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ColourJustificationCommandHandler.CreateColourJustificationAsync(ColourJustificationModel, true),
+            $"Colour Justification {ColourJustificationModel.Justification} successfully created.",
+            $"An error occurred creating Colour Justification {ColourJustificationModel.Justification}. Please try again"
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/colourjustifications/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred creating Colour Justification {ColourJustificationModel.Justification}. Please try again", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

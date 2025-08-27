@@ -24,17 +24,15 @@ public partial class Edit
 
     private async Task UpdateManufacturer()
     {
-        try
-        {
-            CopyDisplayModelToModel();
-            await ManufacturerCommandHandler.UpdateManufacturerAsync(ManufacturerModel, true);
-            Snackbar.Add($"Manufacturer {ManufacturerModel.Name} successfully updated.", Severity.Success);
+        CopyDisplayModelToModel();
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ManufacturerCommandHandler.UpdateManufacturerAsync(ManufacturerModel, true),
+            $"Manufacturer {ManufacturerModel.Name} successfully updated.",
+            $"An error occurred updating manufacturer {ManufacturerModel.Name}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/manufacturers/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred updating manufacturer {ManufacturerModel.Name}. Please try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

@@ -22,16 +22,13 @@ public partial class Delete
 
     private async Task DeleteColourJustification()
     {
-        try
-        {
-            await ColourJustificationCommandHandler.DeleteColourJustificationAsync(ColourJustificationId, true);
-            Snackbar.Add($"Colour Justification {ColourJustificationModel.Justification} successfully deleted.", Severity.Success);
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ColourJustificationCommandHandler.DeleteColourJustificationAsync(ColourJustificationId, true),
+            $"Colour Justification {ColourJustificationModel.Justification} successfully deleted.",
+            $"An error occurred deleting Colour Justification {ColourJustificationModel.Justification}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/colourjustifications/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred deleting Colour Justification {ColourJustificationModel.Justification}. PLease try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

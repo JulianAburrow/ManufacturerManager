@@ -21,16 +21,12 @@ public partial class Delete
 
     private async Task DeleteColour()
     {
-        try
-        {
-            await ColourCommandHandler.DeleteColourAsync(ColourId, true);
-            Snackbar.Add($"Colour {ColourModel.Name} successfully deleted", Severity.Success);
-            NavigationManager.NavigateTo("/colours/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred deleting colour {ColourModel.Name}. Please try again", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
+        await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ColourCommandHandler.DeleteColourAsync(ColourId, true),
+            $"Colour {ColourModel.Name} successfully deleted.",
+            $"An error occurred deleting colour {ColourModel.Name}. Please try again."
+        );
+
+        NavigationManager.NavigateTo("/colours/index");
     }
 }

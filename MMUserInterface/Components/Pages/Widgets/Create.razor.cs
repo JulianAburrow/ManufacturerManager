@@ -48,17 +48,15 @@ public partial class Create
 
     private async Task CreateWidget()
     {
-        try
-        {
-            CopyDisplayModelToModel();
-            await WidgetCommandHandler.CreateWidgetAsync(WidgetModel, true);
-            Snackbar.Add($"Widget {WidgetModel.Name} successfully created.", Severity.Success);
+        CopyDisplayModelToModel();
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await WidgetCommandHandler.CreateWidgetAsync(WidgetModel, true),
+            $"Widget {WidgetModel.Name} successfully created.",
+            $"An error occurred creating Widget {WidgetModel.Name}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/widgets/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred creating Widget {WidgetModel.Name}. Please try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

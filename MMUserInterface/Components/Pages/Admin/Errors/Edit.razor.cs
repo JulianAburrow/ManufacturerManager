@@ -31,16 +31,14 @@ public partial class Edit
     private async Task UpdateError()
     {
         CopyDisplayModelToModel();
-        try
-        {
-            await ErrorCommandHandler.UpdateErrorAsync(ErrorModel, true);
-            Snackbar.Add($"Error {ErrorModel.ErrorId} successfully updated.", Severity.Success);
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ErrorCommandHandler.UpdateErrorAsync(ErrorModel, true),
+            $"Error {ErrorModel.ErrorId} successfully updated.",
+            $"An error occurred updating error {ErrorModel.ErrorId}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/errors/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred updating error {ErrorModel.ErrorId}. Please try again.", Severity.Error);
-            await ErrorCommandHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

@@ -6,6 +6,8 @@ public class BasePageClass : ComponentBase
 
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
 
+    [Inject] protected ICrudWithErrorHandlingHelper CrudWithErrorHandlingHelper { get; set; } = default!;
+
     [Inject] protected IErrorCommandHandler ErrorCommandHandler { get; set; } = default!;
 
     [Inject] protected IErrorQueryHandler ErrorQueryHandler { get; set; } = default!;
