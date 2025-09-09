@@ -28,6 +28,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Playwright** (end-to-end testing)
 - **SQL Server** (default, can be swapped for in-memory in tests)
 - **GitHub Actions** (CI/CD)
+- **Ollama/TinyLlama** (Ai Assistant
 
 ---
 
