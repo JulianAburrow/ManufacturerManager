@@ -12,6 +12,7 @@ global using MMUserInterface.Extensions;
 global using MMUserInterface.Helpers;
 global using MMUserInterface.Interfaces;
 global using MMUserInterface.Models;
+global using MMUserInterface.Services;
 global using MMUserInterface.Shared.BasePageClasses;
 global using MMUserInterface.Shared.CommonValues;
 global using MudBlazor;

@@ -1,55 +1,30 @@
-﻿namespace MMUserInterface.Components.Pages;
+﻿namespace MMUserInterface.Services;
 
-public partial class Help
+public class ChatService : IChatService
 {
-    readonly List<string> HelpCategories = [ SharedValues.PleaseSelectText, "Manufacturer", "Widget", "Colour", "ColourJustification" ];
-
-    protected ChatSearchModel ChatSearchModel = new();
-
-    protected string _response = string.Empty;
-
-    private bool _isThinking = false;
-
-    protected List<string> MatchingFiles = [];
-
-    protected override void OnInitialized()
+    public IReadOnlyList<string> GetMatchingFiles(string category)
     {
-        ChatSearchModel.SearchCategory = HelpCategories[0];
-        MainLayout.SetBreadcrumbs(
-        [
-            GetHomeBreadcrumbItem(),
-            GetCustomBreadcrumbItem("Help")
-        ]);
+        string folderPath = Path.Combine("Documents", category);
+        return Directory.GetFiles(folderPath)
+                        .Where(f => Path.GetFileName(f)
+                        .Contains(category, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
     }
 
-    protected async Task OnSearchClicked()
+    public async Task<string> AskQuestionAsync(string category, string question, bool strictMode = true)
     {
-        _response = string.Empty;
-        _isThinking = true;
+        var files = GetMatchingFiles(category);
+        if (files.Count == 0)
+            return $"📂 No documents found for category '{category}'.";
 
-        if (ChatSearchModel.SearchCategory == SharedValues.PleaseSelectText || string.IsNullOrWhiteSpace(ChatSearchModel.SearchQuestion))
+        var combinedText = new StringBuilder();
+        foreach (var file in files)
         {
-            _response = "❌ Please select a category and enter a question.";
-            return;
+            combinedText.AppendLine(ExtractTextFromPdf(file));
         }
 
-        try
-        {
-            MatchingFiles = ChatService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
-
-            if (MatchingFiles.Count == 0)
-            {
-                _response = $"📂 No documents found for category '{ChatSearchModel.SearchCategory}'.";
-                return;
-            }
-
-            _response = await ChatService.AskQuestionAsync(ChatSearchModel.SearchCategory, ChatSearchModel.SearchQuestion, strictMode: true);
-        }
-        finally
-        {
-            _isThinking = false;
-            StateHasChanged();
-        }
+        string prompt = BuildPrompt($"{category} {combinedText}", question, strictMode);
+        return await QueryOllamaAsync(prompt);
     }
 
     private static string ExtractTextFromPdf(string filePath)
@@ -107,7 +82,7 @@ public partial class Help
         return result?.Response ?? "No response received.";
     }
 
-    public class OllamaResponse
+    private class OllamaResponse
     {
         public string Response { get; set; } = string.Empty;
         public bool Done { get; set; }

@@ -1,4 +1,5 @@
 ﻿@page "/help"
+@inherits HelpBasePageClass
 
 <PageTitle>Help</PageTitle>
 
@@ -49,9 +50,13 @@ Select a category from which you require help and type your question
 {
     <ul>
     @foreach (var file in MatchingFiles)
-    {
-        <li><DisplayFileComponent FileName="@file" /></li>
-    }
+        {
+            var filename = Path.GetFileName(file);
+            var link = $"/docs/{ChatSearchModel.SearchCategory.ToLowerInvariant()}/{filename}";
+            <li>
+                <DisplayFileComponent Url="@link" DisplayText="@filename" />
+            </li>
+        }
     </ul>
 }
 
