@@ -14,8 +14,47 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Documents\How To Add A Colour.pdf" />
+    <None Remove="Documents\How To Add A ColourJustification.pdf" />
+    <None Remove="Documents\How To Add A Manufacturer.pdf" />
+    <None Remove="Documents\How To Add A Widget.pdf" />
+    <None Remove="Documents\What Is A Colour.pdf" />
+    <None Remove="Documents\What Is A ColourJustification.pdf" />
+    <None Remove="Documents\What Is A Manufacturer.pdf" />
+    <None Remove="Documents\What Is A Widget.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Documents\Colour\How To Add A Colour.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ColourJustification\How To Add A ColourJustification.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\Manufacturer\How To Add A Manufacturer.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\Widget\How To Add A Widget.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\Colour\What Is A Colour.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ColourJustification\What Is A ColourJustification.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\Manufacturer\What Is A Manufacturer.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\Widget\What Is A Widget.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
     <PackageReference Include="MudBlazor" Version="8.9.0" />
+    <PackageReference Include="PdfPig" Version="0.1.11" />
   </ItemGroup>
 
   <ItemGroup>

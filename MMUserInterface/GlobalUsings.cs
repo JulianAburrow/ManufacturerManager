@@ -17,4 +17,7 @@ global using MMUserInterface.Shared.CommonValues;
 global using MudBlazor;
 global using MudBlazor.Services;
 global using System.ComponentModel.DataAnnotations;
+global using System.Net.Http.Json;
+global using System.Text;
+global using UglyToad.PdfPig;
 global using static MMDataAccess.Enums.PublicEnums;
