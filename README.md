@@ -55,4 +55,6 @@ This solution contains a database project, which when run will create a seeded d
 
 Create the database, adjust your connection strings and run the application.
 
+If you wish to use the AI-Assistant in the Help page you will need to install Ollama and the TinyLlama model. Alternatively you can choose a model of your own and adjust the code accordingly, but be aware that this has only been tested using TinyLlama.
+
 ---
