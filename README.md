@@ -14,6 +14,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Comprehensive Testing**: Unit tests (xUnit) and end-to-end UI tests (Playwright).
 - **Automated CI/CD**: GitHub Actions for build, test, and deployment automation.
 - **Error Logging**: Centralized error handling and logging to the database for diagnostics.
+- **Document-aware AI Assistant**: Search documents for help with functionality
 
 ---
 
@@ -27,6 +28,15 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Playwright** (end-to-end testing)
 - **SQL Server** (default, can be swapped for in-memory in tests)
 - **GitHub Actions** (CI/CD)
+
+---
+
+## Local AI Assistant
+
+This project includes support for a document-aware AI assistant powered by [Ollama](https://ollama.com).  
+If Ollama is not installed, assistant features will be disabled gracefully.
+
+The model in use is TinyLlama
 
 ---
 
