@@ -29,7 +29,21 @@ Select a category from which you require help and type your question
                     Label="Type your question here"
                     data-testid="question-input"
                     @bind-Value="ChatSearchModel.SearchQuestion" />
+                <MudSelect
+                    T="string"
+                    id="ddlModels"
+                    Label="Model"
+                    data-testid="model-select"
+                    @bind-Value="ChatSearchModel.SearchModel">
+                    @foreach(var availableModel in AvailableModels)
+                    {
+                        <MudSelectItem T="string" Value="@availableModel.Name">
+                            @availableModel.Name
+                        </MudSelectItem>
+                    }
+                </MudSelect>
             </MudCardContent>
+                       
             <MudCardActions>
                 <button class="btn btn-primary" onclick="@OnSearchClicked">Submit</button>
             </MudCardActions>
@@ -39,7 +53,7 @@ Select a category from which you require help and type your question
 
 <br />
 
-@if (_isThinking)
+@if (IsThinking)
 {
     <MudText Typo="Typo.subtitle1" Color="Color.Info">
         🤔 Thinking about it...
@@ -60,10 +74,10 @@ Select a category from which you require help and type your question
     </ul>
 }
 
-@if (!string.IsNullOrWhiteSpace(_response))
+@if (!string.IsNullOrWhiteSpace(Response))
 {
     <MudPaper Class="mt-4 pa-3">
         <MudText Typo="Typo.h6">🧠 Response</MudText>
-        <MudText>@_response</MudText>
+        <MudText>@Response</MudText>
     </MudPaper>
 }

@@ -1,7 +1,12 @@
-﻿namespace MMUserInterface.Services;
+﻿
+using System.Net.WebSockets;
+
+namespace MMUserInterface.Services;
 
 public class ChatService : IChatService
 {
+    private static readonly string apiAddress = "http://localhost:11434/api";
+
     public IReadOnlyList<string> GetMatchingFiles(string category)
     {
         string folderPath = Path.Combine("Documents", category);
@@ -11,7 +16,7 @@ public class ChatService : IChatService
                         .ToList();
     }
 
-    public async Task<string> AskQuestionAsync(string category, string question, bool strictMode = true)
+    public async Task<string> AskQuestionAsync(string category, string question, string model, bool strictMode = true)
     {
         var files = GetMatchingFiles(category);
         if (files.Count == 0)
@@ -24,7 +29,16 @@ public class ChatService : IChatService
         }
 
         string prompt = BuildPrompt($"{category} {combinedText}", question, strictMode);
-        return await QueryOllamaAsync(prompt);
+        return await QueryOllamaAsync(prompt, model);
+    }
+
+    public async Task<List<OllamaModel>> GetAvailableModelsAsync()
+    {
+        var apiClient = new HttpClient();
+        var response = await apiClient.GetFromJsonAsync<OllamaTags>($"{apiAddress}/tags");
+        return (response?.Models ?? [])
+            .OrderBy(m => m.Name)
+            .ToList();
     }
 
     private static string ExtractTextFromPdf(string filePath)
@@ -67,24 +81,18 @@ public class ChatService : IChatService
         return builder.ToString();
     }
 
-    private static async Task<string> QueryOllamaAsync(string prompt)
+    private static async Task<string> QueryOllamaAsync(string prompt, string model)
     {
         var client = new HttpClient();
         var request = new
         {
-            model = "tinyllama",
+            model,
             prompt,
             stream = false
         };
 
-        var response = await client.PostAsJsonAsync("http://localhost:11434/api/generate", request);
+        var response = await client.PostAsJsonAsync($"{apiAddress}/generate", request);
         var result = await response.Content.ReadFromJsonAsync<OllamaResponse>();
         return result?.Response ?? "No response received.";
-    }
-
-    private class OllamaResponse
-    {
-        public string Response { get; set; } = string.Empty;
-        public bool Done { get; set; }
     }
 }
