@@ -20,7 +20,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.MapGet("/docs/{category}/{filename}", async (HttpContext context, string category, string filename) =>
+app.MapGet("/docs/{category}/{filename}", (HttpContext context, string category, string filename) =>
 {
     var safeCategory = Path.GetFileName(category);
     var safeFilename = Path.GetFileName(filename);
@@ -30,7 +30,7 @@ app.MapGet("/docs/{category}/{filename}", async (HttpContext context, string cat
     if (!System.IO.File.Exists(path))
         return Results.NotFound();
 
-    var contentType = "application/pdf"; // Or use FileExtensionContentTypeProvider
+    var contentType = "application/pdf";
     return Results.File(path, contentType, safeFilename);
 });
 
