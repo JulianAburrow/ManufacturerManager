@@ -113,7 +113,7 @@ jobs:
         exit 1
 
     - name: Pull models
-      uses: ./github/actions/ollama.yml
+      uses: ./github/actions/ollama
 
 
     - name: Run Playwright tests over HTTPS
