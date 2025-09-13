@@ -14,6 +14,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Debug action folder
+      run: ls -la ./.github/actions/ollama
+
+    - name: Pull Models
+      uses: ./github/actions/ollama
+
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
@@ -111,9 +117,6 @@ jobs:
         done
         echo "MMUserInterface did not become ready in time."
         exit 1
-
-    - name: Pull models
-      uses: ./github/actions/ollama
 
 
     - name: Run Playwright tests over HTTPS
