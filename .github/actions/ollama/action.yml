@@ -9,4 +9,4 @@ runs:
 
     - name: Pull Gemma 3:1B
       shell: bash
-      run: ollama pull gemma:3b
+      run: ollama pull gemma3:1b
