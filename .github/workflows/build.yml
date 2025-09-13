@@ -112,6 +112,10 @@ jobs:
         echo "MMUserInterface did not become ready in time."
         exit 1
 
+    - name: Pull models
+      uses: ./github/actions/ollama.yml
+
+
     - name: Run Playwright tests over HTTPS
       shell: pwsh
       run: dotnet test TestsPlaywright.csproj -- "UseHttps=true"

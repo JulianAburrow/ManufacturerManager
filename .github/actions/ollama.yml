@@ -1,0 +1,15 @@
+# .github/actions/ollama.yml
+name: Pull Ollama and Gemma3:1B
+
+description: Pulls Ollama and the Gemma 3:1B model
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ollama
+      run: |
+        curl -fsSL https://ollama.com/install.sh | sh
+
+    - name: Pull Gemma 3:1B model
+      run: |
+        ollama pull gemma:3b
