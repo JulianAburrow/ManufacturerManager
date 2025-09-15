@@ -23,6 +23,7 @@ public class HelpPageQueryTests : BaseTestClass
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
         await page.GotoAsync($"{GlobalValues.BaseUrl}/Help");
+        await page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
         var helpTitle = await page.TitleAsync();
         Assert.Equal("Help", helpTitle);
 
