@@ -41,6 +41,12 @@ The model in use is TinyLlama
 
 ---
 
+## Modular Build Configuration
+
+This solution uses a modular build setup, with reusable GitHub Actions defined for PLaywright, SQL Server, and local model integration. Each action is isolated for clarity and composability, allowing targeted CI workflows and easier debugging. The .github/actions directory contains these components.
+
+---
+
 ## Error Handling
 
 - All exceptions in the UI are caught and logged to the database via command handlers.
