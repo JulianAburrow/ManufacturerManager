@@ -12,7 +12,7 @@ public partial class Help
 
     protected string Response= string.Empty;
 
-    private bool IsThinking= false;
+    private bool IsThinking = false;
 
     protected List<string> MatchingFiles = [];
 
@@ -26,6 +26,7 @@ public partial class Help
     {
         ChatSearchModel.SearchCategory = HelpCategories[0];
         
+        MainLayout.SetHeaderValue("Help");
         MainLayout.SetBreadcrumbs(
         [
             GetHomeBreadcrumbItem(),
