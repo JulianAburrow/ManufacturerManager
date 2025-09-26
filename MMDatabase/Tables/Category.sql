@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Category]
+(
+	CategoryId INT NOT NULL IDENTITY(1, 1),
+	Name NVARCHAR(25) NOT NULL
+	CONSTRAINT PK_Category PRIMARY KEY (CategoryId)
+)

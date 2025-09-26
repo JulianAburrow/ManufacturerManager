@@ -44,7 +44,7 @@ public class ColourCommandTests
     [Fact]
     public async Task UpdateColourUpdatesColour()
     {
-        var newColourName = "Violet";
+        var newColourName = "NewColour";
 
         _manufacturerManagerContext.Colours.Add(_testColours[0]);
         _manufacturerManagerContext.SaveChanges();

@@ -42,14 +42,12 @@ public class HelpPageQueryTests : BaseTestClass
         await page.GotoAsync($"{GlobalValues.BaseUrl}/Help", GlobalValues.GetPageOptions());
         await page.WaitForFunctionAsync("document.title === 'Help'");
 
-        await SelectDropDownOption(page, "category-select", category);
-        await page.GetByLabel("Type your question here").FillAsync(question);
+        await page.Locator("[data-testid='category-select']").Locator("..").ClickAsync();
+        var dropdownItems = page.Locator("div.mud-popover div.mud-list-item");
+        await dropdownItems.First.WaitForAsync(new() { Timeout = 10000 });
+        await page.ClickAsync($"div.mud-popover div.mud-list-item:has-text('{category}')");
 
-        await page.GetByTestId("model-select").Locator("..").ClickAsync();
-        var modelItems = page.Locator("div.mud-popover div.mud-list-item");
-        await modelItems.First.WaitForAsync(new() { Timeout = 10000 });
-        var firstModelText = await modelItems.First.InnerTextAsync();
-        await page.ClickAsync($"div.mud-popover div.mud-list-item:has-text('{firstModelText}')");
+        await page.GetByLabel("Type your question here").FillAsync(question);
 
         var submitButton = page.GetByRole(AriaRole.Button, new() { Name = "Submit" });
         if (await submitButton.CountAsync() == 0)
@@ -60,7 +58,7 @@ public class HelpPageQueryTests : BaseTestClass
         await submitButton.First.ClickAsync();
 
         var thinkingLocator = page.Locator("text=🤔 Thinking about it...");
-        await thinkingLocator.WaitForAsync(new() { Timeout = 5000 });
+        await thinkingLocator.WaitForAsync(new() { Timeout = 15000 });
 
         var modelResponse = page.GetByTestId("model-response");
         await modelResponse.First.WaitForAsync(new() { Timeout = 20000 });

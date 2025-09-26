@@ -1,4 +1,4 @@
-﻿/*
+/*
 Post-Deployment Script Template							
 --------------------------------------------------------------------------------------
  This file contains SQL statements that will be appended to the build script.		
@@ -9,6 +9,7 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+:r .\SeedData\SeedCategory.sql
 :r .\SeedData\SeedColour.sql
 :r .\SeedData\SeedColourJustification.sql
 :r .\SeedData\SeedManufacturerStatus.sql

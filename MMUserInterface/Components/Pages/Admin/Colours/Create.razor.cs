@@ -1,6 +1,4 @@
-﻿using MMUserInterface.Helpers;
-
-namespace MMUserInterface.Components.Pages.Admin.Colours;
+﻿namespace MMUserInterface.Components.Pages.Admin.Colours;
 
 public partial class Create
 {
