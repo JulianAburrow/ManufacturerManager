@@ -10,6 +10,7 @@ public static class ServiceExtensions
 
     public static void AddDependencies(this IServiceCollection services)
     {
+        services.AddTransient<ICategoryQueryHandler, CategoryQueryHandler>();
         services.AddScoped<IChatService, ChatService>();
         services.AddTransient<IColourCommandHandler, ColourCommandHandler>();
         services.AddTransient<IColourQueryHandler, ColourQueryHandler>();

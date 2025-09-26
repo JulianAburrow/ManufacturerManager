@@ -1,10 +1,8 @@
-﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-
-namespace MMUserInterface.Components.Pages;
+﻿namespace MMUserInterface.Components.Pages;
 
 public partial class Help
 {
-    readonly List<string> HelpCategories = [ SharedValues.PleaseSelectText, "Manufacturer", "Widget", "Colour", "ColourJustification" ];
+    private List<string> HelpCategories = [];
 
     readonly List<OllamaModel> AvailableModels = [];
 
@@ -18,14 +16,15 @@ public partial class Help
 
     protected override async Task OnInitializedAsync()
     {
+        HelpCategories = (await CategoryQueryHandler.GetCategoriesAsync()).Select(c => c.Name).ToList();
+        HelpCategories.Insert(0, SharedValues.PleaseSelectText);
         AvailableModels.AddRange(await ChatService.GetAvailableModelsAsync());
         ChatSearchModel.SearchModel = AvailableModels.FirstOrDefault()?.Name ?? string.Empty;
+        ChatSearchModel.SearchCategory = HelpCategories[0];
     }
 
     protected override void OnInitialized()
-    {
-        ChatSearchModel.SearchCategory = HelpCategories[0];
-        
+    {        
         MainLayout.SetHeaderValue("Help");
         MainLayout.SetBreadcrumbs(
         [

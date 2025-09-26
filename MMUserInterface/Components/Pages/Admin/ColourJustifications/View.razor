@@ -18,7 +18,11 @@
             <MudCardActions>
                 <a class="btn btn-primary" href="/colourjustification/edit/@ColourJustificationModel.ColourJustificationId">Edit</a>
                 &nbsp;
-                <a class="btn btn-danger" href="/colourjustification/delete/@ColourJustificationModel.ColourJustificationId">Delete</a>
+                @if (OkToDelete)
+                {
+                    @:&nbsp;
+                    <a class="btn btn-danger" href="/colourjustification/delete/@ColourJustificationModel.ColourJustificationId">Delete</a>
+                }               
                 &nbsp;
                 <a class="btn btn-primary" href="/colourjustifications/index">Cancel</a>
             </MudCardActions>

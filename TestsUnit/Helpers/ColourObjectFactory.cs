@@ -8,19 +8,19 @@ public static class ColourObjectFactory
         [
             new ColourModel
             {
-                Name = "Red",
+                Name = "Colour1",
             },
             new ColourModel
             {
-                Name = "Blue",
+                Name = "Colour2",
             },
             new ColourModel
             {
-                Name = "Green",
+                Name = "Colour3",
             },
             new ColourModel
             {
-                Name = "Yellow",
+                Name = "Colour4",
             }
         ];
     }

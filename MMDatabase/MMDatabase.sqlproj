@@ -66,6 +66,7 @@
     <None Include="SeedData\SeedWidgetStatus.sql" />
     <PostDeploy Include="PostDeployment.sql" />
     <None Include="MMDatabase.publish.xml" />
+    <None Include="SeedData\SeedCategory.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Manufacturer.sql" />
@@ -75,5 +76,6 @@
     <Build Include="Tables\Widget.sql" />
     <Build Include="Tables\WidgetStatus.sql" />
     <Build Include="Tables\Error.sql" />
+    <Build Include="Tables\Category.sql" />
   </ItemGroup>
 </Project>
