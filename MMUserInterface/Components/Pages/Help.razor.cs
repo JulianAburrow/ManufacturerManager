@@ -59,10 +59,10 @@ public partial class Help
             if (string.IsNullOrWhiteSpace(Response))
                 Response = "❌ Could not get an answer from this model. Please try a different model.";
         }
-        catch
+        catch (Exception ex)
         {
             Response = $"❌ An error occurred: it may be the case that you do not have Ollama and / or {ChatSearchModel.SearchModel}.";
-            await ErrorCommandHandler.CreateErrorAsync(new Exception($"An error occurred in Help.razor.cs OnSearchClicked method. Suspect lack of Ollama/{ChatSearchModel.SearchModel}."), true);
+            await ErrorCommandHandler.CreateErrorAsync(new Exception($"An error occurred in Help.razor.cs OnSearchClicked method. Suspect lack of Ollama/{ChatSearchModel.SearchModel}. {ex.Message}"), true);
         }
         finally
         {

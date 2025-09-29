@@ -1,5 +1,6 @@
 ﻿
 using System.Net.WebSockets;
+using System.Text.Json;
 
 namespace MMUserInterface.Services;
 
@@ -81,6 +82,21 @@ public class ChatService : IChatService
         return builder.ToString();
     }
 
+    //private static async Task<string> QueryOllamaAsync(string prompt, string model)
+    //{
+    //    var client = new HttpClient();
+    //    var request = new
+    //    {
+    //        model,
+    //        prompt,
+    //        stream = false
+    //    };
+
+    //    var response = await client.PostAsJsonAsync($"{apiAddress}/generate", request);
+    //    var result = await response.Content.ReadFromJsonAsync<OllamaResponse>();
+    //    return result?.Response ?? "No response received.";
+    //}
+
     private static async Task<string> QueryOllamaAsync(string prompt, string model)
     {
         var client = new HttpClient();
@@ -88,11 +104,35 @@ public class ChatService : IChatService
         {
             model,
             prompt,
-            stream = false
+            stream = true
         };
 
         var response = await client.PostAsJsonAsync($"{apiAddress}/generate", request);
-        var result = await response.Content.ReadFromJsonAsync<OllamaResponse>();
-        return result?.Response ?? "No response received.";
+        response.EnsureSuccessStatusCode();
+
+        using var stream = await response.Content.ReadAsStreamAsync();
+        using var reader = new StreamReader(stream);
+
+        var outputBuilder = new StringBuilder();
+        string? line;
+        while ((line = await reader.ReadLineAsync()) != null)
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            try
+            {
+                var fragment = JsonSerializer.Deserialize<OllamaResponse>(line);
+                if (!string.IsNullOrWhiteSpace(fragment?.Response))
+                {
+                    outputBuilder.Append(fragment.Response);
+                }
+            }
+            catch
+            {
+                // Could log the exception here if needed
+            }
+        }
+
+        return outputBuilder.Length > 0 ? outputBuilder.ToString() : "No response received.";
     }
 }
