@@ -13,21 +13,16 @@ public partial class Create
         ]);
     }
 
-
     private async Task CreateColour()
     {
         CopyDisplayModelToModel();
 
-        try
-        {
-            await ColourHandler.CreateColourAsync(ColourModel, true);
-            Snackbar.Add($"Colour {ColourModel.Name} successfully created.", Severity.Success);
-            NavigationManager.NavigateTo("/colours/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred creating colour {ColourModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
-        }
+        await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await ColourCommandHandler.CreateColourAsync(ColourModel, true),
+            $"Colour {ColourModel.Name} successfully created.",
+            $"An error occurred creating colour {ColourModel.Name}. Please try again."
+        );
+
+        NavigationManager.NavigateTo("/colours/index");
     }
 }

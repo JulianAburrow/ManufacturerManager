@@ -4,7 +4,7 @@ public partial class Create
 {
     protected override async Task OnInitializedAsync()
     {
-        WidgetStatuses = await WidgetStatusHandler.GetWidgetStatusesAsync();
+        WidgetStatuses = await WidgetStatusQueryHandler.GetWidgetStatusesAsync();
         WidgetStatuses.Insert(0, new()
         {
             StatusId = SharedValues.PleaseSelectValue,
@@ -48,17 +48,15 @@ public partial class Create
 
     private async Task CreateWidget()
     {
-        try
-        {
-            CopyDisplayModelToModel();
-            await WidgetHandler.CreateWidgetAsync(WidgetModel, true);
-            Snackbar.Add($"Widget {WidgetModel.Name} successfully created.", Severity.Success);
+        CopyDisplayModelToModel();
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await WidgetCommandHandler.CreateWidgetAsync(WidgetModel, true),
+            $"Widget {WidgetModel.Name} successfully created.",
+            $"An error occurred creating Widget {WidgetModel.Name}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/widgets/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred creating Widget {WidgetModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

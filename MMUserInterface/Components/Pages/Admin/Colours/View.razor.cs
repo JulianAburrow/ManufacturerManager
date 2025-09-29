@@ -4,9 +4,9 @@ public partial class View
 {
     protected override async Task OnInitializedAsync()
     {
-        ColourModel = await ColourHandler.GetColourAsync(ColourId);
+        ColourModel = await ColourQueryHandler.GetColourAsync(ColourId);
         MainLayout.SetHeaderValue("View Colour");
-        OkToDelete = true;
+        OkToDelete = ColourModel.Widgets.Count == 0;
     }
 
     protected override void OnInitialized()

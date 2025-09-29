@@ -1,0 +1,13 @@
+name: Install Playwright CLI (no manifest) and browsers (Chromium only)
+description: Installs Playwright and its dependencies
+runs:
+  using: composite
+  steps:
+   - name: Install Playwright CLI (no manifest)
+     shell: bash
+     run: dotnet tool install Microsoft.Playwright.CLI --tool-path tools
+
+   - name: Install Playwright browsers (Chromium only)
+     shell: bash
+     run: tools/playwright install --with-deps chromium
+  

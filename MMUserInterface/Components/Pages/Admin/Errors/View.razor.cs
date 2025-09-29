@@ -5,7 +5,7 @@ public partial class View
 {
     protected override async Task OnInitializedAsync()
     {
-        ErrorModel = await ErrorHandler.GetErrorAsync(ErrorId);
+        ErrorModel = await ErrorQueryHandler.GetErrorAsync(ErrorId);
         MainLayout.SetHeaderValue("View Error");
     }
 

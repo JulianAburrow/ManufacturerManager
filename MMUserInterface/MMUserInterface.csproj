@@ -4,39 +4,27 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <CopyRazorFilesToPublishDirectory>true</CopyRazorFilesToPublishDirectory>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove=".github\**" />
+    <Compile Remove="Documents\**" />
     <Content Remove=".github\**" />
+    <Content Remove="Documents\**" />
     <EmbeddedResource Remove=".github\**" />
+    <EmbeddedResource Remove="Documents\**" />
     <None Remove=".github\**" />
+    <None Remove="Documents\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
     <PackageReference Include="MudBlazor" Version="8.9.0" />
+    <PackageReference Include="PdfPig" Version="0.1.11" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MMDataAccess\MMDataAccess.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <RunPrePublish>true</RunPrePublish>
-  </PropertyGroup>
-  
-  <Target Name="PrePublishScript" BeforeTargets="BeforePublish" Condition="'$(RunPrePublish)' == 'true'">
-    <Exec Command="powershell -ExecutionPolicy Bypass -File Scripts\PrePublish.ps1" />
-  </Target>
-
-<PropertyGroup>
-  <RunPostPublish>true</RunPostPublish>
-</PropertyGroup>
-
-<Target Name="PostPublish" AfterTargets="AfterPublish" Condition="'$(RunPostPublish)' == 'true'">
-  <Exec Command="powershell -ExecutionPolicy Bypass -File Scripts\PostPublish.ps1" />
-</Target>
 
 </Project>

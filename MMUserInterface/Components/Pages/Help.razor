@@ -1,0 +1,83 @@
+﻿@page "/help"
+@inherits HelpBasePageClass
+
+<PageTitle>Help</PageTitle>
+
+<h1>Help</h1>
+
+Select a category from which you require help and type your question
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudSelect
+                    T="string"
+                    id="ddlHelpCategories"
+                    Label="Category"
+                    data-testid="category-select"
+                    @bind-Value="ChatSearchModel.SearchCategory">
+                    @foreach (var helpCategory in HelpCategories)
+                    {
+                        <MudSelectItem T="string" Value="@helpCategory">
+                            @helpCategory
+                        </MudSelectItem>
+                    }
+                </MudSelect>
+                <MudTextField
+                    T="string"
+                    id="txtHelpSearch"
+                    Label="Type your question here"
+                    data-testid="question-input"
+                    @bind-Value="ChatSearchModel.SearchQuestion" />
+                <MudSelect
+                    T="string"
+                    id="ddlModels"
+                    Label="Model"
+                    data-testid="model-select"
+                    @bind-Value="ChatSearchModel.SearchModel">
+                    @foreach(var availableModel in AvailableModels)
+                    {
+                        <MudSelectItem T="string" Value="@availableModel.Name">
+                            @availableModel.Name
+                        </MudSelectItem>
+                    }
+                </MudSelect>
+            </MudCardContent>
+                       
+            <MudCardActions>
+                <button class="btn btn-primary" onclick="@OnSearchClicked">Submit</button>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<br />
+
+@if (IsThinking)
+{
+    <MudText Typo="Typo.subtitle1" Color="Color.Info">
+        🤔 Thinking about it...
+    </MudText>
+}
+
+@if (MatchingFiles.Count > 0)
+{
+    <ul>
+    @foreach (var file in MatchingFiles)
+        {
+            var filename = Path.GetFileName(file);
+            var link = $"/docs/{ChatSearchModel.SearchCategory.ToLowerInvariant()}/{filename}";
+            <li>
+                <DisplayFileComponent Url="@link" DisplayText="@filename" />
+            </li>
+        }
+    </ul>
+}
+
+@if (!string.IsNullOrWhiteSpace(Response))
+{
+    <MudPaper Class="mt-4 pa-3">
+        <MudText Typo="Typo.h6">🧠 Response</MudText>
+        <MudText data-testid="model-response">@Response</MudText>
+    </MudPaper>
+}

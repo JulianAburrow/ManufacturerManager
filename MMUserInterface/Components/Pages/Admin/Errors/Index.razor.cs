@@ -6,7 +6,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        Errors = await ErrorHandler.GetErrorsAsync();
+        Errors = await ErrorQueryHandler.GetErrorsAsync();
         Snackbar.Add($"{Errors.Count} item(s) found", Errors.Count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Errors");
     }

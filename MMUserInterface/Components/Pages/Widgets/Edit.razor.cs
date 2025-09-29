@@ -4,7 +4,7 @@ public partial class Edit
 {
     protected override async Task OnInitializedAsync()
     {
-        WidgetStatuses = await WidgetStatusHandler.GetWidgetStatusesAsync();
+        WidgetStatuses = await WidgetStatusQueryHandler.GetWidgetStatusesAsync();
         WidgetStatuses.Insert(0, new WidgetStatusModel
         {
             StatusId = SharedValues.PleaseSelectValue,
@@ -24,7 +24,7 @@ public partial class Edit
         });
         Manufacturers = await ManufacturerHandler.GetManufacturersAsync();
 
-        WidgetModel = await WidgetHandler.GetWidgetAsync(WidgetId);
+        WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
         WidgetDisplayModel.WidgetId = WidgetId;
         WidgetDisplayModel.Name = WidgetModel.Name;
         WidgetDisplayModel.ManufacturerId = WidgetModel.ManufacturerId;
@@ -58,17 +58,15 @@ public partial class Edit
 
     private async void UpdateWidget()
     {
-        try
-        {
-            CopyDisplayModelToModel();
-            await WidgetHandler.UpdateWidgetAsync(WidgetModel, true);
-            Snackbar.Add($"Widget {WidgetModel.Name} successfully updated.", Severity.Success);
+        CopyDisplayModelToModel();
+
+        var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
+            async () => await WidgetCommandHandler.UpdateWidgetAsync(WidgetModel, true),
+            $"Widget {WidgetModel.Name} successfully updated.",
+            $"An error occurred updating widget {WidgetModel.Name}. Please try again."
+        );
+
+        if (actionSuccessful)
             NavigationManager.NavigateTo("/widgets/index");
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"An error occurred updating {WidgetModel.Name}. Please try again.", Severity.Error);
-            await ErrorHandler.CreateErrorAsync(ex, true);
-        }
     }
 }

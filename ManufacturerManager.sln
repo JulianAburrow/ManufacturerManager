@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{655688C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
+		.github\actions\ollama\action.yml = .github\actions\ollama\action.yml
+		.github\actions\playwright\action.yml = .github\actions\playwright\action.yml
+		.github\actions\sqlserver\action.yml = .github\actions\sqlserver\action.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
@@ -46,10 +49,8 @@ Global
 		{6750483F-2883-2F9A-5074-A4BB37DF6779}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

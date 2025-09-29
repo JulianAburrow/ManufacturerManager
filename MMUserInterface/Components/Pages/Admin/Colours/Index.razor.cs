@@ -6,7 +6,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        Colours = await ColourHandler.GetColoursAsync();
+        Colours = await ColourQueryHandler.GetColoursAsync();
         Snackbar.Add($"{Colours.Count} item(s) found", Colours.Count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Colours");
     }

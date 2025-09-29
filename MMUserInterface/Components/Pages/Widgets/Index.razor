@@ -14,4 +14,10 @@
 <br />
 <br />
 
+@if (Widgets.Count == 0)
+{
+    <NoResultsComponent ObjectType="@WidgetPlural" />
+    return;
+}
+
 <WidgetGridViewComponent Widgets="@Widgets" />

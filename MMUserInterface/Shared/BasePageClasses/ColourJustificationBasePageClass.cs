@@ -2,7 +2,9 @@
 
 public class ColourJustificationBasePageClass : BasePageClass
 {
-    [Inject] protected IColourJustificationHandler ColourJustificationHandler { get; set; } = default!;
+    [Inject] protected IColourJustificationCommandHandler ColourJustificationCommandHandler { get; set; } = default!;
+
+    [Inject] protected IColourJustificationQueryHandler ColourJustificationQueryHandler { get; set; } = default!;
 
     [Parameter] public int ColourJustificationId {  get; set; }
 
@@ -17,5 +19,15 @@ public class ColourJustificationBasePageClass : BasePageClass
     protected BreadcrumbItem GetColourJustificationHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new ("ColourJustifications", "/colourjustifications/index", isDisabled);
+    }
+
+    protected void CopyModelToDisplayModel()
+    {
+        ColourJustificationDisplayModel.Justification = ColourJustificationModel.Justification;
+    }
+
+    protected void CopyDisplayModelToModel()
+    {
+        ColourJustificationModel.Justification = ColourJustificationDisplayModel.Justification;
     }
 }

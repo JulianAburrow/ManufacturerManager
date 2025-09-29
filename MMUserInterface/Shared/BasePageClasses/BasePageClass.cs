@@ -6,7 +6,13 @@ public class BasePageClass : ComponentBase
 
     [Inject] protected ISnackbar Snackbar { get; set; } = default!;
 
-    [Inject] protected IErrorHandler ErrorHandler { get; set; } = default!;
+    [Inject] protected ICategoryQueryHandler CategoryQueryHandler { get; set; } = default!;
+
+    [Inject] protected ICrudWithErrorHandlingHelper CrudWithErrorHandlingHelper { get; set; } = default!;
+
+    [Inject] protected IErrorCommandHandler ErrorCommandHandler { get; set; } = default!;
+
+    [Inject] protected IErrorQueryHandler ErrorQueryHandler { get; set; } = default!;
 
     [CascadingParameter] public MainLayout MainLayout { get; set; } = new();
 

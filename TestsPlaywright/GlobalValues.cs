@@ -8,6 +8,6 @@ public static class GlobalValues
     public static PageGotoOptions GetPageOptions() =>
         new()
         {
-            WaitUntil = WaitUntilState.Load
+            WaitUntil = WaitUntilState.NetworkIdle
         };
 }

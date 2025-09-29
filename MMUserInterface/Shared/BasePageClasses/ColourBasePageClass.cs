@@ -1,8 +1,10 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
 public class ColourBasePageClass : BasePageClass
-{
-    [Inject] protected IColourHandler ColourHandler { get; set; } = default!;
+{    
+    [Inject] protected IColourCommandHandler ColourCommandHandler { get; set; } = default!;
+
+    [Inject] protected IColourQueryHandler ColourQueryHandler { get; set; } = default!;
 
     [Parameter] public int ColourId { get; set; }
 

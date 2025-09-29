@@ -1,0 +1,28 @@
+﻿<MudTable Items="Categories"
+          SortLabel="SortBy"
+          Hover
+          RowsPerPage="10"
+          FixedHeader
+          Height="500px">
+    <HeaderContent>
+        <MudTh title="Sort by Name">
+            <MudTableSortLabel SortBy="new Func<CategoryModel, object>(x => x.Name)">
+                Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Name</MudTd>
+        <MudTd>
+            <a class="btn btn-primary" href="/category/view/@context.CategoryId">View</a>
+            &nbsp;
+            <a class="btn btn-primary" href="/category/edit/@context.CategoryId">Edit</a>
+            &nbsp;
+            <a class="btn btn-danger" href="/category/delete/@context.CategoryId">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

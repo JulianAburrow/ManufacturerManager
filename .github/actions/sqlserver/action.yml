@@ -1,0 +1,49 @@
+name: Start Dockerized SQL Server
+description: Pulls and runs a SQL Server container, waits for readiness
+
+inputs:
+  image:
+    description: Docker image to pull and run
+    required: true
+  container_name:
+    description: Name of the Docker container
+    required: true
+  port:
+    description: Host port to expose SQL Server
+    required: true
+  sa_password:
+    description: SA password for SQL Server
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Pull and run SQL Server
+      shell: bash
+      run: |
+        set -e
+        docker pull ${{ inputs.image }}
+        docker run -d --name ${{ inputs.container_name }} \
+          -e "ACCEPT_EULA=Y" \
+          -e "SA_PASSWORD=${{ inputs.sa_password }}" \
+          -p ${{ inputs.port }}:1433 \
+          ${{ inputs.image }}
+
+    - name: Wait for SQL Server to become available
+      shell: bash
+      run: |
+        set -e
+        max_attempts=10
+        attempt=1
+        until docker run --rm --network host mcr.microsoft.com/mssql-tools \
+          /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S localhost,${{ inputs.port }} -U sa -P \"${{ inputs.sa_password }}\" -Q \"SELECT 1\"" > /dev/null 2>&1
+        do
+          if [ $attempt -ge $max_attempts ]; then
+            echo "SQL Server not available after $max_attempts attempts."
+            exit 1
+          fi
+          echo "Attempt $attempt: SQL Server not ready, waiting..."
+          sleep 5
+          attempt=$((attempt+1))
+        done
+        echo "SQL Server is available!"
