@@ -1,4 +1,6 @@
-﻿namespace TestsPlaywright.Helpers;
+﻿using System.Text.RegularExpressions;
+
+namespace TestsPlaywright.Helpers;
 
 public static class PlaywrightTestHelper
 {

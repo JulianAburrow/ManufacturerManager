@@ -39,7 +39,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CreateButtonOnIndexPageNavigatesToCreateColourPage()
+    public async Task CreateLinkOnIndexPageNavigatesToCreateColourPage()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
@@ -47,13 +47,13 @@ public class ColourPageQueryTests : BaseTestClass
         var coloursTitle = await page.TitleAsync();
         Assert.Equal("Colours", coloursTitle);
 
-        var createButton = page.GetByRole(AriaRole.Button, new() { Name = "Create" });
-        if (await createButton.CountAsync() == 0)
+        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create" });
+        if (await createLink.CountAsync() == 0)
         {
-            createButton = page.GetByText("Create", new() { Exact = false });
-            Assert.True(await createButton.CountAsync() > 0, "Create button not found on Colours index page.");
+            createLink = page.GetByText("Create", new() { Exact = false });
+            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Colours index page.");
         }
-        await createButton.ClickAsync();
+        await createLink.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Colour'");
 
@@ -61,7 +61,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task ViewButtonOnIndexPageNavigatesToViewColourPage()
+    public async Task ViewLinkOnIndexPageNavigatesToViewColourPage()
     {
         var colourId = ColourHelper.AddColour(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -71,13 +71,13 @@ public class ColourPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colours/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
-            var viewButton = page.GetByRole(AriaRole.Button, new() { Name = "View" });
-            if (await viewButton.CountAsync() == 0)
+            var viewLink = page.GetByRole(AriaRole.Link, new() { Name = "View" });
+            if (await viewLink.CountAsync() == 0)
             {
-                viewButton = page.GetByText("View", new() { Exact = false });
-                Assert.True(await viewButton.CountAsync() > 0, "View button not found on Colours index page.");
+                viewLink = page.GetByText("View", new() { Exact = false });
+                Assert.True(await viewLink.CountAsync() > 0, "View link not found on Colours index page.");
             }
-            await viewButton.First.ClickAsync();
+            await viewLink.First.ClickAsync();
             await page.WaitForFunctionAsync("document.title === 'View Colour'");
         }
         finally
@@ -88,7 +88,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task EditButtonOnIndexPageNavigatesToEditColourPage()
+    public async Task EditLinkOnIndexPageNavigatesToEditColourPage()
     {
         var colourId = ColourHelper.AddColour(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -98,13 +98,13 @@ public class ColourPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colours/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
-            var editButton = page.GetByRole(AriaRole.Button, new() { Name = "Edit" });
-            if (await editButton.CountAsync() == 0)
+            var editLink = page.GetByRole(AriaRole.Button, new() { Name = "Edit" });
+            if (await editLink.CountAsync() == 0)
             {
-                editButton = page.GetByText("Edit", new() { Exact = false });
-                Assert.True(await editButton.CountAsync() > 0, "Edit button not found on Colours index page.");
+                editLink = page.GetByText("Edit", new() { Exact = false });
+                Assert.True(await editLink.CountAsync() > 0, "Edit link not found on Colours index page.");
             }
-            await editButton.First.ClickAsync();
+            await editLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Edit Colour'");
         }
@@ -116,7 +116,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task DeleteButtonOnIndexPageNavigatesToDeleteColourPage()
+    public async Task DeleteLinkOnIndexPageNavigatesToDeleteColourPage()
     {
         var colourId = ColourHelper.AddColour(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -126,13 +126,13 @@ public class ColourPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colours/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
-            var deleteButton = page.GetByRole(AriaRole.Button, new() { Name = "Delete" });
-            if (await deleteButton.CountAsync() == 0)
+            var deleteLink = page.GetByRole(AriaRole.Link, new() { Name = "Delete" });
+            if (await deleteLink.CountAsync() == 0)
             {
-                deleteButton = page.GetByText("Delete", new() { Exact = false });
-                Assert.True(await deleteButton.CountAsync() > 0, "Delete button not found on Colours index page.");
+                deleteLink = page.GetByText("Delete", new() { Exact = false });
+                Assert.True(await deleteLink.CountAsync() > 0, "Delete link not found on Colours index page.");
             }
-            await deleteButton.First.ClickAsync();
+            await deleteLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Delete Colour'");
         }
@@ -144,20 +144,20 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnCreatePageNavigatesToIndex()
+    public async Task CancelLinkOnCreatePageNavigatesToIndex()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
         await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/create", GlobalValues.GetPageOptions());
         await page.WaitForFunctionAsync("document.title === 'Create Colour'");
         
-        var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-        if (await cancelButton.CountAsync() == 0)
+        var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+        if (await cancelLink.CountAsync() == 0)
         {
-            cancelButton = page.GetByText("Cancel", new() { Exact = false });
-            Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Create Colour page.");
+            cancelLink = page.GetByText("Cancel", new() { Exact = false });
+            Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Create Colour page.");
         }
-        await cancelButton.First.ClickAsync();
+        await cancelLink.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Colours'");
 
@@ -165,7 +165,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnEditPageNavigatesToIndex()
+    public async Task CancelLinkOnEditPageNavigatesToIndex()
     {
         var colourId = ColourHelper.AddColour(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -175,13 +175,13 @@ public class ColourPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/edit/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Colour'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Edit Colour page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Edit Colour page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Colours'");
         }
@@ -193,7 +193,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnViewPageNavigatesToIndex()
+    public async Task CancelLinkOnViewPageNavigatesToIndex()
     {
         var colourId = ColourHelper.AddColour(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -203,13 +203,13 @@ public class ColourPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/view/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Colour'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on View Colour page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on View Colour page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Colours'");
         }
@@ -221,7 +221,7 @@ public class ColourPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnDeletePageNavigatesToIndex()
+    public async Task CancelLinkOnDeletePageNavigatesToIndex()
     {
         var colourId = ColourHelper.AddColour(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -231,13 +231,13 @@ public class ColourPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colour/delete/{colourId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Colour'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Delete Colour page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Delete Colour page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Colours'");
         }

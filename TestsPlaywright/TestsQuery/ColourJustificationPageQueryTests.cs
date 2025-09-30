@@ -39,7 +39,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CreateButtonOnIndexPageNavigatesToCreateColourJustificationPage()
+    public async Task CreateLinkOnIndexPageNavigatesToCreateColourJustificationPage()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
@@ -47,13 +47,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
         await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
         Assert.Equal("Colour Justifications", await page.TitleAsync());
 
-        var createButton = page.GetByRole(AriaRole.Button, new() { Name = "Create" });
-        if (await createButton.CountAsync() == 0)
+        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create" });
+        if (await createLink.CountAsync() == 0)
         {
-            createButton = page.GetByText("Create", new() { Exact = false });
-            Assert.True(await createButton.CountAsync() > 0, "Create button not found on Colour Justifications index page.");
+            createLink = page.GetByText("Create", new() { Exact = false });
+            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Colour Justifications index page.");
         }
-        await createButton.First.ClickAsync();
+        await createLink.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Colour Justification'");
 
@@ -61,7 +61,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task ViewButtonOnIndexPageNavigatesToViewColourJustificationPage()
+    public async Task ViewLinkOnIndexPageNavigatesToViewColourJustificationPage()
     {
         var colourJustificationId = ColourJustificationHelper.AddColourJustification(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -71,13 +71,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustifications/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
-            var viewButton = page.GetByRole(AriaRole.Button, new() { Name = "View" });
-            if (await viewButton.CountAsync() == 0)
+            var viewLink = page.GetByRole(AriaRole.Link, new() { Name = "View" });
+            if (await viewLink.CountAsync() == 0)
             {
-                viewButton = page.GetByText("View", new() { Exact = false });
-                Assert.True(await viewButton.CountAsync() > 0, "View button not found on Colour Justifications index page.");
+                viewLink = page.GetByText("View", new() { Exact = false });
+                Assert.True(await viewLink.CountAsync() > 0, "View link not found on Colour Justifications index page.");
             }
-            await viewButton.First.ClickAsync();
+            await viewLink.First.ClickAsync();
             await page.WaitForFunctionAsync("document.title === 'View Colour Justification'");
         }
         finally
@@ -88,7 +88,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task EditButtonOnIndexPageNavigatesToEditColourJustificationPage()
+    public async Task EditLinkOnIndexPageNavigatesToEditColourJustificationPage()
     {
         var colourJustificationId = ColourJustificationHelper.AddColourJustification(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -98,13 +98,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustifications/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
-            var editButton = page.GetByRole(AriaRole.Button, new() { Name = "Edit" });
-            if (await editButton.CountAsync() == 0)
+            var editLink = page.GetByRole(AriaRole.Link, new() { Name = "Edit" });
+            if (await editLink.CountAsync() == 0)
             {
-                editButton = page.GetByText("Edit", new() { Exact = false });
-                Assert.True(await editButton.CountAsync() > 0, "Edit button not found on Colour Justifications index page.");
+                editLink = page.GetByText("Edit", new() { Exact = false });
+                Assert.True(await editLink.CountAsync() > 0, "Edit link not found on Colour Justifications index page.");
             }
-            await editButton.First.ClickAsync();
+            await editLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Edit Colour Justification'");
         }
@@ -116,7 +116,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task DeleteButtonOnIndexPageNavigatesToDeleteColourJustificationPage()
+    public async Task DeleteLinkOnIndexPageNavigatesToDeleteColourJustificationPage()
     {
         var colourJustificationId = ColourJustificationHelper.AddColourJustification(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -126,13 +126,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustifications/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
-            var deleteButton = page.GetByRole(AriaRole.Button, new() { Name = "Delete" });
-            if (await deleteButton.CountAsync() == 0)
+            var deleteLink = page.GetByRole(AriaRole.Link, new() { Name = "Delete" });
+            if (await deleteLink.CountAsync() == 0)
             {
-                deleteButton = page.GetByText("Delete", new() { Exact = false });
-                Assert.True(await deleteButton.CountAsync() > 0, "Delete button not found on Colour Justifications index page.");
+                deleteLink = page.GetByText("Delete", new() { Exact = false });
+                Assert.True(await deleteLink.CountAsync() > 0, "Delete link not found on Colour Justifications index page.");
             }
-            await deleteButton.First.ClickAsync();
+            await deleteLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Delete Colour Justification'");
         }
@@ -146,20 +146,20 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     
 
     [Fact]
-    public async Task CancelButtonOnCreatePageNavigatesToIndex()
+    public async Task CancelLinnkOnCreatePageNavigatesToIndex()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
         await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/create", GlobalValues.GetPageOptions());
         await page.WaitForFunctionAsync("document.title === 'Create Colour Justification'");
 
-        var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-        if (await cancelButton.CountAsync() == 0)
+        var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+        if (await cancelLink.CountAsync() == 0)
         {
-            cancelButton = page.GetByText("Cancel", new() { Exact = false });
-            Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Create Colour Justification page.");
+            cancelLink = page.GetByText("Cancel", new() { Exact = false });
+            Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Create Colour Justification page.");
         }
-        await cancelButton.First.ClickAsync();
+        await cancelLink.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
@@ -167,7 +167,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnEditPageNavigatesToIndex()
+    public async Task CancelLinkOnEditPageNavigatesToIndex()
     {
         var colourJustificationId = ColourJustificationHelper.AddColourJustification(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -177,13 +177,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/edit/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Colour Justification'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Edit Colour Justification page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Edit Colour Justification page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
         }
@@ -195,7 +195,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnViewPageNavigatesToIndex()
+    public async Task CancelLinkOnViewPageNavigatesToIndex()
     {
         var colourJustificationId = ColourJustificationHelper.AddColourJustification(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -205,13 +205,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/view/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Colour Justification'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on View Colour Justification page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on View Colour Justification page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
         }
@@ -223,7 +223,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnDeletePageNavigatesToIndex()
+    public async Task CancelLinkOnDeletePageNavigatesToIndex()
     {
         var colourJustificationId = ColourJustificationHelper.AddColourJustification(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -234,13 +234,13 @@ public class ColourJustificationPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/colourjustification/delete/{colourJustificationId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Colour Justification'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Delete Colour Justification page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel button not found on Delete Colour Justification page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
         }

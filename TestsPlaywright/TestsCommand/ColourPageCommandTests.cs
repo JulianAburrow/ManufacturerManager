@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace TestsPlaywright.TestsCommand;
+﻿namespace TestsPlaywright.TestsCommand;
 
 public class ColourPageCommandTestsClass : BaseTestClass
 {

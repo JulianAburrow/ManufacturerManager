@@ -38,7 +38,7 @@ public class ErrorPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task ViewButtonOnIndexPageNavigatesToViewErrorPage()
+    public async Task ViewLinkOnIndexPageNavigatesToViewErrorPage()
     {
         var newError = ErrorHelper.AddError(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -48,13 +48,13 @@ public class ErrorPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/errors/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Errors'");
 
-            var viewButton = page.GetByRole(AriaRole.Button, new() { Name = "View" });
-            if (await viewButton.CountAsync() == 0)
+            var viewLink = page.GetByRole(AriaRole.Link, new() { Name = "View" });
+            if (await viewLink.CountAsync() == 0)
             {
-                viewButton = page.GetByText("View", new() { Exact = false });
-                Assert.True(await viewButton.CountAsync() > 0, "View button not found on Errors index page.");
+                viewLink = page.GetByText("View", new() { Exact = false });
+                Assert.True(await viewLink.CountAsync() > 0, "View link not found on Errors index page.");
             }
-            await viewButton.First.ClickAsync();
+            await viewLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'View Error'");
         }
@@ -66,7 +66,7 @@ public class ErrorPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task EditButtonOnIndexPageNavigatesToEditErrorPage()
+    public async Task EditLinkOnIndexPageNavigatesToEditErrorPage()
     {
         var newError = ErrorHelper.AddError(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -76,13 +76,13 @@ public class ErrorPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/errors/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Errors'");
 
-            var editButton = page.GetByRole(AriaRole.Button, new() { Name = "Edit" });
-            if (await editButton.CountAsync() == 0)
+            var editLink = page.GetByRole(AriaRole.Link, new() { Name = "Edit" });
+            if (await editLink.CountAsync() == 0)
             {
-                editButton = page.GetByText("Edit", new() { Exact = false });
-                Assert.True(await editButton.CountAsync() > 0, "Edit button not found on Errors index page.");
+                editLink = page.GetByText("Edit", new() { Exact = false });
+                Assert.True(await editLink.CountAsync() > 0, "Edit link not found on Errors index page.");
             }
-            await editButton.First.ClickAsync();
+            await editLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Edit Error'");
         }
@@ -94,7 +94,7 @@ public class ErrorPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task DeleteButtonOnIndexPageNavigatesToDeleteErrorPage()
+    public async Task DeleteLinkOnIndexPageNavigatesToDeleteErrorPage()
     {
         var newError = ErrorHelper.AddError(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -104,13 +104,13 @@ public class ErrorPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/errors/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Errors'");
             
-            var deleteButton = page.GetByRole(AriaRole.Button, new() { Name = "Delete" });
-            if (await deleteButton.CountAsync() == 0)
+            var deleteLink = page.GetByRole(AriaRole.Link, new() { Name = "Delete" });
+            if (await deleteLink.CountAsync() == 0)
             {
-                deleteButton = page.GetByText("Delete", new() { Exact = false });
-                Assert.True(await deleteButton.CountAsync() > 0, "Delete button not found on Errors index page.");
+                deleteLink = page.GetByText("Delete", new() { Exact = false });
+                Assert.True(await deleteLink.CountAsync() > 0, "Delete link not found on Errors index page.");
             }
-            await deleteButton.First.ClickAsync();
+            await deleteLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Delete Error'");
         }
@@ -122,7 +122,7 @@ public class ErrorPageQueryTests : BaseTestClass
     }    
 
     [Fact]
-    public async Task CancelButtonOnEditPageNavigatesToIndex()
+    public async Task CancelLinkOnEditPageNavigatesToIndex()
     {
         var newError = ErrorHelper.AddError(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -132,13 +132,13 @@ public class ErrorPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/edit/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Error'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Edit Error page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Edit Error page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Errors'");
         }
@@ -150,7 +150,7 @@ public class ErrorPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnViewPageNavigatesToIndex()
+    public async Task CancelLinkOnViewPageNavigatesToIndex()
     {
         var newError = ErrorHelper.AddError(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -160,13 +160,13 @@ public class ErrorPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/view/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Error'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on View Error page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on View Error page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Errors'");
         }
@@ -178,7 +178,7 @@ public class ErrorPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnDeletePageNavigatesToIndex()
+    public async Task CancelLinkOnDeletePageNavigatesToIndex()
     {
         var newError = ErrorHelper.AddError(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -188,13 +188,13 @@ public class ErrorPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/error/delete/{newError.ErrorId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Error'");
 
-            var cancelButton = page.GetByRole(AriaRole.Button, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Delete Error page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Delete Error page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Errors'");
         }

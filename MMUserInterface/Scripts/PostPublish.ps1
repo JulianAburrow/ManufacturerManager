@@ -49,6 +49,26 @@ try {
     $ScriptFailed = $true
 }
 
+$maxAttempts = 10
+$attempt = 0
+do {
+    try {
+        $response = Invoke-WebRequest -Uri "https://localhost:8090/" -UseBasicParsing -TimeoutSec 5
+        if ($response.StatusCode -eq 200) {
+            Write-Host "Site is ready."
+            break
+        }
+    } catch {
+        Write-Host "Waiting for site to respond..."
+        Start-Sleep -Seconds 3
+        $attempt++
+    }
+} while ($attempt -lt $maxAttempts)
+
+if ($attempt -eq $maxAttempts) {
+    Write-Host "Site did not respond in time."
+}
+
 # Set BASE_URL for Playwright
 $env:BASE_URL = "https://localhost:8090"
 Log "Set BASE_URL to $env:BASE_URL"

@@ -6,7 +6,13 @@ public static class ServiceExtensions
         services.AddDbContext<ManufacturerManagerContext>(
             options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("ManufacturerManager")));
+                    configuration.GetConnectionString("ManufacturerManager"), sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    }));
 
     public static void AddDependencies(this IServiceCollection services)
     {
