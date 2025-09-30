@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ main, feature/* ]
+    branches: [ main, feature/*, zz-never-merge* ]
   pull_request:
     branches: [ main ]
 
