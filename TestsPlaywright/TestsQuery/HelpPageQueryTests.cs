@@ -45,14 +45,14 @@ public class HelpPageQueryTests : BaseTestClass
 
         await page.Locator("[data-testid='model-select']").Locator("..").ClickAsync();
         var modelItems = page.Locator("div.mud-popover div.mud-list-item");
-        await modelItems.First.WaitForAsync(new() { Timeout = 10000 });
+        await modelItems.First.WaitForAsync();
         await modelItems.First.ClickAsync();
 
         // Select this last as in the UI run up by the tests if you select it first and then select the model
         // the category will be reset. This does not happen in the application when used normally.
         await page.Locator("[data-testid='category-select']").Locator("..").ClickAsync();
         var categoryItems = page.Locator("div.mud-popover div.mud-list-item");
-        await categoryItems.First.WaitForAsync(new() { Timeout = 10000 });
+        await categoryItems.First.WaitForAsync();
         await page.ClickAsync($"div.mud-popover div.mud-list-item:has-text('{category}')");
 
         var submitButton = page.GetByRole(AriaRole.Button, new() { Name = "Submit" });
@@ -65,11 +65,11 @@ public class HelpPageQueryTests : BaseTestClass
         await submitButton.First.ClickAsync();
 
         var thinkingLocator = page.Locator("text=🤔 Thinking about it...");
-        await thinkingLocator.WaitForAsync(new() { Timeout = 15000 });
+        await thinkingLocator.WaitForAsync();
 
         var modelResponse = page.GetByTestId("model-response");
-        await modelResponse.First.WaitForAsync(new() { Timeout = 20000 });
-        var replyText = await WaitForStableResponseAsync(page, "[data-testid='model-response']", 20000);
+        await modelResponse.First.WaitForAsync();
+        var replyText = await WaitForStableResponseAsync(page, "[data-testid='model-response']");
         Assert.False(string.IsNullOrWhiteSpace(replyText), "Response block is empty.");
         Assert.False(replyText.StartsWith("❌"), $"Model failed: {replyText}");
         Assert.True(replyText.Length > 30, "Response block is unexpectedly short.");
@@ -77,14 +77,14 @@ public class HelpPageQueryTests : BaseTestClass
         await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
-    private static async Task<string> WaitForStableResponseAsync(IPage page, string selector, int timeoutMs)
+    private static async Task<string> WaitForStableResponseAsync(IPage page, string selector)
     {
         var locator = page.Locator(selector);
         var start = DateTime.UtcNow;
         string lastText = string.Empty;
         int stableCount = 0;
 
-        while ((DateTime.UtcNow - start).TotalMilliseconds < timeoutMs)
+        while ((DateTime.UtcNow - start).TotalMilliseconds < GlobalValues.GlobalTimeOut)
         {
             var currentText = await locator.InnerTextAsync();
             if (currentText == lastText)
@@ -102,7 +102,7 @@ public class HelpPageQueryTests : BaseTestClass
         }
 
         if (stableCount < 3)
-            throw new TimeoutException($"Response did not stabilize within {timeoutMs}ms");
+            throw new TimeoutException($"Response did not stabilize within {GlobalValues.GlobalTimeOut}ms");
 
         return lastText;
     }

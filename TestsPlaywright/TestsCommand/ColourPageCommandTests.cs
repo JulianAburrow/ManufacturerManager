@@ -68,7 +68,7 @@ public class ColourPageCommandTestsClass : BaseTestClass
 
             await page.WaitForFunctionAsync("document.title === 'Colours'");
 
-            var updatedColour = await WaitForColourUpdate(colourId, updatedColourName, 5_000);
+            var updatedColour = await WaitForColourUpdate(colourId, updatedColourName);
             Assert.NotNull(updatedColour);
             Assert.Equal(updatedColourName, updatedColour.Name);
         }
@@ -121,10 +121,10 @@ public class ColourPageCommandTestsClass : BaseTestClass
         }
     }
 
-    private async Task<ColourModel?> WaitForColourUpdate(int colourId, string expectedName, int timeoutMs)
+    private async Task<ColourModel?> WaitForColourUpdate(int colourId, string expectedName)
     {
         var sw = Stopwatch.StartNew();
-        while (sw.ElapsedMilliseconds < timeoutMs)
+        while (sw.ElapsedMilliseconds < GlobalValues.GlobalTimeOut)
         {
             var colour = await _context.Colours
                 .AsNoTracking()

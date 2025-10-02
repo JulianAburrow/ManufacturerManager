@@ -68,7 +68,7 @@ public class ColourJustificationPageCommandTests : BaseTestClass
 
             await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
 
-            var updatedColourJustification = await WaitForColourJustificationUpdate(colourJustificationId, updatedColourJustificationJustification, 2000);
+            var updatedColourJustification = await WaitForColourJustificationUpdate(colourJustificationId, updatedColourJustificationJustification);
             Assert.NotNull(updatedColourJustification);
             Assert.Equal(updatedColourJustificationJustification, updatedColourJustification.Justification);
         }
@@ -121,10 +121,10 @@ public class ColourJustificationPageCommandTests : BaseTestClass
         }
     }
 
-    private async Task<ColourJustificationModel?> WaitForColourJustificationUpdate(int colourJustificationId, string expectedJustification, int timeoutMS)
+    private async Task<ColourJustificationModel?> WaitForColourJustificationUpdate(int colourJustificationId, string expectedJustification)
     {
         var sw = Stopwatch.StartNew();
-        while (sw.ElapsedMilliseconds < timeoutMS)
+        while (sw.ElapsedMilliseconds < GlobalValues.GlobalTimeOut)
         {
             var colourJustification = await _context.ColourJustifications
                 .AsNoTracking()

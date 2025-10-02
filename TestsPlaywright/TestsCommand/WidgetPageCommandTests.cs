@@ -114,7 +114,7 @@ public class WidgetPageCommandTests : BaseTestClass
 
             await page.WaitForFunctionAsync("document.title === 'Widgets'");
 
-            var updatedWidget = await WaitForWidgetUpdate(widgetId, updatedWidgetName, 5000);
+            var updatedWidget = await WaitForWidgetUpdate(widgetId, updatedWidgetName);
             Assert.NotNull(updatedWidget);
             Assert.Equal(updatedWidgetName, updatedWidget.Name);
             Assert.Equal(newManufacturer.Name, updatedWidget.Manufacturer.Name);
@@ -135,10 +135,10 @@ public class WidgetPageCommandTests : BaseTestClass
         }
     }
 
-    private async Task<WidgetModel?> WaitForWidgetUpdate(int widgetId, string expectedName, int timeoutMs)
+    private async Task<WidgetModel?> WaitForWidgetUpdate(int widgetId, string expectedName)
     {
         var sw = Stopwatch.StartNew();
-        while (sw.ElapsedMilliseconds < timeoutMs)
+        while (sw.ElapsedMilliseconds < GlobalValues.GlobalTimeOut)
         {
             var widget = await _context.Widgets
                 .Include(w => w.Manufacturer)

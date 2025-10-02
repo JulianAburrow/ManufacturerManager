@@ -32,7 +32,7 @@ public class ErrorPageCommandTests : BaseTestClass
 
             await page.WaitForFunctionAsync("document.title === 'Errors'");
 
-            var updatedError = await WaitForErrorUpdate(newError.ErrorId, newError.ErrorMessage, 5_000);
+            var updatedError = await WaitForErrorUpdate(newError.ErrorId, newError.ErrorMessage);
             Assert.NotNull(updatedError);
             Assert.True(updatedError.Resolved);
             Assert.NotNull(updatedError.ResolvedDate);
@@ -86,10 +86,10 @@ public class ErrorPageCommandTests : BaseTestClass
         }
     }
 
-    private async Task<ErrorModel?> WaitForErrorUpdate(int errorId, string expectedMessage, int timeoutMs)
+    private async Task<ErrorModel?> WaitForErrorUpdate(int errorId, string expectedMessage)
     {
         var sw = new Stopwatch();
-        while (sw.ElapsedMilliseconds < timeoutMs)
+        while (sw.ElapsedMilliseconds < GlobalValues.GlobalTimeOut)
         {
             var error = await _context.Errors
                 .AsNoTracking()
