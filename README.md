@@ -37,7 +37,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 This project includes support for a document-aware AI assistant powered by [Ollama](https://ollama.com).  
 If Ollama is not installed, assistant features will be disabled gracefully.
 
-The model in use is TinyLlama
+The models in use are gemma3:1b, qwen:0.5b and tinyllama:latest
 
 ---
 
