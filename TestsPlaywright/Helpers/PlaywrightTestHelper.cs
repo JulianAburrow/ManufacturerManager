@@ -18,6 +18,10 @@ public static class PlaywrightTestHelper
 
         var page = await context.NewPageAsync();
         page.SetDefaultTimeout(GlobalValues.GlobalTimeOut);
+        page.Request += (_, request) =>
+        {
+            Console.WriteLine($"Request: {request.Url}");
+        };
         return page;
     }
 

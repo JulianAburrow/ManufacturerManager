@@ -73,6 +73,35 @@ if ($attempt -eq $maxAttempts) {
 $env:BASE_URL = "https://localhost:8090"
 Log "Set BASE_URL to $env:BASE_URL"
 
+# Warm up IIS site before running Playwright tests
+try {
+    Log "Warming up site with Playwright..."
+    # You can use a simple HTTP probe or a Playwright script here
+    $maxAttempts = 10
+    $attempt = 0
+    do {
+        try {
+            $response = Invoke-WebRequest -Uri "https://localhost:8090/" -UseBasicParsing -TimeoutSec 5
+            if ($response.StatusCode -eq 200) {
+                Log "Warm-up probe successful."
+                break
+            }
+        } catch {
+            Log "Waiting for site to respond..."
+            Start-Sleep -Seconds 3
+            $attempt++
+        }
+    } while ($attempt -lt $maxAttempts)
+
+    if ($attempt -eq $maxAttempts) {
+        Log "Site did not respond in time for warm-up."
+        $ScriptFailed = $true
+    }
+} catch {
+    Log "ERROR during warm-up: $_"
+    $ScriptFailed = $true
+}
+
 # Run Playwright tests
 try {
     Log "Running Playwright tests..."
