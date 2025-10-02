@@ -1,4 +1,6 @@
-﻿namespace TestsPlaywright.Helpers;
+﻿using System.Text.RegularExpressions;
+
+namespace TestsPlaywright.Helpers;
 
 public static class PlaywrightTestHelper
 {
@@ -13,7 +15,14 @@ public static class PlaywrightTestHelper
         {
             IgnoreHTTPSErrors = true
         });
-        return await context.NewPageAsync();
+
+        var page = await context.NewPageAsync();
+        page.SetDefaultTimeout(GlobalValues.GlobalTimeOut);
+        page.Request += (_, request) =>
+        {
+            Console.WriteLine($"Request: {request.Url}");
+        };
+        return page;
     }
 
     public static DbContextOptions<ManufacturerManagerContext> GetContextOptions()

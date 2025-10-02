@@ -25,7 +25,7 @@ public class ManufacturerPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CreateButtonOnIndexPageNavigatesToCreateManufacturerPage()
+    public async Task CreateLinkOnIndexPageNavigatesToCreateManufacturerPage()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
@@ -33,13 +33,13 @@ public class ManufacturerPageQueryTests : BaseTestClass
         var manufacturersTitle = await page.TitleAsync();
         Assert.Equal("Manufacturers", manufacturersTitle);
 
-        var createButton = page.GetByRole(AriaRole.Button, new() { Name = "Create Manufacturer" });
-        if (await createButton.CountAsync() == 0)
+        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create Manufacturer" });
+        if (await createLink.CountAsync() == 0)
         {
-            createButton = page.GetByText("Create", new() { Exact = false });
-            Assert.True(await createButton.CountAsync() > 0, "Create Manufacturer button not found on Manufacturers page.");
+            createLink = page.GetByText("Create", new() { Exact = false });
+            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Manufacturers page.");
         }
-        await createButton.First.ClickAsync();
+        await createLink.First.ClickAsync();
 
         await page.WaitForFunctionAsync("document.title === 'Create Manufacturer'");
 
@@ -47,7 +47,7 @@ public class ManufacturerPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task ViewButtonOnIndexPageNavigatesToViewManufacturerPage()
+    public async Task ViewLinkOnIndexPageNavigatesToViewManufacturerPage()
     {
         var manufacturerId = ManufacturerHelper.AddManufacturer(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -57,13 +57,13 @@ public class ManufacturerPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturers/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
 
-            var viewButton = page.GetByRole(AriaRole.Button, new() { Name = "View" });
-            if (await viewButton.CountAsync() == 0)
+            var viewLink = page.GetByRole(AriaRole.Link, new() { Name = "View" });
+            if (await viewLink.CountAsync() == 0)
             {
-                viewButton = page.GetByText("View", new() { Exact = false });
-                Assert.True(await viewButton.CountAsync() > 0, "View button not found on Manufacturers index page.");
+                viewLink = page.GetByText("View", new() { Exact = false });
+                Assert.True(await viewLink.CountAsync() > 0, "View link not found on Manufacturers index page.");
             }
-            await viewButton.First.ClickAsync();
+            await viewLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'View Manufacturer'");
         }
@@ -75,7 +75,7 @@ public class ManufacturerPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task EditButtonOnIndexPageNavigatesToEditManufacturerPage()
+    public async Task EditLinkOnIndexPageNavigatesToEditManufacturerPage()
     {
         var manufacturerId = ManufacturerHelper.AddManufacturer(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -85,13 +85,13 @@ public class ManufacturerPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturers/index", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
 
-            var editButton = page.GetByRole(AriaRole.Button, new() { Name = "Edit" });
-            if (await editButton.CountAsync() == 0)
+            var editLink = page.GetByRole(AriaRole.Link, new() { Name = "Edit" });
+            if (await editLink.CountAsync() == 0)
             {
-                editButton = page.GetByText("Edit", new() { Exact = false });
-                Assert.True(await editButton.CountAsync() > 0, "Edit button not found on Manufacturers index page.");
+                editLink = page.GetByText("Edit", new() { Exact = false });
+                Assert.True(await editLink.CountAsync() > 0, "Edit link not found on Manufacturers index page.");
             }
-            await editButton.First.ClickAsync();
+            await editLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Edit Manufacturer'");
         }
@@ -103,27 +103,27 @@ public class ManufacturerPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnCreatePageNavigatesToIndex()
+    public async Task CancelLinkOnCreatePageNavigatesToIndex()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
         await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/create", GlobalValues.GetPageOptions());
         await page.WaitForFunctionAsync("document.title === 'Create Manufacturer'");
 
-        var cancelButton = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
-        if (await cancelButton.CountAsync() == 0)
+        var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+        if (await cancelLink.CountAsync() == 0)
         {
-            cancelButton = page.GetByText("Cancel", new() { Exact = false });
-            Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Create page.");
+            cancelLink = page.GetByText("Cancel", new() { Exact = false });
+            Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Create page.");
         }
-        await cancelButton.First.ClickAsync();
+        await cancelLink.First.ClickAsync();
         await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
 
         await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 
     [Fact]
-    public async Task CancelButtonOnEditPageNavigatesToIndex()
+    public async Task CancelLinkOnEditPageNavigatesToIndex()
     {
         var manufacturerId = ManufacturerHelper.AddManufacturer(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -133,13 +133,13 @@ public class ManufacturerPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/edit/{manufacturerId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Edit Manufacturer'");
 
-            var cancelButton = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
-            if (await cancelButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Cancel" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                cancelButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await cancelButton.CountAsync() > 0, "Cancel button not found on Edit page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on Edit page.");
             }
-            await cancelButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
         }
@@ -151,7 +151,7 @@ public class ManufacturerPageQueryTests : BaseTestClass
     }
 
     [Fact]
-    public async Task CancelButtonOnViewPageNavigatesToIndex()
+    public async Task CancelLinkOnViewPageNavigatesToIndex()
     {
         var manufacturerId = ManufacturerHelper.AddManufacturer(_context);
         var page = await PlaywrightTestHelper.CreatePageAsync();
@@ -161,13 +161,13 @@ public class ManufacturerPageQueryTests : BaseTestClass
             await page.GotoAsync($"{GlobalValues.BaseUrl}/manufacturer/view/{manufacturerId}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'View Manufacturer'");
 
-            var backToListButton = page.GetByRole(AriaRole.Link, new() { Name = "Back to list" });
-            if (await backToListButton.CountAsync() == 0)
+            var cancelLink = page.GetByRole(AriaRole.Link, new() { Name = "Back to list" });
+            if (await cancelLink.CountAsync() == 0)
             {
-                backToListButton = page.GetByText("Cancel", new() { Exact = false });
-                Assert.True(await backToListButton.CountAsync() > 0, "Back to list button not found on View page.");
+                cancelLink = page.GetByText("Cancel", new() { Exact = false });
+                Assert.True(await cancelLink.CountAsync() > 0, "Cancel link not found on View page.");
             }
-            await backToListButton.First.ClickAsync();
+            await cancelLink.First.ClickAsync();
 
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
         }

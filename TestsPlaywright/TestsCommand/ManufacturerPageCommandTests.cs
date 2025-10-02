@@ -75,7 +75,7 @@ public class ManufacturerPageCommandTests : BaseTestClass
 
             await page.WaitForFunctionAsync("document.title === 'Manufacturers'");
 
-            var updatedManufacturer = await WaitForManufacturerUpdate(manufacturerId, updatedManufacturerName, (int)Enums.StatusEnum.Inactive, 2_000);
+            var updatedManufacturer = await WaitForManufacturerUpdate(manufacturerId, updatedManufacturerName, (int)Enums.StatusEnum.Inactive);
             Assert.NotNull(updatedManufacturer);
             Assert.Equal(updatedManufacturerName, updatedManufacturer.Name);
             Assert.Equal((int)Enums.StatusEnum.Inactive, updatedManufacturer.StatusId);
@@ -87,10 +87,10 @@ public class ManufacturerPageCommandTests : BaseTestClass
         }
     }
 
-    private async Task<ManufacturerModel?> WaitForManufacturerUpdate(int manufacturerId, string expectedName, int expectedStatusId, int timeoutMs)
+    private async Task<ManufacturerModel?> WaitForManufacturerUpdate(int manufacturerId, string expectedName, int expectedStatusId)
     {
         var sw = Stopwatch.StartNew();
-        while (sw.ElapsedMilliseconds < timeoutMs)
+        while (sw.ElapsedMilliseconds < GlobalValues.GlobalTimeOut)
         {
             var manufacturer = await _context.Manufacturers
                 .AsNoTracking()

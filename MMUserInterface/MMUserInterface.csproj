@@ -8,13 +8,15 @@
 
   <ItemGroup>
     <Compile Remove=".github\**" />
-    <Compile Remove="Documents\**" />
     <Content Remove=".github\**" />
-    <Content Remove="Documents\**" />
     <EmbeddedResource Remove=".github\**" />
-    <EmbeddedResource Remove="Documents\**" />
     <None Remove=".github\**" />
-    <None Remove="Documents\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Documents\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -26,5 +28,13 @@
   <ItemGroup>
     <ProjectReference Include="..\MMDataAccess\MMDataAccess.csproj" />
   </ItemGroup>
+
+  <Target Name="PrePublishScript" BeforeTargets="BeforePublish">
+    <Exec Command="powershell -ExecutionPolicy Bypass -File Scripts\PrePublish.ps1" />
+  </Target>
+
+  <Target Name="PostPublishScript" AfterTargets="AfterPublish">
+    <Exec Command="powershell -ExecutionPolicy Bypass -File Scripts\PostPublish.ps1" />
+  </Target>
 
 </Project>
