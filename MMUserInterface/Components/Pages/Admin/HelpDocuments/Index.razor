@@ -1,0 +1,21 @@
+﻿@page "/helpdocuments/index"
+@inherits HelpDocumentBasePageClass
+
+<PageTitle>Help Documents</PageTitle>
+
+@if (HelpDocumentModels == null)
+{
+	<LoadingMessageComponent ValueToShow="@HelpDocumentPlural" />
+}
+
+<br />
+<br />
+
+@if (HelpDocumentModels?.Count == 0)
+{
+	<NoResultsComponent ObjectType="@HelpDocumentPlural" />
+}
+else
+{
+	<HelpDocumentGridViewComponent HelpDocumentModels="HelpDocumentModels" />
+}

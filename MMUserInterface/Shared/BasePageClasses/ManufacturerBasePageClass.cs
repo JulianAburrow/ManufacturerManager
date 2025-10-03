@@ -28,6 +28,6 @@ public class ManufacturerBasePageClass : BasePageClass
 
     protected BreadcrumbItem GetManufacturerHomeBreadcrumbItem(bool isDisabled = false)
     {
-        return new BreadcrumbItem("Manufacturers", "/manufacturers/index", isDisabled);
+        return new BreadcrumbItem(ManufacturerPlural, "/manufacturers/index", isDisabled);
     }
 }

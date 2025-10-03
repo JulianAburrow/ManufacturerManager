@@ -14,7 +14,7 @@ public class ErrorBasePageClass : BasePageClass
 
     protected BreadcrumbItem GetErrorHomeBreadcrumbItem(bool isDisabled = false)
     {
-        return new("Errors", "/errors/index", isDisabled);
+        return new(ErrorPlural, "/errors/index", isDisabled);
     }
 
     protected void CopyModelToDisplayModel()

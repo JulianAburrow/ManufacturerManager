@@ -25,6 +25,7 @@ public static class ServiceExtensions
         services.AddTransient<ICrudWithErrorHandlingHelper, CrudWithErrorHandlingHelper>();
         services.AddTransient<IErrorCommandHandler, ErrorCommandHandler>();
         services.AddTransient<IErrorQueryHandler, ErrorQueryHandler>();
+        services.AddTransient<IHelpDocumentService, HelpDocumentService>();
         services.AddTransient<IManufacturerCommandHandler, ManufacturerCommandHandler>();
         services.AddTransient<IManufacturerQueryHandler, ManufacturerQueryHandler>();
         services.AddTransient<IManufacturerStatusQueryHandler, ManufacturerStatusQueryHandler>();

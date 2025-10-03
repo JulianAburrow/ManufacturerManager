@@ -18,7 +18,7 @@ public class ColourJustificationBasePageClass : BasePageClass
 
     protected BreadcrumbItem GetColourJustificationHomeBreadcrumbItem(bool isDisabled = false)
     {
-        return new ("ColourJustifications", "/colourjustifications/index", isDisabled);
+        return new (ColourJustificationPlural, "/colourjustifications/index", isDisabled);
     }
 
     protected void CopyModelToDisplayModel()

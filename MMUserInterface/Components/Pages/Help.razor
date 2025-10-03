@@ -66,9 +66,9 @@ Select a category from which you require help and type your question
     @foreach (var file in MatchingFiles)
         {
             var filename = Path.GetFileName(file);
-            var link = $"/docs/{ChatSearchModel.SearchCategory.ToLowerInvariant()}/{filename}";
+            var link = $"/Documents/{Uri.EscapeDataString(ChatSearchModel.SearchCategory)}/{Uri.EscapeDataString(filename)}";
             <li>
-                <DisplayFileComponent Url="@link" DisplayText="@filename" />
+                <a href="@link" target="_blank">@filename</a>
             </li>
         }
     </ul>

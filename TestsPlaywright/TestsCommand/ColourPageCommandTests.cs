@@ -1,6 +1,6 @@
 ﻿namespace TestsPlaywright.TestsCommand;
 
-public class ColourPageCommandTestsClass : BaseTestClass
+public class ColourPageCommandTests : BaseTestClass
 {
     [Fact]
     public async Task CanCreateColour()
