@@ -1,0 +1,15 @@
+﻿@page "/helpdocument/delete/{DocumentCategory}/{DocumentName}"
+@inherits HelpDocumentBasePageClass
+
+<PageTitle>Delete Document</PageTitle>
+
+<ConfirmDeleteComponent ObjectType="@HelpDocument" ObjectName="@DocumentName" />
+
+<br />
+<br />
+
+<button class="btn btn-danger" @onclick="DeleteDocument">Delete</button>
+&nbsp;
+<a class="btn btn-primary" href="/helpdocuments/index">Cancel</a>
+
+@ErrorMessage

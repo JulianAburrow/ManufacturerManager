@@ -19,12 +19,12 @@
         <MudTd>@context.DocumentCategory</MudTd>
         <MudTd>
             @{
-                var documentNameAndCategory = $"{Uri.EscapeDataString(context.DocumentCategory)}/{Uri.EscapeDataString(context.DocumentName)}";
-                var link = $"/Documents/{Uri.EscapeDataString(context.DocumentCategory)}/{Uri.EscapeDataString($"{Uri.EscapeDataString(context.DocumentName)}.pdf")}";
+                var link = $"/Documents/{context.DocumentCategory}/{context.DocumentName}.pdf";
+                var documentNameAndCategory = $"{context.DocumentCategory}/{context.DocumentName}";
             }
             <a class="btn btn-primary" href="@link" target="_blank">Open</a>
             &nbsp;
-            <a class="btn btn-danger" href="/helpdocument/delete/@documentNameAndCategory">Delete</a>
+            <a class="btn btn-danger" href="/helpdocument/delete/@context.DocumentCategory/@context.DocumentName">Delete</a>
         </MudTd>
     </RowTemplate>
     <PagerContent>

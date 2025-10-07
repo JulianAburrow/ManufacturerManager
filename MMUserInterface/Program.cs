@@ -30,6 +30,7 @@ app.MapGet("/documents/{category}/{filename}", (HttpContext context, string cate
     if (!System.IO.File.Exists(path))
         return Results.NotFound();
 
+    context.Response.Headers.Append("Content-Disposition", $"inline; filename=\"{safeFilename}\"");
     var contentType = "application/pdf";
     return Results.File(path, contentType);
 });
