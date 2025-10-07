@@ -37,10 +37,9 @@ public partial class Delete
                 Snackbar.Add($"Document {DocumentName} not found.", Severity.Error);
             }
         }
-        catch (Exception ex)
+        catch
         {
             Snackbar.Add($"An error occurred deleting {DocumentName}. Please try again.", Severity.Error);
-            ErrorMessage = ex.Message;
         }
     }
 }

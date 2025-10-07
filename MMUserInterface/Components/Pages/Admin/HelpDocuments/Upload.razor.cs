@@ -25,7 +25,7 @@ public partial class Upload
         MainLayout.SetBreadcrumbs(
         [
             GetHomeBreadcrumbItem(),
-            GetHelpDocumentHomeBreadcrumbItem(true),
+            GetHelpDocumentHomeBreadcrumbItem(),
             new BreadcrumbItem("Upload", null, true)
         ]);
     }
