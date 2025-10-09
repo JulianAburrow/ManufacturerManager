@@ -37,7 +37,7 @@ public class WidgetPageQueryTests : BaseTestClass
         if (await createLink.CountAsync() == 0)
         {
             createLink = page.GetByText("Create Widget", new() { Exact = false });
-            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Widgets page");
+            Assert.True(await createLink.CountAsync() > 0, "Create Widget link not found on Widgets page");
         }
         await createLink.First.ClickAsync();
 

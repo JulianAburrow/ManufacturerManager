@@ -47,11 +47,11 @@ public class ColourPageQueryTests : BaseTestClass
         var coloursTitle = await page.TitleAsync();
         Assert.Equal("Colours", coloursTitle);
 
-        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create" });
+        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create Colour" });
         if (await createLink.CountAsync() == 0)
         {
-            createLink = page.GetByText("Create", new() { Exact = false });
-            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Colours index page.");
+            createLink = page.GetByText("Create Colour", new() { Exact = false });
+            Assert.True(await createLink.CountAsync() > 0, "Create Colour link not found on Colours index page.");
         }
         await createLink.ClickAsync();
 

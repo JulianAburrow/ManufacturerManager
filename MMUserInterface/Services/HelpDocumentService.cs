@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Services;
 
-public class HelpDocumentService : IHelpDocumentService
+public class HelpDocumentService(IWebHostEnvironment env, IErrorCommandHandler errorCommandHandler) : IHelpDocumentService
 {
     public Task<List<HelpDocumentModel>> GetHelpDocumentModelsAsync()
     {
@@ -43,17 +43,40 @@ public class HelpDocumentService : IHelpDocumentService
                 DocumentName = GetFileNameWithoutExtension(name)
             });
         }
-        return Task.FromResult(helpDocumentModels);
+        return Task.FromResult(helpDocumentModels.OrderBy(m => m.DocumentName).ToList());
     }
 
-    public Task AddDocument()
+    public async Task AddDocument(string category, IBrowserFile file)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var filePath = Path.Combine(env.ContentRootPath, "Documents", category, file.Name);
+
+            using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024); // 10 MB limit
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+
+            await stream.CopyToAsync(fileStream);
+        }
+        catch (Exception ex)
+        {
+            await errorCommandHandler.CreateErrorAsync(ex, true);
+        }
     }
 
-    public Task DeleteDocument(string documentName)
+    public async Task DeleteDocument(string category, string documentName)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var filePath = Path.Combine(env.ContentRootPath, "Documents", category, $"{documentName}.pdf");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            await errorCommandHandler.CreateErrorAsync(ex, true);
+        }
     }
 
     private static List<string> GetHelpDocumentNamesFromFolder(string folderPath)

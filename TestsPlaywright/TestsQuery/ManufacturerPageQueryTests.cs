@@ -37,7 +37,7 @@ public class ManufacturerPageQueryTests : BaseTestClass
         if (await createLink.CountAsync() == 0)
         {
             createLink = page.GetByText("Create", new() { Exact = false });
-            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Manufacturers page.");
+            Assert.True(await createLink.CountAsync() > 0, "Create Manufacturer link not found on Manufacturers page.");
         }
         await createLink.First.ClickAsync();
 

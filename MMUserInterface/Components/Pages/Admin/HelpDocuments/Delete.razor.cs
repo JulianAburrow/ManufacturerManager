@@ -24,18 +24,9 @@ public partial class Delete
     {
         try
         {
-            var filePath = Path.Combine("Documents", DocumentCategory, $"{DocumentName}.pdf");
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-                Snackbar.Add($"Document {DocumentName} successfully deleted.", Severity.Success);
-                NavigationManager.NavigateTo("/helpdocuments/index");
-            }
-            else
-            {
-                Snackbar.Add($"Document {DocumentName} not found.", Severity.Error);
-            }
+            HelpDocumentService.DeleteDocument(DocumentCategory, DocumentName);
+            Snackbar.Add($"Document {DocumentName} successfully deleted.", Severity.Success);
+            NavigationManager.NavigateTo("/helpdocuments/index");
         }
         catch
         {

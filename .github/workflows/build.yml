@@ -1,5 +1,8 @@
 ﻿name: Build and Test (.NET on Windows with Playwright)
 
+env:
+  MM_UI_ROOT_PATH: ${{ github.workspace }}/MMUserinterface
+
 on:
   push:
     branches: [ main, feature/* ]

@@ -34,13 +34,7 @@ public partial class Upload
     {
         try
         {
-            var filePath = Path.Combine(Env.ContentRootPath, "Documents", HelpDocumentDisplayModel.Category, FileName);
-
-            using var stream = HelpDocumentDisplayModel.HelpFile.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024); // 10 MB limit
-            using var fileStream = new FileStream(filePath, FileMode.Create);
-
-            await stream.CopyToAsync(fileStream);
-
+            await HelpDocumentService.AddDocument(HelpDocumentDisplayModel.Category, HelpDocumentDisplayModel.HelpFile);
             Snackbar.Add($"File {FileName} successfully saved", Severity.Success);
             NavigationManager.NavigateTo("/helpdocuments/index");
         }

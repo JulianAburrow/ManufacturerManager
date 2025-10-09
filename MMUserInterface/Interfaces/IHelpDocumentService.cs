@@ -4,7 +4,7 @@ public interface IHelpDocumentService
 {
     Task<List<HelpDocumentModel>> GetHelpDocumentModelsAsync();
 
-    Task AddDocument();
+    Task AddDocument(string category, IBrowserFile file);
 
-    Task DeleteDocument(string documentName);
+    Task DeleteDocument(string category, string documentName);
 }
