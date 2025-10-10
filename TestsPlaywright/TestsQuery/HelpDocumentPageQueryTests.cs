@@ -71,8 +71,7 @@ public class HelpDocumentPageQueryTests : BaseTestClass
         }
         finally
         {
-            HelpDocumentHelper.RemoveHelpDocument();
-            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
+            await CleanUp(page);
         }
     }
 
@@ -102,8 +101,7 @@ public class HelpDocumentPageQueryTests : BaseTestClass
         }
         finally
         {
-            HelpDocumentHelper.RemoveHelpDocument();
-            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
+            await CleanUp(page);
         }
     }
 
@@ -152,8 +150,13 @@ public class HelpDocumentPageQueryTests : BaseTestClass
         }
         finally
         {
-            HelpDocumentHelper.RemoveHelpDocument();
-            await PlaywrightTestHelper.DisposeBrowserAndContext(page);
+            await CleanUp(page);
         }
+    }
+
+    private async Task CleanUp(IPage page)
+    {
+        HelpDocumentHelper.RemoveHelpDocument();
+        await PlaywrightTestHelper.DisposeBrowserAndContext(page);
     }
 }
