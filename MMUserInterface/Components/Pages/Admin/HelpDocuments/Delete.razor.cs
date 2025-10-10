@@ -20,11 +20,11 @@ public partial class Delete
         ]);        
     }
 
-    private void DeleteDocument()
+    private async Task DeleteDocument()
     {
         try
         {
-            HelpDocumentService.DeleteDocument(DocumentCategory, DocumentName);
+            await HelpDocumentService.DeleteDocument(DocumentCategory, DocumentName);
             Snackbar.Add($"Document {DocumentName} successfully deleted.", Severity.Success);
             NavigationManager.NavigateTo("/helpdocuments/index");
         }
