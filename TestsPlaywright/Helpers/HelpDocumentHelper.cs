@@ -1,4 +1,8 @@
-﻿namespace TestsPlaywright.Helpers;
+﻿using System;
+using System.IO;
+using System.Security.AccessControl;
+
+namespace TestsPlaywright.Helpers;
 
 public static class HelpDocumentHelper
 {
@@ -9,8 +13,7 @@ public static class HelpDocumentHelper
         string rootPath = Environment.GetEnvironmentVariable("MM_UI_ROOT_PATH")
                           ?? @"C:\inetpub\ManufacturerManagerDev";
 
-        return Path.Combine(rootPath, "Documents", "Colour", DocumentName);
-
+        return Path.Combine(rootPath, "Documents", "Colour", DocumentName);       
     }
 
     public static void AddHelpDocument()

@@ -1,4 +1,8 @@
-﻿namespace TestsPlaywright.TestsCommand;
+﻿using System;
+using System.IO;
+using System.Security.AccessControl;
+
+namespace TestsPlaywright.TestsCommand;
 
 public partial class HelpDocumentPageCommandTests : BaseTestClass
 {
@@ -44,12 +48,13 @@ public partial class HelpDocumentPageCommandTests : BaseTestClass
     {
         HelpDocumentHelper.AddHelpDocument();
 
+        const string expectedMessage = "File successfully uploaded.";
+
         var page = await PlaywrightTestHelper.CreatePageAsync();
 
         try
         {
             var documentNameWithoutSuffix = Uri.EscapeDataString(HelpDocumentHelper.DocumentName.Substring(0, HelpDocumentHelper.DocumentName.IndexOf('.')));
-            var foo = $"{GlobalValues.BaseUrl}/helpdocument/delete/{documentNameWithoutSuffix}";
             await page.GotoAsync($"{GlobalValues.BaseUrl}/helpdocument/delete/colour/{documentNameWithoutSuffix}", GlobalValues.GetPageOptions());
             await page.WaitForFunctionAsync("document.title === 'Delete Help Document'");
 
@@ -63,7 +68,18 @@ public partial class HelpDocumentPageCommandTests : BaseTestClass
 
             await page.WaitForFunctionAsync("document.title === 'Help Documents'");
 
-            Assert.False(File.Exists(HelpDocumentHelper.GetHelpDocumentPath()));
+            await Task.Delay(1000);
+
+            var path = HelpDocumentHelper.GetHelpDocumentPath();
+            var timeout = TimeSpan.FromSeconds(5);
+            var sw = Stopwatch.StartNew();
+
+            while (File.Exists(path) && sw.Elapsed < timeout)
+            {
+                await Task.Delay(200);
+            }
+
+            Assert.False(File.Exists(path), $"Expected file to be deleted, but it still exists at: {path}");
         }
         finally
         {

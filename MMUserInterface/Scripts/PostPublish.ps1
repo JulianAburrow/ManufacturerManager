@@ -16,27 +16,6 @@ function Log($message) {
 
 Log "PostPublish started."
 
-# Apply permissions to Documents folder
-$targetFolder = Join-Path $publishDir "Documents"
-$identity = "IIS AppPool\ManufacturerManagerDev"
-
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
-    $identity,
-    "Modify",
-    "ContainerInherit,ObjectInherit",
-    "None",
-    "Allow"
-)
-
-$acl = Get-Acl $targetFolder
-if (-not ($acl.Access | Where-Object { $_.IdentityReference -eq $identity })) {
-    $acl.AddAccessRule($accessRule)
-    Set-Acl -Path $targetFolder -AclObject $acl
-    Log "Permissions applied to $targetFolder for $identity"
-} else {
-    Log "Permissions already exist for $identity on $targetFolder"
-}
-
 # Start App Pool
 try {
     Start-WebAppPool -Name $AppPoolName

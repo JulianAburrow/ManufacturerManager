@@ -10,7 +10,6 @@ public partial class Delete
 
     protected override void OnInitialized()
     {
-
         MainLayout.SetHeaderValue("Delete Document");
         MainLayout.SetBreadcrumbs(
         [
