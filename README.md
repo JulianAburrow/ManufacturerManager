@@ -55,6 +55,12 @@ This solution uses a modular build setup, with reusable GitHub Actions defined f
 
 ---
 
+# Notes
+
+- Occasionally tests will fail. This is exclusively with the Playwright tests and I belive that this is due to latency as the tests ALL pass locally
+
+- ---
+
 ## Setup
 
 This solution contains a database project, which when run will create a seeded database. There are two connection strings in appsettings.json: one for a local SQL Server instance and the other for an instance running in a Docker container. There is another in PlaywrightTestHelper.cs: this will obviously also need to be changed to reflect your setup.
