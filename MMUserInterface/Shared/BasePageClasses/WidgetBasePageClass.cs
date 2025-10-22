@@ -54,7 +54,7 @@ public abstract class WidgetBasePageClass : BasePageClass
 
     protected BreadcrumbItem GetWidgetHomeBreadcrumbItem(bool isDisabled = false)
     {
-        return new BreadcrumbItem("Widgets", "/widgets/index", isDisabled);
+        return new BreadcrumbItem(WidgetPlural, "/widgets/index", isDisabled);
     }
 
     protected async Task SetWidgetStatusId()

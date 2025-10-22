@@ -1,4 +1,5 @@
 ﻿global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Forms;
 global using Microsoft.EntityFrameworkCore;
 global using MMDataAccess.Data;
 global using MMDataAccess.Handlers.CommandHandlers;

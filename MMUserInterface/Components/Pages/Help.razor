@@ -62,16 +62,20 @@ Select a category from which you require help and type your question
 
 @if (MatchingFiles.Count > 0)
 {
-    <ul>
-    @foreach (var file in MatchingFiles)
-        {
-            var filename = Path.GetFileName(file);
-            var link = $"/docs/{ChatSearchModel.SearchCategory.ToLowerInvariant()}/{filename}";
-            <li>
-                <DisplayFileComponent Url="@link" DisplayText="@filename" />
-            </li>
-        }
-    </ul>
+    <MudTable Items="MatchingFiles">
+        <RowTemplate>
+            @{
+                var filename = Path.GetFileName(context);
+                var link = $"/Documents/{ChatSearchModel.SearchCategory}/{filename}";
+            }
+            <MudTr Class="spaced-row">
+                <MudTd>@filename</MudTd>
+                <MudTd>
+                    <a href="@link" class="btn btn-primary" target="_blank">View</a>
+                </MudTd>
+            </MudTr>
+        </RowTemplate>
+    </MudTable>
 }
 
 @if (!string.IsNullOrWhiteSpace(Response))

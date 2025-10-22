@@ -47,11 +47,11 @@ public class ColourJustificationPageQueryTests : BaseTestClass
         await page.WaitForFunctionAsync("document.title === 'Colour Justifications'");
         Assert.Equal("Colour Justifications", await page.TitleAsync());
 
-        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create" });
+        var createLink = page.GetByRole(AriaRole.Link, new() { Name = "Create Colour Justification" });
         if (await createLink.CountAsync() == 0)
         {
-            createLink = page.GetByText("Create", new() { Exact = false });
-            Assert.True(await createLink.CountAsync() > 0, "Create link not found on Colour Justifications index page.");
+            createLink = page.GetByText("Create Colour Justification", new() { Exact = false });
+            Assert.True(await createLink.CountAsync() > 0, "Create Colour Justification link not found on Colour Justifications index page.");
         }
         await createLink.First.ClickAsync();
 
@@ -146,7 +146,7 @@ public class ColourJustificationPageQueryTests : BaseTestClass
     
 
     [Fact]
-    public async Task CancelLinnkOnCreatePageNavigatesToIndex()
+    public async Task CancelLinkOnCreatePageNavigatesToIndex()
     {
         var page = await PlaywrightTestHelper.CreatePageAsync();
 

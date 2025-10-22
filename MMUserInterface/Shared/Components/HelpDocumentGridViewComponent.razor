@@ -1,0 +1,33 @@
+﻿<MudTable Items="HelpDocumentModels"
+          Hover
+          FixedHeader>
+    <HeaderContent>
+        <MudTh title="Sort by Document Name">
+            <MudTableSortLabel SortBy="new Func<HelpDocumentModel, object>(x => x.DocumentName)">
+                Document Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Document Category">
+            <MudTableSortLabel SortBy="new Func<HelpDocumentModel, object>(x => x.DocumentCategory)">
+                Document Category
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.DocumentName</MudTd>
+        <MudTd>@context.DocumentCategory</MudTd>
+        <MudTd>
+            @{
+                var link = $"/Documents/{context.DocumentCategory}/{context.DocumentName}.pdf";
+                var documentNameAndCategory = $"{context.DocumentCategory}/{context.DocumentName}";
+            }
+            <a class="btn btn-primary" href="@link" target="_blank">Open</a>
+            &nbsp;
+            <a class="btn btn-danger" href="/helpdocument/delete/@context.DocumentCategory/@context.DocumentName">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

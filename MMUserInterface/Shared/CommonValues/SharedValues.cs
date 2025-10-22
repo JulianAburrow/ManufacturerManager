@@ -20,4 +20,12 @@ public static class SharedValues
         Active = 1,
         Inactive = 2,
     }
+
+    public enum DocumentCategories
+    {
+        Colour,
+        ColourJustification,
+        Manufacturer,
+        Widget,
+    }
 }

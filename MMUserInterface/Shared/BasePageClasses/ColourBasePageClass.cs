@@ -18,7 +18,7 @@ public class ColourBasePageClass : BasePageClass
 
     protected BreadcrumbItem GetColourHomeBreadcrumbItem(bool isDisabled = false)
     {
-        return new ("Colours", "/colours/index", isDisabled);
+        return new (ColourPlural, "/colours/index", isDisabled);
     }
 
     protected void CopyModelToDisplayModel()

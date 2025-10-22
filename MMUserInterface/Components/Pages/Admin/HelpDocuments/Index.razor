@@ -1,0 +1,23 @@
+﻿@page "/helpdocuments/index"
+@inherits HelpDocumentBasePageClass
+
+<PageTitle>Help Documents</PageTitle>
+
+@if (HelpDocumentModels == null)
+{
+	<LoadingMessageComponent ValueToShow="@HelpDocumentPlural" />
+}
+
+<a href="/helpdocument/upload" class="btn btn-primary">Upload Help Document</a>
+
+<br />
+<br />
+
+@if (HelpDocumentModels?.Count == 0)
+{
+	<NoResultsComponent ObjectType="@HelpDocumentPlural" />
+}
+else
+{
+	<HelpDocumentGridViewComponent HelpDocumentModels="HelpDocumentModels" />
+}

@@ -20,18 +20,19 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.MapGet("/docs/{category}/{filename}", (HttpContext context, string category, string filename) =>
+app.MapGet("/documents/{category}/{filename}", (HttpContext context, string category, string filename) =>
 {
     var safeCategory = Path.GetFileName(category);
-    var safeFilename = Path.GetFileName(filename);
+    var safeFilename = Path.GetFileName(Uri.UnescapeDataString(filename));
     var env = context.RequestServices.GetRequiredService<IWebHostEnvironment>();
     var path = Path.Combine(env.ContentRootPath, "Documents", safeCategory, safeFilename);
 
     if (!System.IO.File.Exists(path))
         return Results.NotFound();
 
+    context.Response.Headers.Append("Content-Disposition", $"inline; filename=\"{safeFilename}\"");
     var contentType = "application/pdf";
-    return Results.File(path, contentType, safeFilename);
+    return Results.File(path, contentType);
 });
 
 app.UseHttpsRedirection();

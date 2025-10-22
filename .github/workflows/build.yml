@@ -1,5 +1,8 @@
 ﻿name: Build and Test (.NET on Windows with Playwright)
 
+env:
+  MM_UI_ROOT_PATH: ${{ github.workspace }}/MMUserInterface
+
 on:
   push:
     branches: [ main, feature/* ]
@@ -67,7 +70,7 @@ jobs:
       shell: bash
       run: |
         dotnet run --no-build --urls https://127.0.0.1:5245 &
-        sleep 20
+        sleep 30
       working-directory: MMUserInterface
 
     - name: Check if MMUserInterface is up

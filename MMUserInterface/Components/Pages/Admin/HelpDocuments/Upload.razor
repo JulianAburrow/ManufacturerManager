@@ -1,0 +1,50 @@
+﻿@page "/helpdocument/upload"
+@inherits HelpDocumentBasePageClass
+
+<PageTitle>Upload Help Document</PageTitle>
+
+<EditForm Model="@HelpDocumentDisplayModel" OnValidSubmit="CreateFile">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <MudCardContent>
+                    <MudSelect
+                        T="string"
+                        Label="Category"
+                        @bind-Value="HelpDocumentDisplayModel.Category"
+                        data-testid="ddlHelpDocumentCategory">
+                        @foreach (var helpCategory in HelpCategories)
+                        {
+                            <MudSelectItem Value="@helpCategory">@helpCategory</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <br />
+                    <MudFileUpload
+                        T="IBrowserFile"
+                        FilesChanged="UploadFile"
+                        Accept="@(".pdf")"
+                        data-testid="uplHelpDocument">
+                        <ActivatorContent>
+                            <MudButton HtmlTag="label"
+                                       Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       StartIcon="@Icons.Material.Filled.FileUpload">
+                                Select File
+                            </MudButton>
+                        </ActivatorContent>
+                    </MudFileUpload>
+                    @FileName
+                    <div style="color: red" data-testid="fileUploadMessage">@FileMessage</div>
+                </MudCardContent>
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    &nbsp;
+                    <a class="btn btn-primary" href="/helpdocuments/index">Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
