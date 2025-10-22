@@ -57,7 +57,7 @@ This solution uses a modular build setup, with reusable GitHub Actions defined f
 
 # Notes
 
-- Occasionally tests will fail. This is exclusively with the Playwright tests and I belive that this is due to latency as the tests ALL pass locally
+- Very occasionally tests will fail. This is exclusively with the Playwright tests and I believe that this is due to latency as the tests ALL pass locally
 
 - ---
 
