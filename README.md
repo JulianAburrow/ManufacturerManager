@@ -26,7 +26,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **MudBlazor** (UI components)
 - **xUnit** (unit testing)
 - **Playwright** (end-to-end testing)
-- **SQL Server** (default, can be swapped for in-memory in tests)
+- **SQL Server** (default, swapped for in-memory in unit tests)
 - **GitHub Actions** (CI/CD)
 - **Ollama/TinyLlama** (AI Assistant)
 
@@ -43,7 +43,7 @@ The models in use are gemma3:1b, qwen:0.5b and tinyllama:latest
 
 ## Modular Build Configuration
 
-This solution uses a modular build setup, with reusable GitHub Actions defined for PLaywright, SQL Server, and local model integration. Each action is isolated for clarity and composability, allowing targeted CI workflows and easier debugging. The .github/actions directory contains these components.
+This solution uses a modular build setup, with reusable GitHub Actions defined for Playwright, SQL Server, and local model integration. Each action is isolated for clarity and composability, allowing targeted CI workflows and easier debugging. The .github/actions directory contains these components.
 
 ---
 
@@ -51,7 +51,7 @@ This solution uses a modular build setup, with reusable GitHub Actions defined f
 
 - All exceptions in the UI are caught and logged to the database via command handlers.
 - User-friendly error messages are displayed using MudBlazor snackbars.
-- Errors can be reviewed and managed through the admin interface.
+- Errors can be reviewed and managed through the admin user interface.
 
 ---
 
