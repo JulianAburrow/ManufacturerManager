@@ -1,4 +1,4 @@
-[![Build ManufacturerManagerWithPlaywrightAndCICD](https://github.com/JulianAburrow/ManufacturerManagerWithPlaywrightAndCICD/actions/workflows/build.yml/badge.svg)](https://github.com/JulianAburrow/ManufacturerManagerWithPlaywrightAndCICD/actions/workflows/build.yml)
+[![Build ManufacturerManager](https://github.com/JulianAburrow/ManufacturerManager/actions/workflows/build.yml/badge.svg)](https://github.com/JulianAburrow/ManufacturerManager/actions/workflows/build.yml)
 
 # ManufacturerManager
 
