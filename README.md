@@ -27,7 +27,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **xUnit** (unit testing)
 - **SQL Server** (default, swapped for in-memory in unit tests)
 - **GitHub Actions** (CI/CD)
-- **Ollama/TinyLlama** (AI Assistant)
+- **Ollama/TinyLlama/gemma3:1b/qwen:0.5b** (AI Assistant)
 
 ---
 
