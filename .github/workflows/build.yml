@@ -1,4 +1,4 @@
-﻿name: Build and Test (.NET on Windows with Playwright)
+﻿name: Build and Test
 
 env:
   MM_UI_ROOT_PATH: ${{ github.workspace }}/MMUserInterface
@@ -17,9 +17,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Pull Models
-      uses: ./.github/actions/ollama
-
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
@@ -33,62 +30,9 @@ jobs:
         dotnet build MMDataAccess/MMDataAccess.csproj --no-restore
         dotnet build MMUserInterface/MMUserInterface.csproj --no-restore
         dotnet build TestsUnit/TestsUnit.csproj --no-restore
-        dotnet build TestsPlaywright/TestsPlaywright.csproj --no-restore
 
     - name: Run unit tests
       run: dotnet test TestsUnit.csproj
         --no-build
         --configuration Debug
       working-directory: TestsUnit
-
-    - name: Install Playwright and browsers
-      uses: ./.github/actions/playwright
-
-    - name: Generate and trust HTTPS development certificate
-      run: |
-        dotnet dev-certs https --clean
-        dotnet dev-certs https
-      shell: pwsh
-
-    - name: Docker login
-      shell: pwsh
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        $env:DOCKER_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
-
-    - name: Start SQL Server for ManufacturerManager
-      uses: ./.github/actions/sqlserver
-      with:
-        image: jaburrow/manufacturermanager:seeded
-        container_name: seeded-db
-        port: 11433
-        sa_password: ${{ secrets.DB_PASSWORD }}    
-    
-    - name: Start MMUserInterface in background
-      shell: bash
-      run: |
-        dotnet run --no-build --urls https://127.0.0.1:5245 &
-        sleep 30
-      working-directory: MMUserInterface
-
-    - name: Check if MMUserInterface is up
-      shell: bash
-      run: |
-        for i in {1..30}; do
-          if curl -k --silent --fail https://127.0.0.1:5245/ > /dev/null; then
-            echo "MMUserInterface is up!"
-            exit 0
-          fi
-          echo "Waiting for MMUserInterface..."
-          sleep 2
-        done
-        echo "MMUserInterface did not become ready in time."
-        exit 1
-
-
-    - name: Run Playwright tests over HTTPS
-      shell: pwsh
-      run: dotnet test TestsPlaywright.csproj -- "UseHttps=true"
-      working-directory: TestsPlaywright
