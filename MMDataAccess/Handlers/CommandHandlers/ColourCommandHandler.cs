@@ -14,7 +14,7 @@ public class ColourCommandHandler(ManufacturerManagerContext context) : IColourC
     public async Task DeleteColourAsync(int colourId, bool callSaveChanges)
     {
         var colourToDelete = _context.Colours.SingleOrDefault(c => c.ColourId == colourId);
-        if (colourToDelete == null)
+        if (colourToDelete is null)
             return;
         _context.Colours.Remove(colourToDelete);
         if (callSaveChanges)
@@ -24,7 +24,7 @@ public class ColourCommandHandler(ManufacturerManagerContext context) : IColourC
     public async Task UpdateColourAsync(ColourModel colour, bool callSaveChanges)
     {
         var colourToUpdate = _context.Colours.SingleOrDefault(c => c.ColourId == colour.ColourId);
-        if (colourToUpdate == null)
+        if (colourToUpdate is null)
             return;
 
         colourToUpdate.Name = colour.Name;

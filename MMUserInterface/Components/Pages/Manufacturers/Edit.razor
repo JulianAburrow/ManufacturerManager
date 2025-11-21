@@ -3,7 +3,7 @@
 
 <PageTitle>Edit Manufacturer</PageTitle>
 
-@if (ManufacturerDisplayModel == null || ManufacturerStatuses == null)
+@if (ManufacturerDisplayModel is null || ManufacturerStatuses is null)
 {
     <LoadingMessageComponent ValueToShow="@Manufacturer" />
     return;

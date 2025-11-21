@@ -46,7 +46,7 @@ public partial class Upload
 
     private void UploadFile(IBrowserFile file)
     {
-        if (file == null)
+        if (file is null)
         {
             return;
         }

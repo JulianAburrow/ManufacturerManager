@@ -22,7 +22,7 @@ public class ErrorCommandHandler(ManufacturerManagerContext context) : IErrorCom
     public async Task DeleteErrorAsync(int errorId, bool callSaveChanges)
     {
         var errorToDelete = _context.Errors.SingleOrDefault(e => e.ErrorId == errorId);
-        if (errorToDelete == null)
+        if (errorToDelete is null)
             return;
         _context.Errors.Remove(errorToDelete);
         if (callSaveChanges)
@@ -32,7 +32,7 @@ public class ErrorCommandHandler(ManufacturerManagerContext context) : IErrorCom
     public async Task UpdateErrorAsync(ErrorModel error, bool callSaveChanges)
     {
         var errorToUpdate = _context.Errors.SingleOrDefault(e => e.ErrorId == error.ErrorId);
-        if (errorToUpdate == null)
+        if (errorToUpdate is null)
             return;
 
         errorToUpdate.Resolved = error.Resolved;

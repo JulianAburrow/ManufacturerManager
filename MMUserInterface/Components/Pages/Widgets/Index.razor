@@ -3,7 +3,7 @@
 
 <PageTitle>Widgets</PageTitle>
 
-@if (Widgets == null)
+@if (Widgets is null)
 {
     <LoadingMessageComponent ValueToShow="@WidgetPlural" />
     return;

@@ -3,7 +3,7 @@
 
 <PageTitle>Manufacturers</PageTitle>
 
-@if (Manufacturers == null)
+@if (Manufacturers is null)
 {
     <LoadingMessageComponent ValueToShow="@ManufacturerPlural" />
     return;

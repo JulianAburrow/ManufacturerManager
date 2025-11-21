@@ -3,7 +3,7 @@
 
 <PageTitle>Errors</PageTitle>
 
-@if (Errors == null)
+@if (Errors is null)
 {
     <LoadingMessageComponent ValueToShow="@ErrorPlural" />
     return;
