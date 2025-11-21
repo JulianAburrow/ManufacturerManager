@@ -3,11 +3,11 @@
 
 <PageTitle>Edit Widget</PageTitle>
 
-@if (WidgetModel == null ||
-    Manufacturers == null ||
-    Colours == null ||
-    ColourJustifications == null ||
-    WidgetStatuses == null)
+@if (WidgetModel is null ||
+    Manufacturers is null ||
+    Colours is null ||
+    ColourJustifications is null ||
+    WidgetStatuses is null)
 {
     <LoadingMessageComponent ValueToShow="@Widget" />
     return;

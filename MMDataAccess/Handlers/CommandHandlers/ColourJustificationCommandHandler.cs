@@ -14,7 +14,7 @@ public class ColourJustificationCommandHandler(ManufacturerManagerContext contex
     public async Task DeleteColourJustificationAsync(int colourJustificationId, bool callSaveChanges)
     {
         var colourJustificationToDelete = _context.ColourJustifications.SingleOrDefault(c => c.ColourJustificationId == colourJustificationId);
-        if (colourJustificationToDelete == null)
+        if (colourJustificationToDelete is null)
             return;
         _context.ColourJustifications.Remove(colourJustificationToDelete);
         if (callSaveChanges)
@@ -24,7 +24,7 @@ public class ColourJustificationCommandHandler(ManufacturerManagerContext contex
     public async Task UpdateColourJustificationAsync(ColourJustificationModel colourJustification, bool callSaveChanges)
     {
         var colourJustificationToUpdate = _context.ColourJustifications.SingleOrDefault(c => c.ColourJustificationId == colourJustification.ColourJustificationId);
-        if (colourJustificationToUpdate == null)
+        if (colourJustificationToUpdate is null)
             return;
         colourJustificationToUpdate.Justification = colourJustification.Justification;
         if (callSaveChanges)

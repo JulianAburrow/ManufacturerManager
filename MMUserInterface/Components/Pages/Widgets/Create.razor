@@ -3,7 +3,7 @@
 
 <PageTitle>Create Widget</PageTitle>
 
-@if (WidgetStatuses == null || Manufacturers == null || WidgetStatuses == null)
+@if (WidgetStatuses is null || Manufacturers is null || WidgetStatuses is null)
 {
     <LoadingMessageComponent ValueToShow="@Values" />
     return;

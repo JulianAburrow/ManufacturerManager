@@ -3,7 +3,7 @@
 
 <PageTitle>Delete Error</PageTitle>
 
-@if (ErrorModel == null)
+@if (ErrorModel is null)
 {
     <LoadingMessageComponent ValueToShow="@Error" />
     return;

@@ -14,7 +14,7 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
     public async Task DeleteManufacturerAsync(int manufacturerId, bool callSaveChanges)
     {
         var manufacturerToDelete = _context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturerId);
-        if (manufacturerToDelete == null)
+        if (manufacturerToDelete is null)
             return;
         _context.Manufacturers.Remove(manufacturerToDelete);
         if (callSaveChanges)
@@ -24,7 +24,7 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
     public async Task UpdateManufacturerAsync(ManufacturerModel manufacturer, bool callSaveChanges)
     {
         var manufacturerToUpdate = _context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturer.ManufacturerId);
-        if (manufacturerToUpdate == null)
+        if (manufacturerToUpdate is null)
             return;
         manufacturerToUpdate.Name = manufacturer.Name;
         manufacturerToUpdate.StatusId = manufacturer.StatusId;

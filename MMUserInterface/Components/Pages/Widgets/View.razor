@@ -3,9 +3,9 @@
 
 <PageTitle>View Widget</PageTitle>
 
-@if (WidgetModel == null ||
-    WidgetModel.Manufacturer == null ||
-    WidgetModel.Status == null)
+@if (WidgetModel is null ||
+    WidgetModel.Manufacturer is null ||
+    WidgetModel.Status is null)
 {
     <LoadingMessageComponent ValueToShow="@Widget" />
     return;
