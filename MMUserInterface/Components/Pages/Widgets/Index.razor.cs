@@ -19,4 +19,14 @@ public partial class Index
             GetWidgetHomeBreadcrumbItem(true),
         ]);
     }
+
+    private async Task ExportCSV()
+    {
+        var csvString = CSVStringHelper.CreateWidgetCSVString(Widgets);
+        var fileBytes = SharedMethods.GetUTF8Bytes(csvString);
+        var base64 = SharedMethods.GetBase64String(fileBytes);
+        var fileName = $"Widgets-{DateTime.Now}.csv";
+
+        await JS.InvokeVoidAsync(DownloadFile, base64, ContentType, fileName);
+    }
 }

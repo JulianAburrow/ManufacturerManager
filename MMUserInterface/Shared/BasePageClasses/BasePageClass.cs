@@ -14,6 +14,14 @@ public class BasePageClass : ComponentBase
 
     [Inject] protected IErrorQueryHandler ErrorQueryHandler { get; set; } = default!;
 
+    [Inject] protected ICSVStringHelper CSVStringHelper { get; set; } = default!;
+
+    [Inject] protected IJSRuntime JS { get; set; } = null!;
+
+    protected string ContentType = "application/octet-stream";
+
+    protected string DownloadFile = "downloadFile";
+
     [CascadingParameter] public MainLayout MainLayout { get; set; } = new();
 
     protected string Values = "Values";
