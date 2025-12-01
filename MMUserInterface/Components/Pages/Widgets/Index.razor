@@ -11,6 +11,12 @@
 
 <a href="/widget/create" class="btn btn-primary">Create Widget</a>
 
+@if (Widgets.Count > 0)
+{
+    @:&nbsp;
+    <button class="btn btn-success" @onclick="ExportCSV">Download As CSV</button>
+}
+
 <br />
 <br />
 

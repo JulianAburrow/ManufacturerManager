@@ -1,6 +1,7 @@
 ﻿global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Forms;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.JSInterop;
 global using MMDataAccess.Data;
 global using MMDataAccess.Handlers.CommandHandlers;
 global using MMDataAccess.Handlers.QueryHandlers;
@@ -16,6 +17,7 @@ global using MMUserInterface.Models;
 global using MMUserInterface.Services;
 global using MMUserInterface.Shared.BasePageClasses;
 global using MMUserInterface.Shared.CommonValues;
+global using MMUserInterface.Shared.Methods;
 global using MudBlazor;
 global using MudBlazor.Services;
 global using System.ComponentModel.DataAnnotations;
