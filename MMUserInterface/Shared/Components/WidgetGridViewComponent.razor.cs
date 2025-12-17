@@ -2,7 +2,7 @@
 
 public partial class WidgetGridViewComponent
 {
-    [Parameter] public ICollection<WidgetModel> Widgets { get; set; } = null!;
+    [Parameter] public ICollection<WidgetSummary> Widgets { get; set; } = null!;
 
     private decimal TotalStockValue { get; set; }
 

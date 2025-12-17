@@ -8,22 +8,22 @@
             </MudTableSortLabel>
         </MudTh>
         <MudTh title="Sort by Manufacturer">
-            <MudTableSortLabel SortBy="new Func<WidgetModel, object>(x => x.Manufacturer.Name)">
+            <MudTableSortLabel SortBy="@((WidgetSummary x) => x.ManufacturerName ?? "Unknown")">
                 Manufacturer
             </MudTableSortLabel>
         </MudTh>
         <MudTh title="Sort by Colour">
-            <MudTableSortLabel SortBy="new Func<WidgetModel, object>(x => x.Colour?.Name!)">
+            <MudTableSortLabel SortBy="@((WidgetSummary x) => x.ColourName ?? "Unknown")">
                 Colour
             </MudTableSortLabel>
         </MudTh>
         <MudTh title="Sort by Cost Price">
-            <MudTableSortLabel SortBy="new Func<WidgetModel, object>(x => x.CostPrice)">
+            <MudTableSortLabel SortBy="new Func<WidgetSummary, object>(x => x.CostPrice)">
                 Cost Price
             </MudTableSortLabel>
         </MudTh>
         <MudTh title="Sort by Stock Level">
-            <MudTableSortLabel SortBy="new Func<WidgetModel, object>(x => x.StockLevel)">
+            <MudTableSortLabel SortBy="new Func<WidgetSummary, object>(x => x.StockLevel)">
                 Stock Level
             </MudTableSortLabel>
         </MudTh>
@@ -31,7 +31,7 @@
             Net Stock Value
         </MudTh>
         <MudTh title="Sort by Status">
-            <MudTableSortLabel SortBy="new Func<WidgetModel, object>(x => x.Status.StatusName)">
+            <MudTableSortLabel SortBy="@((WidgetSummary x) => x.StatusName ?? "Unknown")">
                 Status
             </MudTableSortLabel>
         </MudTh>
@@ -39,12 +39,12 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd>@context.Name</MudTd>
-        <MudTd>@context.Manufacturer.Name</MudTd>
-        <MudTd>@(context.Colour != null ? context.Colour.Name : "None")</MudTd>
+        <MudTd>@context.ManufacturerName</MudTd>
+        <MudTd>@(context.ColourName != null ? context.ColourName : "None")</MudTd>
         <MudTd>£@context.CostPrice</MudTd>
         <MudTd>@context.StockLevel</MudTd>
         <MudTd>£@(context.StockLevel * context.CostPrice)</MudTd>
-        <MudTd>@context.Status.StatusName</MudTd>
+        <MudTd>@context.StatusName</MudTd>
         <MudTd>
             <a href="/widget/view/@context.WidgetId" class="btn btn-primary">View</a>
             &nbsp;

@@ -8,6 +8,7 @@ global using MMDataAccess.Handlers.QueryHandlers;
 global using MMDataAccess.Interfaces.CommandHandlers;
 global using MMDataAccess.Interfaces.QueryHandlers;
 global using MMDataAccess.Models;
+global using MMDataAccess.ModelsSummary;
 global using MMUserInterface.Components;
 global using MMUserInterface.Components.Layout;
 global using MMUserInterface.Extensions;

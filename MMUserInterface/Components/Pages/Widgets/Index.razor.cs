@@ -2,7 +2,7 @@
 
 public partial class Index
 {
-    protected List<WidgetModel> Widgets { get; set; } = null!;
+    protected List<WidgetSummary> Widgets { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

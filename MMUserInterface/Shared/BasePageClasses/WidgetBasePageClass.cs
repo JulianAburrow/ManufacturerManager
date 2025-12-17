@@ -26,7 +26,7 @@ public abstract class WidgetBasePageClass : BasePageClass
 
     public required List<ColourJustificationModel> ColourJustifications { get; set; }
 
-    public required List<ManufacturerModel> Manufacturers { get; set; }
+    public required List<ManufacturerSummary> Manufacturers { get; set; }
 
     protected string FileName = string.Empty;
 

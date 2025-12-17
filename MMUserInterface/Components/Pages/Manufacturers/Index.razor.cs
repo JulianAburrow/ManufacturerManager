@@ -2,7 +2,7 @@ namespace MMUserInterface.Components.Pages.Manufacturers;
 
 public partial class Index
 {
-    protected List<ManufacturerModel> Manufacturers { get; set; } = null!;
+    protected List<ManufacturerSummary> Manufacturers { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

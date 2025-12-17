@@ -2,7 +2,7 @@
 
 public interface ICSVStringHelper
 {
-    string CreateWidgetCSVString(List<WidgetModel> widgets);
+    string CreateWidgetCSVString(List<WidgetSummary> widgets);
 
-    string CreateManufacturerCSVString(List<ManufacturerModel> manufacturers);
+    string CreateManufacturerCSVString(List<ManufacturerSummary> manufacturers);
 }
