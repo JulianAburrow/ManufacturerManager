@@ -3,17 +3,17 @@
           FixedHeader="true">
     <HeaderContent>
         <MudTh title="Sort by Manufacturer Name">
-            <MudTableSortLabel SortBy="new Func<ManufacturerModel, object>(x => x.Name)">
+            <MudTableSortLabel SortBy="new Func<ManufacturerSummary, object>(x => x.Name)">
                 Name
             </MudTableSortLabel>
         </MudTh>
         <MudTh title="Sort by Status">
-            <MudTableSortLabel SortBy="new Func<ManufacturerModel, object>(x => x.Status.StatusName)">
+            <MudTableSortLabel SortBy="@((ManufacturerSummary x) => x.StatusName ?? "Unknown")">
                 Status
             </MudTableSortLabel>
         </MudTh>
-        <MudTh title="Sort by Active Widget Count">
-            <MudTableSortLabel SortBy="new Func<ManufacturerModel, object>(x => x.Widgets.Count)">
+        <MudTh title="Sort by Widget Count">
+            <MudTableSortLabel SortBy="new Func<ManufacturerSummary, object>(x => x.WidgetCount)">
                 Widget Count
             </MudTableSortLabel>
         </MudTh>
@@ -21,8 +21,8 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd>@context.Name</MudTd>
-        <MudTd>@context.Status.StatusName</MudTd>
-        <MudTd>@context.Widgets.Count (@context.Widgets.Where(w => w.StatusId == (int)ManufacturerStatusEnum.Inactive).Count() inactive)</MudTd>
+        <MudTd>@context.StatusName</MudTd>
+        <MudTd>@context.WidgetCount</MudTd>
         <MudTd>
             <a href="/manufacturer/view/@context.ManufacturerId" class="btn btn-primary">View</a>
             &nbsp;

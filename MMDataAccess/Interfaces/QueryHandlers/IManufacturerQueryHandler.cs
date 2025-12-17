@@ -4,7 +4,7 @@ public interface IManufacturerQueryHandler
 {
     Task<ManufacturerModel> GetManufacturerAsync(int manufacturerId);
 
-    Task<List<ManufacturerModel>> GetManufacturersAsync();
+    Task<List<ManufacturerSummary>> GetManufacturersAsync();
 
     Task<int> GetManufacturerStatusByManufacturerId(int manufacturerId);
 }
