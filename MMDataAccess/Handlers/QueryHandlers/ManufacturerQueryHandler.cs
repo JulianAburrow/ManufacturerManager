@@ -2,10 +2,8 @@
 
 public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IManufacturerQueryHandler
 {
-    private readonly ManufacturerManagerContext _context = context;
-
     public async Task<ManufacturerModel> GetManufacturerAsync(int manufacturerId) =>
-        await _context.Manufacturers
+        await context.Manufacturers
             .Include(m => m.Widgets)
                 .ThenInclude(w => w.Colour)
             .Include(m => m.Widgets)
@@ -16,7 +14,7 @@ public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IMan
             ?? throw new ArgumentNullException(nameof(manufacturerId), "Manufacturer not found");
 
     public async Task<List<ManufacturerSummary>> GetManufacturersAsync() =>
-        await _context.Manufacturers
+        await context.Manufacturers
             .Select(m => new ManufacturerSummary
             {
                 ManufacturerId = m.ManufacturerId,
@@ -29,7 +27,7 @@ public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IMan
             .ToListAsync();
 
     public async Task<int> GetManufacturerStatusByManufacturerId(int manufacturerId) =>
-        await _context.Manufacturers
+        await context.Manufacturers
             .Where(m => m.ManufacturerId == manufacturerId)
             .Select(s => s.StatusId)
             .SingleOrDefaultAsync();

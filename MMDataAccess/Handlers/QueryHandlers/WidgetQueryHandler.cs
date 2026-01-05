@@ -2,10 +2,8 @@
 
 public class WidgetQueryHandler(ManufacturerManagerContext context) : IWidgetQueryHandler
 {
-    private readonly ManufacturerManagerContext _context = context;
-
     public async Task<WidgetModel> GetWidgetAsync(int widgetId) =>
-        await _context.Widgets
+        await context.Widgets
             .Include(w => w.Colour)
             .Include(w => w.ColourJustification)
             .Include(w => w.Manufacturer)
@@ -15,7 +13,7 @@ public class WidgetQueryHandler(ManufacturerManagerContext context) : IWidgetQue
             ?? throw new ArgumentNullException(nameof(widgetId), "Widget not found");
 
     public async Task<List<WidgetSummary>> GetWidgetsAsync() =>
-        await _context.Widgets
+        await context.Widgets
             .Select(w => new WidgetSummary
             {
                 WidgetId = w.WidgetId,

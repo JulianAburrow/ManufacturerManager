@@ -30,6 +30,10 @@ public static class ServiceExtensions
         services.AddTransient<IManufacturerCommandHandler, ManufacturerCommandHandler>();
         services.AddTransient<IManufacturerQueryHandler, ManufacturerQueryHandler>();
         services.AddTransient<IManufacturerStatusQueryHandler, ManufacturerStatusQueryHandler>();
+        services.AddTransient<IMyMMCommandHandler, MyMMCommandHandler>();
+        services.AddTransient<IMyMMQueryHandler, MyMMQueryHandler>();
+        services.AddTransient<IMyMMStatusCommandHandler, MyMMStatusCommandHandler>();
+        services.AddTransient<IMyMMStatusQueryHandler, MyMMStatusQueryHandler>();
         services.AddTransient<IWidgetCommandHandler, WidgetCommandHandler>();
         services.AddTransient<IWidgetQueryHandler, WidgetQueryHandler>();
         services.AddTransient<IWidgetStatusQueryHandler, WidgetStatusQueryHandler>();

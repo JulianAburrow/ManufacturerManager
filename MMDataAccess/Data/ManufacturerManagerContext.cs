@@ -8,6 +8,8 @@ public class ManufacturerManagerContext(DbContextOptions<ManufacturerManagerCont
     public DbSet<ErrorModel> Errors { get; set; }
     public DbSet<ManufacturerModel> Manufacturers { get; set; }
     public DbSet<ManufacturerStatusModel> ManufacturerStatuses { get; set; }
+    public DbSet<MyMMModel> MyMMs { get; set; }
+    public DbSet<MyMMStatusModel> MyMMStatuses { get; set; }
     public DbSet<WidgetModel> Widgets { get; set; }
     public DbSet<WidgetStatusModel> WidgetStatuses { get; set; }
 
@@ -26,6 +28,8 @@ public class ManufacturerManagerContext(DbContextOptions<ManufacturerManagerCont
         builder.ApplyConfiguration(new ErrorConfiguration());
         builder.ApplyConfiguration(new ManufacturerConfiguration());
         builder.ApplyConfiguration(new ManufacturerStatusConfiguration());
+        builder.ApplyConfiguration(new MyMMConfiguration());
+        builder.ApplyConfiguration(new MyMMStatusConfiguration());
         builder.ApplyConfiguration(new WidgetConfiguration());
         builder.ApplyConfiguration(new WidgetStatusConfiguration());
     }
