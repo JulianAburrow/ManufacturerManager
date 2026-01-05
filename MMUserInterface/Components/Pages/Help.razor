@@ -5,6 +5,20 @@
 
 <h1>Help</h1>
 
+@if (HelpCategories is null)
+{
+    <LoadingMessageComponent ValueToShow="@HelpCategoryPlural" />
+    return;
+}
+
+@if (IsError)
+{
+    <MudAlert Severity="Severity.Error" Elevation="0" Variant="Variant.Filled" Class="mb-4">
+        @ErrorMessage
+    </MudAlert>
+    return;
+}
+
 Select a category from which you require help and type your question
 <MudGrid>
     <MudItem sm="7">

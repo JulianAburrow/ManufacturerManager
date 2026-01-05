@@ -2,23 +2,37 @@
 
 public partial class Help
 {
-    private List<string> HelpCategories = [];
+    private List<string> HelpCategories = null!;
 
     readonly List<OllamaModel> AvailableModels = [];
 
     protected ChatSearchModel ChatSearchModel = new();
 
-    protected string Response= string.Empty;
+    protected string Response = string.Empty;
 
     private bool IsThinking = false;
 
     protected List<string> MatchingFiles = [];
 
+    private bool IsError = false;
+
+    private string ErrorMessage = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
+        try
+        {
+            AvailableModels.AddRange(await ChatService.GetAvailableModelsAsync());
+        }
+        catch
+        {
+            IsError = true;
+            HelpCategories = [];
+            ErrorMessage = "Unable to retrieve available models. Please ensure that Ollama is installed and running and that at least one LLM is present.";
+            return;
+        }
         HelpCategories = (await CategoryQueryHandler.GetCategoriesAsync()).Select(c => c.Name).ToList();
-        HelpCategories.Insert(0, SharedValues.PleaseSelectText);
-        AvailableModels.AddRange(await ChatService.GetAvailableModelsAsync());
+        HelpCategories.Insert(0, SharedValues.PleaseSelectText);       
         ChatSearchModel.SearchModel = AvailableModels.FirstOrDefault()?.Name ?? string.Empty;
         ChatSearchModel.SearchCategory = HelpCategories[0];
     }
