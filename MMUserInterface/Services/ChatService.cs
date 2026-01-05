@@ -78,21 +78,6 @@ public class ChatService : IChatService
         return builder.ToString();
     }
 
-    //private static async Task<string> QueryOllamaAsync(string prompt, string model)
-    //{
-    //    var client = new HttpClient();
-    //    var request = new
-    //    {
-    //        model,
-    //        prompt,
-    //        stream = false
-    //    };
-
-    //    var response = await client.PostAsJsonAsync($"{apiAddress}/generate", request);
-    //    var result = await response.Content.ReadFromJsonAsync<OllamaResponse>();
-    //    return result?.Response ?? "No response received.";
-    //}
-
     private static async Task<string> QueryOllamaAsync(string prompt, string model)
     {
         var client = new HttpClient();
