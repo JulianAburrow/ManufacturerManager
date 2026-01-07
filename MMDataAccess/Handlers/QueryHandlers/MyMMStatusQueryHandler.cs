@@ -2,7 +2,7 @@
 
 public class MyMMStatusQueryHandler(ManufacturerManagerContext context) : IMyMMStatusQueryHandler
 {
-    public async Task<List<MyMMStatusModel>> GetMMStatusesAsync() =>
+    public async Task<List<MyMMStatusModel>> GetMyMMStatusesAsync() =>
         await context.MyMMStatuses
             .AsNoTracking()
             .ToListAsync();

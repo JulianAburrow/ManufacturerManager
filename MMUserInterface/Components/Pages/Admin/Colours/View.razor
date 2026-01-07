@@ -3,7 +3,7 @@
 
 <PageTitle>View Colour</PageTitle>
 
-@if (ColourModel is null)
+@if (ColourModel.ColourId == 0)
 {
     <LoadingMessageComponent ValueToShow="@Colour" />
     return;
@@ -17,7 +17,6 @@
             </MudCardContent>
             <MudCardActions>
                 <a class="btn btn-primary" href="/colour/edit/@ColourModel.ColourId">Edit</a>
-                &nbsp;
                 @if (OkToDelete)
                 {
                     @:&nbsp;

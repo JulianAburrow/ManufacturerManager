@@ -1,0 +1,32 @@
+﻿@page "/mymm/view/{MyMMId:int}"
+@inherits MyMMBasePageClass
+
+<PageTitle>View MyMM</PageTitle>
+
+@if (MyMMModel.MyMMId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@MyMM" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudField Label="Title">@MyMMModel.Title</MudField>
+                <MudField Label="URL">@MyMMModel.URL</MudField>
+                <MudField Label="Notes">@MyMMModel.Notes</MudField>
+                <MudField Label="Action Date">@MyMMModel.ActionDate</MudField>
+                <MudField Label="Is External">@MyMMModel.IsExternal</MudField>
+                <MudField Label="Status">@MyMMModel.Status.StatusName</MudField>
+            </MudCardContent>
+            <MudCardActions>
+                <a class="btn btn-primary" href="/mymm/edit/@MyMMModel.MyMMId">Edit</a>
+                &nbsp;
+                <a class="btn btn-danger" href="/mymm/delete/@MyMMModel.MyMMId">Delete</a>
+                &nbsp;
+                <a class="btn btn-primary" href="/mymms/index">Cancel</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

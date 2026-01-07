@@ -7,6 +7,13 @@ public static class SharedValues
     public const int NoneValue = -1;
     public const string NoneText = "None";
 
+    public enum MyMMStatuses
+    {
+        Active = 1,
+        Inactive = 2,
+        Pending = 3,
+    }
+
     public enum ObjectTypes
     {
         PleaseSelect = -1,

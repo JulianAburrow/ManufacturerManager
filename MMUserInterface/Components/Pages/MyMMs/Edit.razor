@@ -1,0 +1,22 @@
+﻿@page "/mymm/edit/{MyMMId:int}"
+@inherits MyMMBasePageClass
+
+<PageTitle>Edit MyMM</PageTitle>
+
+@if (MyMMDisplayModel.MyMMId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@MyMM" />
+    return;
+}
+
+<EditForm Model="@MyMMDisplayModel" OnValidSubmit="UpdateMyMM">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <MyMMCreateUpdateComponent MyMMDisplayModel="@MyMMDisplayModel" MyMMStatuses="@MyMMStatuses" />
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

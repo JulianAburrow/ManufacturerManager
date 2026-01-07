@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace MMUserInterface.Helpers;
+﻿namespace MMUserInterface.Helpers;
 
 public class CSVStringHelper : ICSVStringHelper
 {
@@ -33,5 +31,17 @@ public class CSVStringHelper : ICSVStringHelper
         }
 
         return manufacturerCSVSB.ToString();
+    }
+
+    public string CreateMyMMCSVString(List<MyMMModel> myMMs)
+    {
+        var myMMCSVSB = new StringBuilder();
+        myMMCSVSB.AppendLine("Title,Notes,Action Date,Is External,Status");
+        foreach(var myMM in myMMs)
+        {
+            myMMCSVSB.AppendLine($"{myMM.Title},{myMM.Notes},{myMM.ActionDate},{myMM.IsExternal},{myMM.Status.StatusName}");
+        }            
+        
+        return myMMCSVSB.ToString();
     }
 }

@@ -21,7 +21,7 @@ public class MyMMStatusQueryTests
         _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[1]);
         _manufacturerManagerContext.SaveChanges();
 
-        var myMMStatusesReturned = await _myMMStatusHandler.GetMMStatusesAsync();
+        var myMMStatusesReturned = await _myMMStatusHandler.GetMyMMStatusesAsync();
 
         myMMStatusesReturned.Count().Should().Be(initialCount + 2);
     }

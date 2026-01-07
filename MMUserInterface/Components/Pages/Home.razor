@@ -1,8 +1,28 @@
 ﻿@page "/"
-@inherits BasePageClass
+@inherits MyMMBasePageClass
 
 <PageTitle>Manufacturer Manager</PageTitle>
 
 <h1>Hello team!</h1>
 
 Welcome to your new Manufacturer app.
+
+<br />
+
+<h2>My MMs</h2>
+
+@if (MyMMs is null)
+{
+    <LoadingMessageComponent ValueToShow="@MyMMPlural" />
+    return;
+}
+
+@if (MyMMs.Count() == 0)
+{
+    <NoResultsComponent ObjectType="@MyMMPlural" />
+    return;
+}
+
+Here are your currently active MyMMs:
+
+<MyMMGridViewComponent MyMMs="@MyMMs" />

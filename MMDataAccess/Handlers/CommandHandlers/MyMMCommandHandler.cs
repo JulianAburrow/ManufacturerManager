@@ -34,6 +34,7 @@ public class MyMMCommandHandler(ManufacturerManagerContext context) : IMyMMComma
         myMMToUpdate.Notes = myMM.Notes;
         myMMToUpdate.ActionDate = myMM.ActionDate;
         myMMToUpdate.IsExternal = myMM.IsExternal;
+        myMMToUpdate.StatusId = myMM.StatusId;
         if (callSaveChanges)
             await SaveChangesAsync();
     }

@@ -2,7 +2,7 @@
 
 public interface IMyMMStatusQueryHandler
 {
-    Task<List<MyMMStatusModel>> GetMMStatusesAsync();
+    Task<List<MyMMStatusModel>> GetMyMMStatusesAsync();
 
     Task<MyMMStatusModel> GetMyMMStatusAsync(int myMMStatusId);
 }

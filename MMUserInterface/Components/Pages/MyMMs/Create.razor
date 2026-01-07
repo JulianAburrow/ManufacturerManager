@@ -1,0 +1,23 @@
+﻿@page "/mymm/create"
+@inherits MyMMBasePageClass
+
+<PageTitle>Create MyMM</PageTitle>
+
+@if (MyMMStatuses is null)
+{
+    <LoadingMessageComponent ValueToShow="@Values" />
+    return;
+}
+
+<EditForm Model="MyMMDisplayModel" OnValidSubmit="CreateMyMM">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <MyMMCreateUpdateComponent MyMMDisplayModel="@MyMMDisplayModel" MyMMStatuses="@MyMMStatuses" />
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

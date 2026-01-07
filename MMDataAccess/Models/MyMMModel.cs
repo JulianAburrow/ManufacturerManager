@@ -10,7 +10,7 @@ public class MyMMModel
 
     public string? Notes { get; set; }
 
-    public DateOnly? ActionDate { get; set; }
+    public DateTime? ActionDate { get; set; }
 
     public bool IsExternal { get; set; }
 

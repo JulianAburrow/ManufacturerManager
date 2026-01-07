@@ -3,7 +3,7 @@
 
 <PageTitle>View Error</PageTitle>
 
-@if (ErrorModel is null)
+@if (ErrorModel.ErrorId == 0)
 {
     <LoadingMessageComponent ValueToShow="@Error" />
     return;
