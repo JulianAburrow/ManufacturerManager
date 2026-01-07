@@ -2,28 +2,26 @@
 
 public class ColourCommandHandler(ManufacturerManagerContext context) : IColourCommandHandler
 {
-    private readonly ManufacturerManagerContext _context = context;
-
     public async Task CreateColourAsync(ColourModel colour, bool callSaveChanges)
     {
-        _context.Colours.Add(colour);
+        context.Colours.Add(colour);
         if (callSaveChanges)
             await SaveChangesAsync();
     }
 
     public async Task DeleteColourAsync(int colourId, bool callSaveChanges)
     {
-        var colourToDelete = _context.Colours.SingleOrDefault(c => c.ColourId == colourId);
+        var colourToDelete = context.Colours.SingleOrDefault(c => c.ColourId == colourId);
         if (colourToDelete is null)
             return;
-        _context.Colours.Remove(colourToDelete);
+        context.Colours.Remove(colourToDelete);
         if (callSaveChanges)
             await SaveChangesAsync();
     }
 
     public async Task UpdateColourAsync(ColourModel colour, bool callSaveChanges)
     {
-        var colourToUpdate = _context.Colours.SingleOrDefault(c => c.ColourId == colour.ColourId);
+        var colourToUpdate = context.Colours.SingleOrDefault(c => c.ColourId == colour.ColourId);
         if (colourToUpdate is null)
             return;
 
@@ -33,5 +31,5 @@ public class ColourCommandHandler(ManufacturerManagerContext context) : IColourC
     }
 
     public async Task SaveChangesAsync() =>
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 }

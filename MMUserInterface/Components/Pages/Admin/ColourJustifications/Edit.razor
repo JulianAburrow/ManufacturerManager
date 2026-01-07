@@ -3,7 +3,7 @@
 
 <PageTitle>Edit Colour Justification</PageTitle>
 
-@if (ColourJustificationDisplayModel is null)
+@if (ColourJustificationDisplayModel.ColourJustificationId == 0)
 {
     <LoadingMessageComponent ValueToShow="@ColourJustification" />
     return;

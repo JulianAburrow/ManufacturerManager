@@ -1,0 +1,23 @@
+﻿<MudCardContent>
+    <MudTextField id="txtTitle" Label="Title" @bind-Value="MyMMDisplayModel.Title" AutoFocus OnlyValidateIfDirty="true" />
+    <MudTextField id="txtURL" Label="URL" @bind-Value="MyMMDisplayModel.URL" />
+    <MudTextField id="txtNotes" Label="Notes" @bind-Value="MyMMDisplayModel.Notes" Lines="10" />
+    <MudDatePicker id="txtActionDate" Editable="true" Label="Action Date" @bind-Date="MyMMDisplayModel.ActionDate" />
+    <MudCheckBox id="chkIsExternal" Label="Is External" @bind-Value="MyMMDisplayModel.IsExternal" T="bool" />
+    <MudSelect T="int"
+               id="ddlMyMMStatus"
+               Label="Status"
+               @bind-Value="MyMMDisplayModel.StatusId">
+        @foreach (var myMMStatus in MyMMStatuses)
+        {
+            <MudSelectItem T="int" Value="@myMMStatus.StatusId">
+                @myMMStatus.StatusName
+            </MudSelectItem>
+        }
+    </MudSelect>
+</MudCardContent>
+<MudCardActions>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    &nbsp;
+    <a class="btn btn-primary" href="/mymms/index">Cancel</a>
+</MudCardActions>

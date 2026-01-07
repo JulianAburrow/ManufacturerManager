@@ -14,6 +14,7 @@
             <MudText Typo="Typo.h5" Class="ml-3">Manufacturer Manager</MudText>
             <MudSpacer />
             <div style="width: 80%; color: white; font-size: 24px">@HeaderText</div>
+            <a class="btn btn-light" @onclick="SaveToMyMM" style="cursor: pointer">Save To MyMM</a>
         </MudAppBar>
         <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
             <NavMenu />

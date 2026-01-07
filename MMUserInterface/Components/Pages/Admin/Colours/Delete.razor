@@ -3,7 +3,7 @@
 
 <PageTitle>Delete Colour</PageTitle>
 
-@if (ColourModel is null)
+@if (ColourModel.ColourId == 0)
 {
     <LoadingMessageComponent ValueToShow="@Colour" />
     return;

@@ -3,7 +3,7 @@
 
 <PageTitle>View Widget</PageTitle>
 
-@if (WidgetModel is null ||
+@if (WidgetModel.WidgetId == 0 ||
     WidgetModel.Manufacturer is null ||
     WidgetModel.Status is null)
 {

@@ -5,4 +5,6 @@ public interface ICSVStringHelper
     string CreateWidgetCSVString(List<WidgetSummary> widgets);
 
     string CreateManufacturerCSVString(List<ManufacturerSummary> manufacturers);
+
+    string CreateMyMMCSVString(List<MyMMModel> myMMs);
 }

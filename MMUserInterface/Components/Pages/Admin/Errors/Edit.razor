@@ -3,7 +3,7 @@
 
 <PageTitle>Edit Error</PageTitle>
 
-@if (ErrorDisplayModel is null)
+@if (ErrorDisplayModel.ErrorId == 0)
 {
     <LoadingMessageComponent ValueToShow="@Error" />
     return;

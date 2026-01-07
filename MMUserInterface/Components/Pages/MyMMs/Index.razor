@@ -1,0 +1,30 @@
+﻿@page "/mymms/index"
+@inherits MyMMBasePageClass
+
+<PageTitle>My MM</PageTitle>
+
+@if (MyMMs is null)
+{
+    <LoadingMessageComponent ValueToShow="@MyMMPlural" />
+    return;
+}
+
+<a href="/mymm/create" class="btn btn-primary">Create My MM</a>
+
+@if (MyMMs.Count > 0)
+{
+    @:&nbsp;
+    <button class="btn btn-success" @onclick="ExportCSV">Download As CSV</button>
+}
+
+
+<br />
+<br />
+
+@if (MyMMs.Count == 0)
+{
+    <NoResultsComponent ObjectType="@MyMMPlural" />
+    return;
+}
+
+<MyMMGridViewComponent MyMMs="@MyMMs" />

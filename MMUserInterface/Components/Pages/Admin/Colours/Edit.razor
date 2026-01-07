@@ -3,7 +3,7 @@
 
 <PageTitle>Edit Colour</PageTitle>
 
-@if (ColourDisplayModel is null)
+@if (ColourDisplayModel.ColourId == 0)
 {
     <LoadingMessageComponent ValueToShow="@Colour" />
     return;

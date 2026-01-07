@@ -1,0 +1,59 @@
+﻿<MudTable Items="MyMMs"
+          Hover
+          FixedHeader="true">
+    <HeaderContent>
+        <MudTh title="Sort by Title">
+            <MudTableSortLabel SortBy="new Func<MyMMModel, object>(x => x.Title)">
+                Title
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by URL">
+            <MudTableSortLabel SortBy="@((MyMMModel x) => x.URL?.ToString() ?? "None")">
+                URL
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            Notes
+        </MudTh>
+        <MudTh title="Sort by Action Date">
+            <MudTableSortLabel SortBy="@((MyMMModel x) => x.ActionDate.ToString() ?? "None")">
+                Action Date
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Is External">
+            <MudTableSortLabel SortBy="new Func<MyMMModel, object>(x => x.IsExternal)">
+                Is External
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Status">
+            <MudTableSortLabel SortBy="new Func<MyMMModel, object>(x => x.Status.StatusName)">
+                Status
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Title</MudTd>
+        <MudTd>@context.URL</MudTd>
+        <MudTd title="@context.Notes">
+            @(context.Notes is not null
+                        ? (context.Notes.Length >= 22
+                        ? $"{context.Notes.Substring(0, 22)} ..."
+                        : context.Notes)
+                        : "None")
+        </MudTd>
+        <MudTd>@(context.ActionDate != null ? context.ActionDate : "None")</MudTd>
+        <MudTd>@context.IsExternal</MudTd>
+        <MudTd>@context.Status.StatusName</MudTd>
+        <MudTd>
+            <a href="/mymm/view/@context.MyMMId" class="btn btn-primary">View</a>
+            &nbsp;
+            <a href="/mymm/edit/@context.MyMMId" class="btn btn-primary">Edit</a>
+            &nbsp;
+            <a href="/mymm/delete/@context.MyMMId" class="btn btn-danger">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 15, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

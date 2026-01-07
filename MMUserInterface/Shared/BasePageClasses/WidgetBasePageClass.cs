@@ -52,6 +52,25 @@ public abstract class WidgetBasePageClass : BasePageClass
         WidgetModel.StockLevel = WidgetDisplayModel.StockLevel;
     }
 
+    protected void CopyModelToDisplayModel()
+    {
+        WidgetDisplayModel.WidgetId = WidgetId;
+        WidgetDisplayModel.Name = WidgetModel.Name;
+        WidgetDisplayModel.ManufacturerId = WidgetModel.ManufacturerId;
+        WidgetDisplayModel.ColourId = WidgetModel.ColourId != null
+            ? WidgetModel.ColourId
+            : SharedValues.NoneValue;
+        WidgetDisplayModel.ColourJustificationId = WidgetModel.ColourJustificationId != null
+            ? WidgetModel.ColourJustificationId
+            : SharedValues.NoneValue;
+        WidgetDisplayModel.StatusId = WidgetModel.StatusId;
+        WidgetDisplayModel.Manufacturer = WidgetModel.Manufacturer;
+        WidgetDisplayModel.WidgetImage = WidgetModel.WidgetImage;
+        WidgetDisplayModel.CostPrice = WidgetModel.CostPrice;
+        WidgetDisplayModel.RetailPrice = WidgetModel.RetailPrice;
+        WidgetDisplayModel.StockLevel = WidgetModel.StockLevel;
+    }
+
     protected BreadcrumbItem GetWidgetHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new BreadcrumbItem(WidgetPlural, "/widgets/index", isDisabled);

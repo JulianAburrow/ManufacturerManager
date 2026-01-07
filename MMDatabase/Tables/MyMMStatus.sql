@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[MyMMStatus]
+(
+	StatusId INT NOT NULL IDENTITY (1, 1),
+	StatusName NVARCHAR (20) NOT NULL,
+	CONSTRAINT PK_MyMMStatus PRIMARY KEY (StatusId)
+)

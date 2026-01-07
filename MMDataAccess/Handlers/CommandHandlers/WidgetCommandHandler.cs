@@ -1,29 +1,27 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
 public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetCommandHandler
-{
-    private readonly ManufacturerManagerContext _context = context;
-
+{    
     public async Task CreateWidgetAsync(WidgetModel widget, bool callSaveChanges)
     {
-        _context.Widgets.Add(widget);
+        context.Widgets.Add(widget);
         if (callSaveChanges)
             await SaveChangesAsync();
     }
 
     public async Task DeleteWidgetAsync(int widgetId, bool callSaveChanges)
     {
-        var widgetToDelete = _context.Widgets.SingleOrDefault(w => w.WidgetId == widgetId);
+        var widgetToDelete = context.Widgets.SingleOrDefault(w => w.WidgetId == widgetId);
         if (widgetToDelete is null)
             return;
-        _context.Widgets.Remove(widgetToDelete);
+        context.Widgets.Remove(widgetToDelete);
         if (callSaveChanges)
             await SaveChangesAsync();
     }
 
     public async Task UpdateWidgetAsync(WidgetModel widget, bool callSaveChanges)
     {
-        var widgetToUpdate = _context.Widgets.SingleOrDefault(w => w.WidgetId == widget.WidgetId);
+        var widgetToUpdate = context.Widgets.SingleOrDefault(w => w.WidgetId == widget.WidgetId);
         if (widgetToUpdate is null)
             return;
         widgetToUpdate.Name = widget.Name;
@@ -41,5 +39,5 @@ public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetC
     }
 
     public async Task SaveChangesAsync() =>
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 }

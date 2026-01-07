@@ -67,6 +67,7 @@
     <PostDeploy Include="PostDeployment.sql" />
     <None Include="MMDatabase.publish.xml" />
     <None Include="SeedData\SeedCategory.sql" />
+    <None Include="SeedData\SeedMyMMStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Manufacturer.sql" />
@@ -77,5 +78,7 @@
     <Build Include="Tables\WidgetStatus.sql" />
     <Build Include="Tables\Error.sql" />
     <Build Include="Tables\Category.sql" />
+    <Build Include="Tables\MyMM.sql" />
+    <Build Include="Tables\MyMMStatus.sql" />
   </ItemGroup>
 </Project>

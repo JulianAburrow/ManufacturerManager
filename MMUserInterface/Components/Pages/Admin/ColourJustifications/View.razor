@@ -3,7 +3,7 @@
 
 <PageTitle>View Colour Justification</PageTitle>
 
-@if (ColourJustificationModel is null)
+@if (ColourJustificationModel.ColourJustificationId == 0)
 {
     <LoadingMessageComponent ValueToShow="@ColourJustification" />
     return;
@@ -27,5 +27,5 @@
                 <a class="btn btn-primary" href="/colourjustifications/index">Cancel</a>
             </MudCardActions>
         </MudCard>
-    </MudItem>"
+    </MudItem>
 </MudGrid>

@@ -1,0 +1,19 @@
+﻿@page "/mymm/delete/{MyMMId:int}"
+@inherits MyMMBasePageClass
+
+<PageTitle>Delete MyMM</PageTitle>
+
+@if (MyMMModel.MyMMId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@MyMM" />
+    return;
+}
+
+<ConfirmDeleteComponent ObjectType="@MyMM" ObjectName="@MyMMModel.Title" />
+
+<br />
+<br />
+
+<button class="btn btn-danger" @onclick="DeleteMyMM">Delete</button>
+&nbsp;
+<a href="/mymms/index" class="btn btn-primary">Cancel</a>

@@ -25,21 +25,8 @@ public partial class Edit
         Manufacturers = await ManufacturerHandler.GetManufacturersAsync();
 
         WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
-        WidgetDisplayModel.WidgetId = WidgetId;
-        WidgetDisplayModel.Name = WidgetModel.Name;
-        WidgetDisplayModel.ManufacturerId = WidgetModel.ManufacturerId;
-        WidgetDisplayModel.ColourId = WidgetModel.ColourId != null
-            ? WidgetModel.ColourId
-            : SharedValues.NoneValue;
-        WidgetDisplayModel.ColourJustificationId = WidgetModel.ColourJustificationId != null
-            ? WidgetModel.ColourJustificationId
-            : SharedValues.NoneValue;
-        WidgetDisplayModel.StatusId = WidgetModel.StatusId;
-        WidgetDisplayModel.Manufacturer = WidgetModel.Manufacturer;
-        WidgetDisplayModel.WidgetImage = WidgetModel.WidgetImage;
-        WidgetDisplayModel.CostPrice = WidgetModel.CostPrice;
-        WidgetDisplayModel.RetailPrice = WidgetModel.RetailPrice;
-        WidgetDisplayModel.StockLevel = WidgetModel.StockLevel;
+
+        CopyModelToDisplayModel();
 
         ManufacturerIsInactive = WidgetModel.Manufacturer.StatusId == (int)ManufacturerStatusEnum.Inactive;
 

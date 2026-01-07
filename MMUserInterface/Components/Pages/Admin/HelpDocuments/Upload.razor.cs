@@ -57,7 +57,7 @@ public partial class Upload
         }
         if (!file.Name.Contains(HelpDocumentDisplayModel.Category))
         {
-            FileMessage = $"File name must contain the category name. Please select a category first.";
+            FileMessage = $"File name must contain the category name. Please select a category first and ensure that the document name contains the category.";
             return;
         }   
         try
