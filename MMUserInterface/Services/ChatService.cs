@@ -75,6 +75,32 @@ public class ChatService : IChatService
         builder.AppendLine("=== QUESTION ===");
         builder.AppendLine(question.Trim());
 
+        //if (strictMode)
+        //{
+        //    builder.AppendLine("You are an assistant that answers using only the information found in the document.");
+        //    builder.AppendLine("If the document does not contain the answer, say so briefly.");
+        //    builder.AppendLine("Keep your answer concise and factual.");
+        //    builder.AppendLine("Use bullet points when listing items.");
+        //    builder.AppendLine();
+        //}
+        //else
+        //{
+        //    builder.AppendLine("You are a concise, helpful assistant.");
+        //    builder.AppendLine("If the question is unclear, state your assumption briefly and answer based on it.");
+        //    builder.AppendLine("Keep explanations short and direct.");
+        //    builder.AppendLine();
+        //}
+
+        //builder.AppendLine("### Document");
+        //builder.AppendLine(document.Trim());
+        //builder.AppendLine();
+
+        //builder.AppendLine("### Question");
+        //builder.AppendLine(question.Trim());
+        //builder.AppendLine();
+
+        //builder.AppendLine("### Answer");
+
         return builder.ToString();
     }
 

@@ -52,7 +52,7 @@ Select a category from which you require help and type your question
                     @foreach(var availableModel in AvailableModels)
                     {
                         <MudSelectItem T="string" Value="@availableModel.Name">
-                            @availableModel.Name
+                            @availableModel.Name (@GetTooltip(availableModel.Size))
                         </MudSelectItem>
                     }
                 </MudSelect>
