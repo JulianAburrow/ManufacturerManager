@@ -22,7 +22,10 @@ public partial class Help
     {
         try
         {
-            AvailableModels.AddRange(await ChatService.GetAvailableModelsAsync());
+            AvailableModels.AddRange((
+                await ChatService.GetAvailableModelsAsync())
+                    .OrderBy(a => a.Size)
+                    .ThenBy(a => a.Name));
         }
         catch
         {
@@ -83,5 +86,19 @@ public partial class Help
             IsThinking = false;
             StateHasChanged();
         }
+    }
+
+    private string GetTooltip(long sizeBytes)
+    {
+        double sizeGB = sizeBytes / (1024.0 * 1024.0 * 1024.0);
+
+        if (sizeGB < 2)
+            return "Fast";
+        if (sizeGB < 5)
+            return "Balanced";
+        if (sizeGB < 10)
+            return "Detailed";
+
+        return "Very detailed";
     }
 }
