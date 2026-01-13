@@ -37,7 +37,7 @@ try {
 # Run xUnit tests
 try {
     Log "Running xUnit tests..."
-    dotnet test "C:\Julians Work\Study\ManufacturerManager\TestsUnit\TestsUnit.csproj"
+    dotnet test "C:\JuliansWork\Study\ManufacturerManager\TestsUnit\TestsUnit.csproj"
     if ($LASTEXITCODE -ne 0) {
         Log "xUnit tests failed with exit code $LASTEXITCODE"
         $ScriptFailed = $true
@@ -53,7 +53,7 @@ $maxAttempts = 10
 $attempt = 0
 do {
     try {
-        $response = Invoke-WebRequest -Uri "https://localhost:8090/" -UseBasicParsing -TimeoutSec 5
+        $response = Invoke-WebRequest -Uri "http://localhost:8090/" -UseBasicParsing -TimeoutSec 5
         if ($response.StatusCode -eq 200) {
             Write-Host "Site is ready."
             break
@@ -69,8 +69,10 @@ if ($attempt -eq $maxAttempts) {
     Write-Host "Site did not respond in time."
 }
 
+<#
+
 # Set BASE_URL for Playwright
-$env:BASE_URL = "https://localhost:8090"
+$env:BASE_URL = "http://localhost:8090"
 Log "Set BASE_URL to $env:BASE_URL"
 
 # Warm up IIS site before running Playwright tests
@@ -81,7 +83,7 @@ try {
     $attempt = 0
     do {
         try {
-            $response = Invoke-WebRequest -Uri "https://localhost:8090/" -UseBasicParsing -TimeoutSec 5
+            $response = Invoke-WebRequest -Uri "http://localhost:8090/" -UseBasicParsing -TimeoutSec 5
             if ($response.StatusCode -eq 200) {
                 Log "Warm-up probe successful."
                 break
@@ -105,7 +107,7 @@ try {
 # Run Playwright tests
 try {
     Log "Running Playwright tests..."
-    dotnet test "C:\Julians Work\Study\ManufacturerManager\TestsPlaywright\TestsPlaywright.csproj"
+    dotnet test "C:\JuliansWork\Study\ManufacturerManager\TestsPlaywright\TestsPlaywright.csproj"
     if ($LASTEXITCODE -ne 0) {
         Log "Playwright tests failed."
         $ScriptFailed = $true
@@ -120,6 +122,7 @@ try {
 # Remove BASE_URL
 Remove-Item Env:\BASE_URL
 Log "Removed BASE_URL environment variable."
+#>
 
 # Clean up lingering processes
 try {
@@ -133,9 +136,9 @@ try {
 Log "PostPublish completed."
 
 # Trigger Jenkins job after successful publish
-$jenkinsUrl = "http://localhost:8080/job/ManufacturerManager-DeployDevToTest/buildWithParameters?DryRun=false"
-$jenkinsUser = "julianaburrow"
-$jenkinsToken = "113abbf294bdd2bc810f2893b954cc0deb"
+$jenkinsUrl = "http://localhost:8080/job/ManufacturerManager-1-DeployDevToTest/buildWithParameters?DryRun=false"
+$jenkinsUser = "VS_Publisher"
+$jenkinsToken = "11e5c4513b9716c83758531e7390ac9e3b"
 
 $headers = @{
     Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${jenkinsUser}:${jenkinsToken}"))
