@@ -1,7 +1,7 @@
 ﻿param (
     [string]$AppPoolName = "ManufacturerManagerDev",
     [string]$SiteName = "ManufacturerManagerDev",
-    [string]$PublishDir = "C:\inetpub\ManufacturerManagerDev"
+    [string]$PublishDir = "C:\inetpub\Websites\ManufacturerManager\Dev"
 )
 
 Import-Module WebAdministration

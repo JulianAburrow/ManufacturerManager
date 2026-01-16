@@ -5,7 +5,7 @@ param (
 
 Import-Module WebAdministration
 $ScriptFailed = $false
-$LogPath = "C:\inetpub\ManufacturerManagerDev\PrePublish.log"
+$LogPath = "C:\inetpub\Websites\ManufacturerManager\Dev\PrePublish.log"
 
 function Log($message) {
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
@@ -43,12 +43,21 @@ try {
     $ScriptFailed = $true
 }
 
-# Kill lingering w3wp
+# Kill only the ManufacturerDev worker process
 try {
-    Get-Process w3wp -ErrorAction SilentlyContinue | Stop-Process -Force
-    Log "Stopped lingering w3wp processes."
-} catch {
-    Log "ERROR stopping w3wp: $_"
+    $workerProcesses = Get-ChildItem "IIS:\AppPools\$AppPoolName\workerProcesses"
+
+    if ($workerProcesses) {
+        foreach ($wp in $workerProcesses) {
+            Stop-Process -Id $wp.ProcessId -Force
+            Log "Stopped w3wp for App Pool '$AppPoolName' (PID $($wp.ProcessId))."
+        }
+    } else {
+        Log "No worker process running for App Pool '$AppPoolName'."
+    }
+}
+catch {
+    Log "ERROR stopping ManufacturerDev w3wp: $_"
     $ScriptFailed = $true
 }
 
