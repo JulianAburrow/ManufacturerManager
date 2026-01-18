@@ -1,0 +1,40 @@
+﻿@page "/category/edit/{CategoryId:int}"
+@inherits CategoryBasePageClass
+
+<PageTitle>Edit Category</PageTitle>
+
+@if (CategoryDisplayModel.CategoryId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@Category" />
+    return;
+}
+
+@if (!OkToDeleteOrEdit)
+{
+    <CannotDeleteOrEditCategoryComponent />
+    <br />
+    <a href="/categories/index" class="btn btn-primary">Cancel</a>
+    return;
+}
+
+@if (CategoryExists)
+{
+    <MudAlert Severity="Severity.Error" Elevation="0">
+        A category with the name "@CategoryDisplayModel.Name" already exists. Please choose a different name.
+    </MudAlert>
+}
+
+<br />
+<br />
+
+<EditForm Model="@CategoryDisplayModel" OnValidSubmit="UpdateCategory">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CategoryCreateUpdateComponent CategoryDisplayModel="@CategoryDisplayModel" />
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

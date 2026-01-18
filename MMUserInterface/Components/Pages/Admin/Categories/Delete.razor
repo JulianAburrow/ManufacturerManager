@@ -1,0 +1,31 @@
+﻿@page "/category/delete/{CategoryId:int}"
+@inherits CategoryBasePageClass
+
+<PageTitle>Delete Category</PageTitle>
+
+@if  (CategoryModel.CategoryId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@Category" />
+    return;
+}
+
+@if (!OkToDeleteOrEdit)
+{
+    <CannotDeleteOrEditCategoryComponent />
+    return;
+}
+
+<ConfirmDeleteComponent ObjectType="@Category" ObjectName="@CategoryModel.Name" />
+
+<br />
+<br />
+
+@if (OkToDeleteOrEdit)
+{
+    <button class="btn btn-danger" @onclick="DeleteCategory">Delete</button>
+    @:&nbsp;
+}
+
+<a class="btn btn-primary" href="/categories/index">Cancel</a>
+
+

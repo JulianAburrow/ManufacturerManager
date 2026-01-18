@@ -1,0 +1,24 @@
+﻿@page "/category/create"
+@inherits CategoryBasePageClass
+
+<PageTitle>Create Category</PageTitle>
+
+@if (CategoryExists)
+{
+    <MudAlert Severity="Severity.Error" Elevation="0">
+        A category with the name "@CategoryDisplayModel.Name" already exists. Please choose a different name.
+    </MudAlert>
+}
+
+<EditForm Model="@CategoryDisplayModel" OnValidSubmit="CreateCategory">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CategoryCreateUpdateComponent CategoryDisplayModel="@CategoryDisplayModel" />
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
