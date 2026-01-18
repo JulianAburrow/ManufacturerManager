@@ -16,10 +16,13 @@
         <MudTd>@context.Name</MudTd>
         <MudTd>
             <a class="btn btn-primary" href="/category/view/@context.CategoryId">View</a>
-            &nbsp;
-            <a class="btn btn-primary" href="/category/edit/@context.CategoryId">Edit</a>
-            &nbsp;
-            <a class="btn btn-danger" href="/category/delete/@context.CategoryId">Delete</a>
+            @if (OkToDeleteOrEdit(context.Name))
+            {
+                @:&nbsp;
+                <a class="btn btn-primary" href="/category/edit/@context.CategoryId">Edit</a>
+                @:&nbsp;
+                <a class="btn btn-danger" href="/category/delete/@context.CategoryId">Delete</a>
+            }            
         </MudTd>
     </RowTemplate>
     <PagerContent>

@@ -1,0 +1,22 @@
+﻿@page "/categories/index"
+@inherits CategoryBasePageClass
+
+<PageTitle>Categories</PageTitle>
+
+@if (Categories is null)
+{
+    <LoadingMessageComponent ValueToShow="@CategoryPlural" />
+    return;
+}
+
+<a href="/category/create" class="btn btn-primary">Create Category</a>
+
+<br />
+<br />
+
+@if (Categories.Count == 0)
+{
+    <NoResultsComponent ObjectType="@CategoryPlural" />
+    return;
+}
+<CategoryGridViewComponent Categories="Categories" />

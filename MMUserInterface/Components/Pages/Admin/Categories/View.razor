@@ -1,0 +1,31 @@
+﻿@page "/category/view/{CategoryId:int}"
+@inherits CategoryBasePageClass
+
+<PageTitle>View Category</PageTitle>
+
+@if (CategoryModel.CategoryId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@Category" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudField Label="Name">@CategoryModel.Name</MudField>
+            </MudCardContent>
+            <MudCardActions>
+                @if (OkToDeleteOrEdit)
+                {
+                    <a class="btn btn-primary" href="/category/edit/@CategoryModel.CategoryId">Edit</a>
+                    @:&nbsp;
+                    <a class="btn btn-danger" href="/category/delete/@CategoryModel.CategoryId">Delete</a>
+                    @:&nbsp;
+                }
+                <a class="btn btn-primary" href="/categories/index">Cancel</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+

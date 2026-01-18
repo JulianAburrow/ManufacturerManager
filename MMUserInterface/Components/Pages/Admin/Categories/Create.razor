@@ -1,0 +1,22 @@
+﻿@page "/category/create"
+@inherits CategoryBasePageClass
+
+<PageTitle>Create Category</PageTitle>
+
+@if (CategoryExists)
+{
+    <CategeoryExistsComponent CategoryName="@CategoryDisplayModel.Name" />
+}
+
+<EditForm Model="@CategoryDisplayModel" OnValidSubmit="CreateCategory">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CategoryCreateUpdateComponent CategoryDisplayModel="@CategoryDisplayModel" />
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
