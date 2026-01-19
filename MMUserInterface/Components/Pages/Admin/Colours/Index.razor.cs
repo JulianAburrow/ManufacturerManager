@@ -2,12 +2,13 @@
 
 public partial class Index
 {
-    List<ColourModel> Colours { get; set; } = null!;
+    private List<ColourModel>? Colours { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Colours = await ColourQueryHandler.GetColoursAsync();
-        Snackbar.Add($"{Colours.Count} item(s) found", Colours.Count > 0 ? Severity.Info : Severity.Warning);
+        var count = Colours.Count;
+        Snackbar.Add($"{count} colour{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Colours");
     }
 

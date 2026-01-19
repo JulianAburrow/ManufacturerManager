@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class ColourBasePageClass : BasePageClass
+public abstract class ColourBasePageClass : BasePageClass
 {    
     [Inject] protected IColourCommandHandler ColourCommandHandler { get; set; } = default!;
 

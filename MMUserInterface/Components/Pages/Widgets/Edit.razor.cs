@@ -28,8 +28,6 @@ public partial class Edit
 
         CopyModelToDisplayModel();
 
-        ManufacturerIsInactive = WidgetModel.Manufacturer.StatusId == (int)ManufacturerStatusEnum.Inactive;
-
         MainLayout.SetHeaderValue("Edit Widget");
     }
 
@@ -43,7 +41,7 @@ public partial class Edit
         ]);
     }
 
-    private async void UpdateWidget()
+    private async Task UpdateWidget()
     {
         CopyDisplayModelToModel();
 

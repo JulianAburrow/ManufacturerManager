@@ -2,12 +2,13 @@
 
 public partial class Index
 {
-    protected List<WidgetSummary> Widgets { get; set; } = null!;
+    private List<WidgetSummary>? Widgets { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Widgets = await WidgetQueryHandler.GetWidgetsAsync();
-        Snackbar.Add($"{Widgets.Count} item(s) found.", Widgets.Count > 0 ? Severity.Info : Severity.Warning);
+        var count = Widgets.Count;
+        Snackbar.Add($"{count} widget{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Widgets");
     }
 
@@ -22,6 +23,12 @@ public partial class Index
 
     private async Task ExportCSV()
     {
+        if (Widgets == null || !Widgets.Any())
+        {
+            Snackbar.Add("No widgets available to export.", Severity.Warning);
+            return;
+        }
+
         var csvString = CSVStringHelper.CreateWidgetCSVString(Widgets);
         var fileBytes = SharedMethods.GetUTF8Bytes(csvString);
         var base64 = SharedMethods.GetBase64String(fileBytes);

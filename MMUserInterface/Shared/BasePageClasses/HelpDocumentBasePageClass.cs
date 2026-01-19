@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class HelpDocumentBasePageClass : BasePageClass
+public abstract class HelpDocumentBasePageClass : BasePageClass
 {
     [Inject] protected IHelpDocumentService HelpDocumentService { get; set; } = default!;
 

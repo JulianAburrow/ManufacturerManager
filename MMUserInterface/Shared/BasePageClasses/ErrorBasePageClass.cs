@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class ErrorBasePageClass : BasePageClass
+public abstract class ErrorBasePageClass : BasePageClass
 {
     [Parameter] public int ErrorId { get; set; }
 

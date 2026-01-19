@@ -2,12 +2,13 @@ namespace MMUserInterface.Components.Pages.Admin.HelpDocuments;
 
 public partial class Index
 {
-    protected List<HelpDocumentModel> HelpDocumentModels { get; set; } = null!;
+    private List<HelpDocumentModel>? HelpDocumentModels { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         HelpDocumentModels = await HelpDocumentService.GetHelpDocumentModelsAsync();
-        Snackbar.Add($"{HelpDocumentModels.Count} item(s) found", HelpDocumentModels.Count > 0 ? Severity.Info : Severity.Warning);
+        var count = HelpDocumentModels.Count;
+        Snackbar.Add($"{count} help document{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Help Documents");
     }
 

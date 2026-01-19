@@ -5,7 +5,8 @@ public partial class Index
     protected override async Task OnInitializedAsync()
     {
         MyMMs = await MyMMQueryHandler.GetMyMMsAsync();
-        Snackbar.Add($"{MyMMs.Count} item(s) found.", MyMMs.Count > 0 ? Severity.Info : Severity.Warning);
+        var count = MyMMs.Count;
+        Snackbar.Add($"{count} MyMM{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("MyMMs");
     }
 
@@ -20,6 +21,12 @@ public partial class Index
 
     private async Task ExportCSV()
     {
+        if (MyMMs is null || MyMMs.Count == 0)
+        {
+            Snackbar.Add("No MyMMs to export.", Severity.Warning);
+            return;
+        }
+
         var csvString = CSVStringHelper.CreateMyMMCSVString(MyMMs);
         var fileBytes = SharedMethods.GetUTF8Bytes(csvString);
         var base64 = SharedMethods.GetBase64String(fileBytes);
