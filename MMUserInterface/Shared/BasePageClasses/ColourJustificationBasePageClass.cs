@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class ColourJustificationBasePageClass : BasePageClass
+public abstract class ColourJustificationBasePageClass : BasePageClass
 {
     [Inject] protected IColourJustificationCommandHandler ColourJustificationCommandHandler { get; set; } = default!;
 

@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class HelpBasePageClass : BasePageClass
+public abstract class HelpBasePageClass : BasePageClass
 {
     [Inject] protected IChatService ChatService { get; set; } = default!;
 

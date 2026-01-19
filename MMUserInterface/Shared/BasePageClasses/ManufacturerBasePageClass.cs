@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class ManufacturerBasePageClass : BasePageClass
+public abstract class ManufacturerBasePageClass : BasePageClass
 {
     [Inject] protected IManufacturerQueryHandler ManufacturerQueryHandler { get; set; } = default!;
 
@@ -14,7 +14,7 @@ public class ManufacturerBasePageClass : BasePageClass
 
     protected ManufacturerDisplayModel ManufacturerDisplayModel = new();
 
-    public required List<ManufacturerStatusModel> ManufacturerStatuses { get; set; }
+    protected List<ManufacturerStatusModel>? ManufacturerStatuses { get; set; }
 
     protected string Manufacturer = "Manufacturer";
 

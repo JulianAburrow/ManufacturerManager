@@ -1,6 +1,6 @@
 ﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-public class BasePageClass : ComponentBase
+public abstract class BasePageClass : ComponentBase
 {
     [Inject] protected NavigationManager NavigationManager { get; set; } = default!;
 

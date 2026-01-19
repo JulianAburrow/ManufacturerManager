@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.Web;
+﻿namespace MMUserInterface.Shared.BasePageClasses;
 
-namespace MMUserInterface.Shared.BasePageClasses;
-
-public class CategoryBasePageClass : BasePageClass
+public abstract class CategoryBasePageClass : BasePageClass
 {
 
     [Parameter] public int CategoryId { get; set; }

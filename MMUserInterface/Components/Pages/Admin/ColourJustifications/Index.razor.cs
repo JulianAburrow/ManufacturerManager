@@ -2,12 +2,13 @@
 
 public partial class Index
 {
-    List<ColourJustificationModel> ColourJustifications { get; set; } = null!;
+    private List<ColourJustificationModel>? ColourJustifications { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         ColourJustifications = await ColourJustificationQueryHandler.GetColourJustificationsAsync();
-        Snackbar.Add($"{ColourJustifications.Count} item(s) found", ColourJustifications.Count > 0 ? Severity.Info : Severity.Warning);
+        var count = ColourJustifications.Count;
+        Snackbar.Add($"{count} colour justification{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Colour Justifications");
     }
 

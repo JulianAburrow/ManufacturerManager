@@ -20,13 +20,13 @@ public abstract class WidgetBasePageClass : BasePageClass
 
     protected WidgetDisplayModel WidgetDisplayModel = new();
 
-    public required List<WidgetStatusModel> WidgetStatuses { get; set; }
+    protected List<WidgetStatusModel>? WidgetStatuses { get; set; }
 
-    public required List<ColourModel> Colours { get; set; }
+    protected List<ColourModel>? Colours { get; set; }
 
-    public required List<ColourJustificationModel> ColourJustifications { get; set; }
+    protected List<ColourJustificationModel>? ColourJustifications { get; set; }
 
-    public required List<ManufacturerSummary> Manufacturers { get; set; }
+    protected List<ManufacturerSummary>? Manufacturers { get; set; }
 
     protected string FileName = string.Empty;
 
@@ -74,20 +74,5 @@ public abstract class WidgetBasePageClass : BasePageClass
     protected BreadcrumbItem GetWidgetHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new BreadcrumbItem(WidgetPlural, "/widgets/index", isDisabled);
-    }
-
-    protected async Task SetWidgetStatusId()
-    {
-        if (WidgetDisplayModel.ManufacturerId == SharedValues.PleaseSelectValue)
-        {
-            WidgetDisplayModel.StatusId = SharedValues.PleaseSelectValue;
-            ManufacturerIsInactive = false;
-            return;
-        }
-        var manufacturerStatusId = await ManufacturerHandler.GetManufacturerStatusByManufacturerId(WidgetDisplayModel.ManufacturerId);
-        ManufacturerIsInactive = manufacturerStatusId == (int)ManufacturerStatusEnum.Inactive;
-        WidgetDisplayModel.StatusId = ManufacturerIsInactive
-            ? (int)WidgetStatusEnum.Inactive
-            : SharedValues.PleaseSelectValue;
     }
 }

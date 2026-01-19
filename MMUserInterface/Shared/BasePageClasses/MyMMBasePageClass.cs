@@ -14,7 +14,7 @@ public abstract class MyMMBasePageClass : BasePageClass
 
     protected MyMMDisplayModel MyMMDisplayModel { get; set; } = new();
 
-    protected List<MyMMModel> MyMMs { get; set; } = null!;
+    protected List<MyMMModel>? MyMMs { get; set; }
 
     public required List<MyMMStatusModel> MyMMStatuses { get; set; }
 
