@@ -14,7 +14,11 @@
         <MudCard>
             <MudCardContent>
                 <MudField Label="Title">@MyMMModel.Title</MudField>
-                <MudField Label="URL">@MyMMModel.URL</MudField>
+                <MudField Label="URL">
+                    <a href="@MyMMModel.URL" target="@(MyMMModel.IsExternal ? "_blank" : "_self")">
+                        @MyMMModel.URL
+                    </a>
+                </MudField>
                 <MudField Label="Notes">@MyMMModel.Notes</MudField>
                 <MudField Label="Action Date">@MyMMModel.ActionDate</MudField>
                 <MudField Label="Is External">@MyMMModel.IsExternal</MudField>

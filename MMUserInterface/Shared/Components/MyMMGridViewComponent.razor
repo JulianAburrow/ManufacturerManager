@@ -34,7 +34,11 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd>@context.Title</MudTd>
-        <MudTd>@context.URL</MudTd>
+        <MudTd>
+            <a href="@context.URL" target="@(context.IsExternal ? "_blank" : "_self")">
+                @context.URL
+            </a>
+        </MudTd>
         <MudTd title="@context.Notes">
             @(context.Notes is not null
                         ? (context.Notes.Length >= 22
