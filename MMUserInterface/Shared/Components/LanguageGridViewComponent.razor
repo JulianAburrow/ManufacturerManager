@@ -1,0 +1,47 @@
+﻿<MudTable Items="Languages"
+          SortLabel="SortBy"
+          Hover
+          RowsPerPage="10"
+          FixedHeader
+          Height="500px">
+    <HeaderContent>
+        <MudTh title="Sort by English Name">
+            <MudTableSortLabel SortBy="new Func<LanguageModel, object>(x => x.EnglishName)">
+                English Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Original Name">
+            <MudTableSortLabel SortBy="new Func<LanguageModel, object>(x => x.OriginalName)">
+                Original Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Transliterated Name">
+            <MudTableSortLabel SortBy="new Func<LanguageModel, object>(x => x.TransliteratedName)">
+                Transliterated Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Code">
+            <MudTableSortLabel SortBy="new Func<LanguageModel, object>(x => x.Code)">
+                Code
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            Use in Help Page
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.EnglishName</MudTd>
+        <MudTd>@context.OriginalName</MudTd>
+        <MudTd>@context.TransliteratedName</MudTd>
+        <MudTd>@context.Code</MudTd>
+        <MudTd>
+            <MudCheckBox T="bool"
+                         Value="@context.UseInHelpPage"
+                         ValueChanged="@(e => SetUnsetUseInHelpPage(context.LanguageId, e))" />
+
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

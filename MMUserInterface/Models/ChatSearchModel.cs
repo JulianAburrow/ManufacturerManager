@@ -7,4 +7,6 @@ public class ChatSearchModel
     public string SearchQuestion { get; set; } = string.Empty;
 
     public string SearchModel { get; set; } = string.Empty;
+
+    public string LanguageRequired { get; set; } = "English";
 }

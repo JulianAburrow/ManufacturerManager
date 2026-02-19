@@ -1,0 +1,48 @@
+﻿@page "/languages/index"
+@inherits LanguageBasePageClass
+
+<PageTitle>Languages</PageTitle>
+
+@if (Languages is null)
+{
+    <LoadingMessageComponent ValueToShow="@LanguagePlural" />
+    return;
+}
+
+@if (Languages.Count == 0)
+{
+    <NoResultsComponent ObjectType="@LanguagePlural" />
+    return;
+}
+
+@if (Languages.Any(l => l.UseInHelpPage))
+{
+    <MudPaper Class="pa-2 mb-4">
+        <MudText Typo="Typo.h6">Selected Languages</MudText>
+        @foreach(var language in Languages.Where(l => l.UseInHelpPage))
+        {
+            <MudChip T="string" Color="Color.Primary" Class="ma-1">
+                @language.EnglishName &nbsp;
+                <MudTooltip Text="Remove">
+                        <MudIconButton Icon="@Icons.Material.Filled.Close"
+                            Size="Size.Small"
+                            Color="Color.Error"
+                            OnClick="() => UnsetSelection(language.LanguageId)">
+                            (x)
+                        </MudIconButton>
+                </MudTooltip>
+            </MudChip>
+
+        }
+    </MudPaper>
+}
+
+<MudText Typo="Typo.h6">
+    Available Languages
+</MudText>
+
+<LanguageGridViewComponent Languages="Languages" UseInHelpPageChanged="@UseInHelpPageChanged" />
+
+
+
+

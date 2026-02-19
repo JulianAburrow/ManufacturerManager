@@ -13,7 +13,7 @@ public class ChatService : IChatService
                         .ToList();
     }
 
-    public async Task<string> AskQuestionAsync(string category, string question, string model, bool strictMode = true)
+    public async Task<string> AskQuestionAsync(string category, string question, string model, string languageRequired, bool strictMode = true)
     {
         var files = GetMatchingFiles(category);
         if (files.Count == 0)
@@ -25,7 +25,7 @@ public class ChatService : IChatService
             combinedText.AppendLine(ExtractTextFromPdf(file));
         }
 
-        string prompt = BuildPrompt($"{category} {combinedText}", question, strictMode);
+        string prompt = BuildPrompt($"{category} {combinedText}", question, languageRequired, strictMode);
         return await QueryOllamaAsync(prompt, model);
     }
 
@@ -49,7 +49,7 @@ public class ChatService : IChatService
         return text.ToString();
     }
 
-    private static string BuildPrompt(string document, string question, bool strictMode)
+    private static string BuildPrompt(string document, string question, string languageRequired, bool strictMode)
     {
         var builder = new StringBuilder();
 
@@ -65,6 +65,8 @@ public class ChatService : IChatService
             builder.AppendLine("Do not summarize or restate the document’s implications.");
             builder.AppendLine("Only reproduce explicit steps or facts.");
             builder.AppendLine("Do not describe post-creation behavior unless explicitly stated in the document.");
+            builder.AppendLine($"Please translate your responses into {languageRequired} language.");
+            builder.AppendLine($"If you don't understand or cannot translate {languageRequired} please say so and do not attempt any other answer");
             builder.AppendLine();
         }
 

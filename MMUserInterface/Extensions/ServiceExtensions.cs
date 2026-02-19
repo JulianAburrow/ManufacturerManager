@@ -29,6 +29,8 @@ public static class ServiceExtensions
         services.AddTransient<IErrorCommandHandler, ErrorCommandHandler>();
         services.AddTransient<IErrorQueryHandler, ErrorQueryHandler>();
         services.AddTransient<IHelpDocumentService, HelpDocumentService>();
+        services.AddTransient<ILanguageCommandHandler, LangaugeCommandHandler>();
+        services.AddTransient<ILanguageQueryHandler, LanguageQueryHandler>();
         services.AddTransient<IManufacturerCommandHandler, ManufacturerCommandHandler>();
         services.AddTransient<IManufacturerQueryHandler, ManufacturerQueryHandler>();
         services.AddTransient<IManufacturerStatusQueryHandler, ManufacturerStatusQueryHandler>();
