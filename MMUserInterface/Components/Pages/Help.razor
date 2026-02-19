@@ -45,6 +45,20 @@ Select a category from which you require help and type your question
                     @bind-Value="ChatSearchModel.SearchQuestion" />
                 <MudSelect
                     T="string"
+                    Label="Respond in"
+                    @bind-Value="ChatSearchModel.LanguageRequired">
+                    @foreach (var language in Languages)
+                    {
+                        
+                        <MudSelectItem T="string" Value="@language.EnglishName">
+                            <MudTooltip Text=@($"{@language.OriginalName} / {@language.TransliteratedName} / {@language.Code}")>
+                                @language.EnglishName
+                            </MudTooltip>
+                        </MudSelectItem>
+                    }
+                </MudSelect>
+                <MudSelect
+                    T="string"
                     id="ddlModels"
                     Label="Model"
                     data-testid="model-select"

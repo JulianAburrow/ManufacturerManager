@@ -10,6 +10,10 @@ public abstract class BasePageClass : ComponentBase
 
     [Inject] protected ICategoryQueryHandler CategoryQueryHandler { get; set; } = default!;
 
+    [Inject] protected ILanguageCommandHandler LanguageCommandHandler { get; set; } = default!;
+
+    [Inject] protected ILanguageQueryHandler LanguageQueryHandler { get; set; } = default!;
+
     [Inject] protected ICrudWithErrorHandlingHelper CrudWithErrorHandlingHelper { get; set; } = default!;
 
     [Inject] protected IErrorCommandHandler ErrorCommandHandler { get; set; } = default!;

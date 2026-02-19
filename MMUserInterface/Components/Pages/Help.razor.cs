@@ -8,6 +8,8 @@ public partial class Help
 
     protected ChatSearchModel ChatSearchModel = new();
 
+    private List<LanguageModel> Languages = null!;
+
     protected string Response = string.Empty;
 
     private bool IsThinking = false;
@@ -35,7 +37,17 @@ public partial class Help
             return;
         }
         HelpCategories = (await CategoryQueryHandler.GetCategoriesAsync()).Select(c => c.Name).ToList();
-        HelpCategories.Insert(0, SharedValues.PleaseSelectText);       
+        HelpCategories.Insert(0, SharedValues.PleaseSelectText);
+        Languages = await LanguageQueryHandler.GetLanguagesForHelpPageAsync();
+        Languages = Languages.Where(l => l.Code != "en").ToList();
+        Languages.Insert(0, new LanguageModel
+        {
+            EnglishName = "English",
+            OriginalName = "English",
+            TransliteratedName = "English",
+            Code = "en",
+        });
+        ChatSearchModel.LanguageRequired = "English";
         ChatSearchModel.SearchModel = AvailableModels.FirstOrDefault()?.Name ?? string.Empty;
         ChatSearchModel.SearchCategory = HelpCategories[0];
     }
@@ -72,7 +84,7 @@ public partial class Help
                 return;
             }
 
-            Response = await ChatService.AskQuestionAsync(ChatSearchModel.SearchCategory, ChatSearchModel.SearchQuestion, ChatSearchModel.SearchModel, strictMode: true);
+            Response = await ChatService.AskQuestionAsync(ChatSearchModel.SearchCategory, ChatSearchModel.SearchQuestion, ChatSearchModel.SearchModel, ChatSearchModel.LanguageRequired, strictMode: true);
             if (string.IsNullOrWhiteSpace(Response))
                 Response = "❌ Could not get an answer from this model. Please try a different model.";
         }

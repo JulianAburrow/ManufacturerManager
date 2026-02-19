@@ -5,6 +5,7 @@ public class CategoryCommandTests
     private readonly ManufacturerManagerContext _manufacturerManagerContext;
     private readonly ICategoryCommandHandler _categoryCommandHandler;
     private readonly List<CategoryModel> _testCategories = CategoryObjectFactory.GetTestCategories();
+
     public CategoryCommandTests()
     {
         _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();

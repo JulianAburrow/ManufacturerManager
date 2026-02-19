@@ -6,6 +6,7 @@ public class ManufacturerManagerContext(DbContextOptions<ManufacturerManagerCont
     public DbSet<ColourJustificationModel> ColourJustifications { get; set; }
     public DbSet<ColourModel> Colours { get; set; }
     public DbSet<ErrorModel> Errors { get; set; }
+    public DbSet<LanguageModel> Languages { get; set; }
     public DbSet<ManufacturerModel> Manufacturers { get; set; }
     public DbSet<ManufacturerStatusModel> ManufacturerStatuses { get; set; }
     public DbSet<MyMMModel> MyMMs { get; set; }
@@ -26,6 +27,7 @@ public class ManufacturerManagerContext(DbContextOptions<ManufacturerManagerCont
         builder.ApplyConfiguration(new ColourConfiguration());
         builder.ApplyConfiguration(new ColourJustificationConfiguration());
         builder.ApplyConfiguration(new ErrorConfiguration());
+        builder.ApplyConfiguration(new LanguageConfiguration());
         builder.ApplyConfiguration(new ManufacturerConfiguration());
         builder.ApplyConfiguration(new ManufacturerStatusConfiguration());
         builder.ApplyConfiguration(new MyMMConfiguration());

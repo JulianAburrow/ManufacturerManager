@@ -12,6 +12,7 @@ Post-Deployment Script Template
 :r .\SeedData\SeedCategory.sql
 :r .\SeedData\SeedColour.sql
 :r .\SeedData\SeedColourJustification.sql
+:r .\SeedData\SeedLanguage.sql
 :r .\SeedData\SeedManufacturerStatus.sql
 :r .\SeedData\SeedMyMMStatus.sql
 :r .\SeedData\SeedWidgetStatus.sql
