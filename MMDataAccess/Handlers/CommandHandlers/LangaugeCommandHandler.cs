@@ -1,6 +1,6 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class LangaugeCommandHandler(ManufacturerManagerContext context) : ILanguageCommandHandler
+public class LanguageCommandHandler(ManufacturerManagerContext context) : ILanguageCommandHandler
 {
     
     public async Task SetUnsetUseForHelpPage(int languageId, bool useInHelpPage, bool callSaveChanges)
