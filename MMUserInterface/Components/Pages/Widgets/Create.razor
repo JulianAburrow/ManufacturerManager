@@ -12,7 +12,7 @@
     return;
 }
 
-<EditForm Model="WidgetDisplayModel" OnValidSubmit="CreateWidget">
+<EditForm Model="WidgetDisplayModel" OnValidSubmit="CreateWidget" EditContext="@EditContext">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
