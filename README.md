@@ -14,7 +14,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Comprehensive Testing**: Unit tests (xUnit).
 - **Automated CI/CD**: GitHub Actions for build, test, and deployment automation.
 - **Error Logging**: Centralized error handling and logging to the database for diagnostics.
-- **Document-aware RAG AI Assistant**: Search documents for help with functionality
+- **Document-aware RAG AI Assistant**: Search documents for help with functionality, with built‑in language selection and translation.
 
 ---
 
