@@ -23,6 +23,7 @@ public abstract class ColourBasePageClass : BasePageClass
 
     protected void CopyModelToDisplayModel()
     {
+        ColourDisplayModel.ColourId = ColourModel.ColourId;
         ColourDisplayModel.Name = ColourModel.Name;
     }
 
