@@ -5,7 +5,7 @@ public partial class Edit
     protected override async Task OnInitializedAsync()
     {
         ColourJustificationModel = await ColourJustificationQueryHandler.GetColourJustificationAsync(ColourJustificationId);
-        ColourJustificationDisplayModel.Justification = ColourJustificationModel.Justification;
+        CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Colour Justification");
     }
 

@@ -19,6 +19,7 @@ public abstract class ErrorBasePageClass : BasePageClass
 
     protected void CopyModelToDisplayModel()
     {
+        ErrorDisplayModel.ErrorId = ErrorModel.ErrorId;
         ErrorDisplayModel.ErrorDate = ErrorModel.ErrorDate;
         ErrorDisplayModel.ErrorMessage = ErrorModel.ErrorMessage;
         ErrorDisplayModel.Exception = ErrorModel.Exception;

@@ -23,6 +23,7 @@ public abstract class ColourJustificationBasePageClass : BasePageClass
 
     protected void CopyModelToDisplayModel()
     {
+        ColourJustificationDisplayModel.ColourJustificationId = ColourJustificationModel.ColourJustificationId;
         ColourJustificationDisplayModel.Justification = ColourJustificationModel.Justification;
     }
 
