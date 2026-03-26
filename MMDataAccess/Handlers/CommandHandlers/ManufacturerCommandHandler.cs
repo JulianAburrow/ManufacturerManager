@@ -21,9 +21,12 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
 
     public async Task UpdateManufacturerAsync(ManufacturerModel manufacturer, bool callSaveChanges)
     {
+        using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
         var manufacturerToUpdate = context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturer.ManufacturerId);
         if (manufacturerToUpdate is null)
             return;
+
         manufacturerToUpdate.Name = manufacturer.Name;
         manufacturerToUpdate.StatusId = manufacturer.StatusId;
 
@@ -39,6 +42,8 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
 
         if (callSaveChanges)
             await SaveChangesAsync();
+
+        scope.Complete();
     }
 
     public async Task SaveChangesAsync() =>
