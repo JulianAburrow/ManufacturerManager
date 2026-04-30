@@ -15,11 +15,12 @@ public class CategoryHelper : ICategoryHelper
     public void DeleteCategoryDirectory(string categoryName)
     {
         var categoryPath = Path.Combine("Documents", categoryName);
-        if (Directory.Exists(categoryPath))
+        if (Directory.Exists(categoryPath) && !Directory.EnumerateFileSystemEntries(categoryPath).Any())
         {
-            Directory.Delete(categoryPath, true);
+            Directory.Delete(categoryPath);
         }
     }
+
     public bool OkToDeleteOrEdit(string categoryName)
     {
         var categoryPath = Path.Combine("Documents", categoryName);
