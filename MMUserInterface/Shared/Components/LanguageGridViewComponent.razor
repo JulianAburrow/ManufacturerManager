@@ -1,7 +1,16 @@
-﻿<MudTable Items="Languages"
+﻿<MudTextField T="string" Label="Search" @bind-Value="SearchString" />
+
+<br />
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Search">Search</MudButton> <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ClearSearch">Clear Search</MudButton>
+
+<br />
+<br />
+
+<MudTable Items="LanguagesToShow"
           SortLabel="SortBy"
           Hover
-          RowsPerPage="10"
+          RowsPerPage="7"
           FixedHeader>
     <HeaderContent>
         <MudTh title="Sort by English Name">

@@ -24,7 +24,7 @@ public partial class Index
 
         StateHasChanged();
 
-        Snackbar.Add($"Language {language?.OriginalName} has been {(isChecked ? "added to" : "removed from")} the list of languages available to the Help page.", Severity.Info);
+        Snackbar.Add($"Language {language?.EnglishName} has been {(isChecked ? "added to" : "removed from")} the list of languages available to the Help page.", Severity.Info);
     }
 
 
