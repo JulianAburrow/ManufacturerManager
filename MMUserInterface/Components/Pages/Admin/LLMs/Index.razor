@@ -1,0 +1,26 @@
+﻿@page "/llms/index"
+@inherits LLMBasePageClass
+
+<PageTitle>LLMs</PageTitle>
+
+@if (LLMs is null)
+{
+    <LoadingMessageComponent ValueToShow="@LLMPlural" />
+    return;
+}
+
+@if (IsError)
+{
+    <MudAlert Severity="Severity.Error" Elevation="0" Variant="Variant.Filled" Class="mb-4">
+        @ErrorMessage
+    </MudAlert>
+    return;
+}
+
+@if (LLMs.Count == 0)
+{
+    <NoResultsComponent ObjectType="@LLMPlural" />
+    return;
+}
+
+<LLMGridViewComponent LLMs="LLMs" />

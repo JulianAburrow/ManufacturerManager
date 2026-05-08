@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		Documents\Installing the AI Assistant in ManufacturerManager.pdf = Documents\Installing the AI Assistant in ManufacturerManager.pdf
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMBusinessLayer", "MMBusinessLayer\MMBusinessLayer.csproj", "{6C21B7A6-73D9-407F-9E26-1B9948C86BAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C21B7A6-73D9-407F-9E26-1B9948C86BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C21B7A6-73D9-407F-9E26-1B9948C86BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C21B7A6-73D9-407F-9E26-1B9948C86BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C21B7A6-73D9-407F-9E26-1B9948C86BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{98E8096D-0F3A-9C5B-94FB-277806BBEE11} = {655688C1-8A09-4A79-B0CB-3EA6425A5A83}
 		{32C7E3A0-FDBC-46A6-9A22-E375EB6A2D4C} = {9C5B2848-EC86-4053-BA13-35AD01599342}
 		{5EF702EA-D00A-4A29-B2FB-17F48CD65E9F} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
+		{6C21B7A6-73D9-407F-9E26-1B9948C86BAE} = {9C5B2848-EC86-4053-BA13-35AD01599342}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26F5386C-711F-46BB-B877-E99D06B5D775}

@@ -5,17 +5,17 @@
 
 @if (ColourModel.ColourId == 0)
 {
-    <LoadingMessageComponent ValueToShow="@Colour" />
+    <LoadingMessageComponent ValueToShow="@ColourSingular" />
     return;
 }
 
 @if (!OkToDelete)
 {
-    <CannotDeleteComponent ObjectType="@Colour" ObjectName="@ColourModel.Name" />
+    <CannotDeleteComponent ObjectType="@ColourSingular" ObjectName="@ColourModel.Name" />
     return;
 }
 
-<ConfirmDeleteComponent ObjectType="@Colour" ObjectName="@ColourModel.Name" />
+<ConfirmDeleteComponent ObjectType="@ColourSingular" ObjectName="@ColourModel.Name" />
 
 <br />
 <br />

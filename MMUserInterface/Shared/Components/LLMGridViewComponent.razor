@@ -1,0 +1,25 @@
+﻿<MudTable Items="LLMs"
+        SortLabel="SortBy"
+        Hover
+        RowsPerPage="10"
+        FixedHeader>
+    <HeaderContent>
+        <MudTh title="Sort by Name">
+            <MudTableSortLabel SortBy="new Func<OllamaModel, object>(x => x.Name)">
+                Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Name</MudTd>
+        <MudTd>
+            <a class="btn btn-primary" href="/llm/view/@context.Name">View</a>
+            &nbsp;
+            <a class="btn btn-danger" href="/llm/delete/@context.Name">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>
