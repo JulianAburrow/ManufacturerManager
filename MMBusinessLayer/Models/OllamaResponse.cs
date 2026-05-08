@@ -1,4 +1,5 @@
-﻿namespace MMUserInterface.Models;
+﻿
+namespace MMBusinessLayer.Models;
 
 public class OllamaResponse
 {

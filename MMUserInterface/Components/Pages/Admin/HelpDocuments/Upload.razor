@@ -27,14 +27,12 @@
                         FilesChanged="UploadFile"
                         Accept="@(".pdf")"
                         data-testid="uplHelpDocument">
-                        <ActivatorContent>
-                            <MudButton HtmlTag="label"
-                                       Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       StartIcon="@Icons.Material.Filled.FileUpload">
-                                Select File
-                            </MudButton>
-                        </ActivatorContent>
+                        <MudButton HtmlTag="label"
+                                    Variant="Variant.Filled"
+                                    Color="Color.Primary"
+                                    StartIcon="@Icons.Material.Filled.FileUpload">
+                            Select File
+                        </MudButton>
                     </MudFileUpload>
                     <br />
                     @FileName

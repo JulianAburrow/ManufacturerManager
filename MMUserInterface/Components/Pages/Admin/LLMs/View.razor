@@ -1,0 +1,36 @@
+﻿@page "/llm/view/{LLMName}"
+@inherits LLMBasePageClass
+
+<PageTitle>View LLM</PageTitle>
+
+@if (OllamaModel?.Name == string.Empty)
+{
+    <LoadingMessageComponent ValueToShow="@LLMSingular" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudField Label="Name">@OllamaModel?.Name</MudField>
+                <MudField Label="Size">@OllamaModel?.Size</MudField>
+                <MudField Label="Modified At">
+                    @if (OllamaModel?.ModifiedAt == DateTime.MinValue)
+                    {
+                        <span>Unknown</span>
+                    }
+                    else
+                    {
+                        <span>@OllamaModel?.ModifiedAt</span>
+                    }
+                </MudField>
+            </MudCardContent>
+            <MudCardActions>
+                <a class="btn btn-danger" href="/llm/delete/@OllamaModel.Name">Delete</a>
+                &nbsp;
+                <a class="btn btn-primary" href="/llms/index">Cancel</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

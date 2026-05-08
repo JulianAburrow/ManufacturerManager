@@ -12,7 +12,7 @@ public abstract class ColourBasePageClass : BasePageClass
 
     protected ColourDisplayModel ColourDisplayModel { get; set; } = new();
 
-    protected string Colour = "Colour";
+    protected string ColourSingular = "Colour";
 
     protected string ColourPlural = "Colours";
 

@@ -1,0 +1,19 @@
+﻿@page "/llm/delete/{LLmName}"
+@inherits LLMBasePageClass
+
+<PageTitle>Delete LLM</PageTitle>
+
+@if (OllamaModel?.Name == string.Empty)
+{
+    <LoadingMessageComponent ValueToShow="@LLMSingular" />
+    return;
+}
+
+<ConfirmDeleteComponent ObjectType="@LLMSingular" ObjectName="@OllamaModel?.Name" />
+
+<br />
+<br />
+
+<button class="btn btn-danger" @onclick="DeleteLLM">Delete</button>
+&nbsp;
+<a class="btn btn-primary" href="/llms/index">Cancel</a>

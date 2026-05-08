@@ -1,4 +1,4 @@
-﻿namespace MMUserInterface.Interfaces;
+﻿namespace MMBusinessLayer.Interfaces;
 
 public interface IChatService
 {
@@ -6,10 +6,6 @@ public interface IChatService
 
     IReadOnlyList<string> GetMatchingFiles(string category);
 
-    Task<OllamaModel?> GetModelAsync(string modelName);
-
     Task<List<OllamaModel>> GetAvailableModelsAsync();
-
-    Task DeleteLLMAsync(string name);
 
 }

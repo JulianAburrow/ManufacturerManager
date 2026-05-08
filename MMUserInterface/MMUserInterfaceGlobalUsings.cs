@@ -2,6 +2,7 @@
 global using Microsoft.AspNetCore.Components.Forms;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.JSInterop;
+global using MMBusinessLayer.Models;
 global using MMDataAccess.Data;
 global using MMDataAccess.Handlers.CommandHandlers;
 global using MMDataAccess.Handlers.QueryHandlers;
@@ -22,9 +23,7 @@ global using MMUserInterface.Shared.Methods;
 global using MudBlazor;
 global using MudBlazor.Services;
 global using System.ComponentModel.DataAnnotations;
-global using System.Net.Http.Json;
 global using System.Text;
 global using System.Text.Json;
-global using System.Text.Json.Serialization;
 global using UglyToad.PdfPig;
 global using static MMDataAccess.Enums.PublicEnums;

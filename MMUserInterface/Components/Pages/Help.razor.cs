@@ -4,7 +4,7 @@ public partial class Help
 {
     private List<string> HelpCategories = null!;
 
-    readonly List<OllamaModel> AvailableModels = [];
+    private readonly List<OllamaModel> AvailableModels = [];
 
     protected ChatSearchModel ChatSearchModel = new();
 
