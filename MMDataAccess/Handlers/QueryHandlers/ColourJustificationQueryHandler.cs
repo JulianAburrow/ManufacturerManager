@@ -7,7 +7,7 @@ public class ColourJustificationQueryHandler(ManufacturerManagerContext context)
             .Include(c => c.Widgets)
             .AsNoTracking()
             .SingleOrDefaultAsync(c => c.ColourJustificationId == colourJustificationId)
-            ?? throw new ArgumentNullException(nameof(colourJustificationId), "Colour Justification not found");
+            ?? throw new ArgumentNullException(nameof(colourJustificationId), "Colour Justification not found.");
 
     public async Task<List<ColourJustificationModel>> GetColourJustificationsAsync() =>
         await context.ColourJustifications

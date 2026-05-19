@@ -8,7 +8,7 @@ public partial class Index
     {
         HelpDocumentModels = await HelpDocumentService.GetHelpDocumentModelsAsync();
         var count = HelpDocumentModels.Count;
-        Snackbar.Add($"{count} help document{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
+        Snackbar.Add($"{count} help document{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Help Documents");
     }
 

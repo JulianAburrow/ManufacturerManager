@@ -11,5 +11,5 @@ public class MyMMStatusQueryHandler(ManufacturerManagerContext context) : IMyMMS
         await context.MyMMStatuses
             .AsNoTracking()
             .SingleOrDefaultAsync(m => m.StatusId == myMMStatusId)
-            ?? throw new ArgumentNullException(nameof(myMMStatusId), "MyMMStatus not found");
+            ?? throw new ArgumentNullException(nameof(myMMStatusId), "MyMMStatus not found.");
 }

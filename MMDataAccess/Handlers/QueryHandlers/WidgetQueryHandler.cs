@@ -10,7 +10,7 @@ public class WidgetQueryHandler(ManufacturerManagerContext context) : IWidgetQue
             .Include(w => w.Status)
             .AsNoTracking()
             .SingleOrDefaultAsync(w => w.WidgetId == widgetId)
-            ?? throw new ArgumentNullException(nameof(widgetId), "Widget not found");
+            ?? throw new ArgumentNullException(nameof(widgetId), "Widget not found.");
 
     public async Task<List<WidgetSummary>> GetWidgetsAsync() =>
         await context.Widgets

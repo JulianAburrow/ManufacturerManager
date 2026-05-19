@@ -8,7 +8,7 @@ public partial class Index
     {
         ColourJustifications = await ColourJustificationQueryHandler.GetColourJustificationsAsync();
         var count = ColourJustifications.Count;
-        Snackbar.Add($"{count} colour justification{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
+        Snackbar.Add($"{count} colour justification{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Colour Justifications");
     }
 

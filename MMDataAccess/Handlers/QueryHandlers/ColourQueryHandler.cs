@@ -7,7 +7,7 @@ public class ColourQueryHandler(ManufacturerManagerContext context) : IColourQue
             .Include(c => c.Widgets)
             .AsNoTracking()
             .SingleOrDefaultAsync(c => c.ColourId == colourId)
-            ?? throw new ArgumentNullException(nameof(colourId), "Colour not found");
+            ?? throw new ArgumentNullException(nameof(colourId), "Colour not found.");
 
     public async Task<List<ColourModel>> GetColoursAsync() =>
         await context.Colours
