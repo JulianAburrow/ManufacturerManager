@@ -11,7 +11,7 @@ public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IMan
             .Include(m => m.Status)
             .AsNoTracking()
             .SingleOrDefaultAsync(m => m.ManufacturerId == manufacturerId)
-            ?? throw new ArgumentNullException(nameof(manufacturerId), "Manufacturer not found");
+            ?? throw new ArgumentNullException(nameof(manufacturerId), "Manufacturer not found.");
 
     public async Task<List<ManufacturerSummary>> GetManufacturersAsync() =>
         await context.Manufacturers

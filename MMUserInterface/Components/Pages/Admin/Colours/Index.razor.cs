@@ -8,7 +8,7 @@ public partial class Index
     {
         Colours = await ColourQueryHandler.GetColoursAsync();
         var count = Colours.Count;
-        Snackbar.Add($"{count} colour{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
+        Snackbar.Add($"{count} colour{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Colours");
     }
 

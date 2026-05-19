@@ -8,7 +8,7 @@ public partial class Index
     {
         Categories = await CategoryQueryHandler.GetCategoriesAsync();
         var count = Categories.Count;
-        Snackbar.Add($"{count} {(count == 1 ? "category" : "categories")} found", count > 0 ? Severity.Info : Severity.Warning);
+        Snackbar.Add($"{count} {(count == 1 ? "category" : "categories")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Categories");
     }
 

@@ -32,7 +32,7 @@ public partial class Index
     {
         Languages = await LanguageQueryHandler.GetLanguagesAsync();
         var count = Languages.Count;
-        Snackbar.Add($"{count} language {(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
+        Snackbar.Add($"{count} language {(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Languages");
     }
 

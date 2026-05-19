@@ -7,7 +7,7 @@ public class MyMMQueryHandler(ManufacturerManagerContext context) : IMyMMQueryHa
             .Include(m => m.Status)
             .AsNoTracking()
             .SingleOrDefaultAsync(m => m.MyMMId == myMMId)
-            ?? throw new ArgumentNullException(nameof(myMMId), "MyMM not found");
+            ?? throw new ArgumentNullException(nameof(myMMId), "MyMM not found.");
 
     public async Task<List<MyMMModel>> GetMyMMsAsync() =>
         await context.MyMMs

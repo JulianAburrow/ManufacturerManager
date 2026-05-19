@@ -8,7 +8,7 @@ public partial class Index
     {
         Errors = await ErrorQueryHandler.GetErrorsAsync();
         var count = Errors.Count;
-        Snackbar.Add($"{count} error{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
+        Snackbar.Add($"{count} error{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
         MainLayout.SetHeaderValue("Errors");
     }
 

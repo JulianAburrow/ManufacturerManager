@@ -15,5 +15,5 @@ public class CategoryQueryHandler(ManufacturerManagerContext context) : ICategor
         await context.Categories
             .AsNoTracking()
             .SingleOrDefaultAsync(c => c.CategoryId == categoryId)
-            ?? throw new ArgumentNullException(nameof(categoryId), "Category not found");
+            ?? throw new ArgumentNullException(nameof(categoryId), "Category not found.");
 }

@@ -18,7 +18,7 @@ public partial class Index
                     .ThenBy(a => a.Name),
             ];
             var count = LLMs.Count;
-            Snackbar.Add($"{count} LLM{(count == 1 ? "" : "s")} found", count > 0 ? Severity.Info : Severity.Warning);
+            Snackbar.Add($"{count} LLM{(count == 1 ? "" : "s")} found.", count > 0 ? Severity.Info : Severity.Warning);
             MainLayout.SetHeaderValue("LLMs");
         }
         catch

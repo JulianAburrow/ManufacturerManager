@@ -6,7 +6,7 @@ public class ErrorQueryHandler(ManufacturerManagerContext context) : IErrorQuery
         await context.Errors
             .AsNoTracking()
         .SingleOrDefaultAsync(e => e.ErrorId == errorId)
-        ?? throw new ArgumentNullException(nameof(errorId), "Error not found");
+        ?? throw new ArgumentNullException(nameof(errorId), "Error not found.");
 
     public async Task<List<ErrorModel>> GetErrorsAsync() =>
         await context.Errors
