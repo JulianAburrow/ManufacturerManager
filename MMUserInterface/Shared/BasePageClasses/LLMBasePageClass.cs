@@ -1,8 +1,10 @@
-﻿namespace MMUserInterface.Shared.BasePageClasses;
+﻿using Microsoft.AspNetCore.Mvc.Razor.Internal;
+
+namespace MMUserInterface.Shared.BasePageClasses;
 
 public class LLMBasePageClass : BasePageClass
 {
-    [Inject] protected IChatService ChatService { get; set; } = default!;
+    [Inject] protected IModelManagementService ModelManagementService { get; set; } = null!;
 
     protected List<OllamaModel>? LLMs;
 

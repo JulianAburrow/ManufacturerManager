@@ -73,19 +73,18 @@ Select a category from which you require help and type your question
             </MudCardContent>
                        
             <MudCardActions>
-                <button class="btn btn-primary" onclick="@OnSearchClicked">Submit</button>
+                <button class="btn btn-primary" onclick="@OnSearchClicked" disabled="@IsThinking">Submit</button>
             </MudCardActions>
         </MudCard>
     </MudItem>
 </MudGrid>
 
 <br />
+<br />
 
 @if (IsThinking)
 {
-    <MudText Typo="Typo.subtitle1" Color="Color.Info">
-        🤔 Thinking about it... <img src="images/ThinkingSpinner.png" alt="Thinking..." style="width: 20px; height: 20px; vertical-align: middle" />
-    </MudText>
+    <ThinkingComponent />
 }
 
 @if (MatchingFiles.Count > 0)

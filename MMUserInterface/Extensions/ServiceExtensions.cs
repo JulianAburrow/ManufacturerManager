@@ -1,4 +1,6 @@
-﻿namespace MMUserInterface.Extensions;
+﻿using MMDataAccess.MCP;
+
+namespace MMUserInterface.Extensions;
 
 public static class ServiceExtensions
 {
@@ -16,10 +18,10 @@ public static class ServiceExtensions
 
     public static void AddDependencies(this IServiceCollection services)
     {
+        services.AddHttpClient<IOllamaService, OllamaService>();
         services.AddTransient<ICategoryCommandHandler, CategoryCommandHandler>();
         services.AddTransient<ICategoryHelper, CategoryHelper>();
         services.AddTransient<ICategoryQueryHandler, CategoryQueryHandler>();
-        services.AddScoped<IChatService, ChatService>();
         services.AddTransient<IColourCommandHandler, ColourCommandHandler>();
         services.AddTransient<IColourQueryHandler, ColourQueryHandler>();
         services.AddTransient<IColourJustificationCommandHandler, ColourJustificationCommandHandler>();
@@ -34,12 +36,17 @@ public static class ServiceExtensions
         services.AddTransient<IManufacturerCommandHandler, ManufacturerCommandHandler>();
         services.AddTransient<IManufacturerQueryHandler, ManufacturerQueryHandler>();
         services.AddTransient<IManufacturerStatusQueryHandler, ManufacturerStatusQueryHandler>();
+        services.AddTransient<IModelManagementService, ModelManagementService>();
         services.AddTransient<IMyMMCommandHandler, MyMMCommandHandler>();
         services.AddTransient<IMyMMQueryHandler, MyMMQueryHandler>();
         services.AddTransient<IMyMMStatusCommandHandler, MyMMStatusCommandHandler>();
         services.AddTransient<IMyMMStatusQueryHandler, MyMMStatusQueryHandler>();
+        services.AddTransient<IOllamaService, OllamaService>();
+        services.AddTransient<IRagAiService, RagAiService>();
         services.AddTransient<IWidgetCommandHandler, WidgetCommandHandler>();
         services.AddTransient<IWidgetQueryHandler, WidgetQueryHandler>();
         services.AddTransient<IWidgetStatusQueryHandler, WidgetStatusQueryHandler>();
+        services.AddSingleton<McpSqlExecutor>();
+        services.AddTransient<IMcpService, McpService>();
     }
 }

@@ -4,7 +4,7 @@ public partial class Delete
 {
     protected override async Task OnInitializedAsync()
     {
-        OllamaModel = await ChatService.GetModelAsync(LLMName);
+        OllamaModel = await ModelManagementService.GetModelAsync(LLMName);
         MainLayout.SetHeaderValue("Delete LLM");
     }
 
@@ -21,7 +21,7 @@ public partial class Delete
     private async Task DeleteLLM()
     {
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ChatService.DeleteLLMAsync(LLMName),
+            async () => await ModelManagementService.DeleteModelAsync(LLMName),
             $"LLM {LLMName} successfully deleted.",
             $"An error occurred deleting LLM {LLMName}. Please try again."
         );

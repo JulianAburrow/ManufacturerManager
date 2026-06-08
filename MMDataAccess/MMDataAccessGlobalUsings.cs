@@ -1,5 +1,7 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using Microsoft.Data.SqlClient;
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
 global using MMBusinessLayer.Models;
 global using MMDataAccess.Configuration;
 global using MMDataAccess.Data;
@@ -8,4 +10,5 @@ global using MMDataAccess.Interfaces.CommandHandlers;
 global using MMDataAccess.Interfaces.QueryHandlers;
 global using MMDataAccess.Models;
 global using MMDataAccess.ModelsSummary;
+global using System.Data;  
 global using System.Transactions;

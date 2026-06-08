@@ -1,0 +1,23 @@
+﻿<h3>Your Query Results</h3>
+
+@if (AdhocQueryResults is null)
+{
+    <p>No results to display.</p>
+    return;
+}
+
+<MudTable T="DataRow" Items="@(AdhocQueryResults.Rows.Cast<DataRow>())" Hover="true" FixedHeader="true">
+    <HeaderContent>
+        @foreach (DataColumn col in AdhocQueryResults.Columns)
+        {
+            <MudTh>@col.ColumnName</MudTh>
+        }
+    </HeaderContent>
+
+    <RowTemplate>
+        @foreach (var item in context.ItemArray)
+        {
+            <MudTd>@item</MudTd>
+        }
+    </RowTemplate>
+</MudTable>
