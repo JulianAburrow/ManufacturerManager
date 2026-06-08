@@ -25,7 +25,7 @@ public partial class Help
         try
         {
             AvailableModels.AddRange((
-                await ChatService.GetAvailableModelsAsync())
+                await ModelManagementService.GetAvailableModelsAsync())
                     .OrderBy(a => a.Size)
                     .ThenBy(a => a.Name));
         }
@@ -76,7 +76,7 @@ public partial class Help
 
         try
         {
-            MatchingFiles = ChatService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
+            MatchingFiles = RagAiService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
 
             if (MatchingFiles.Count == 0)
             {
@@ -84,7 +84,7 @@ public partial class Help
                 return;
             }
 
-            Response = await ChatService.AskQuestionAsync(ChatSearchModel.SearchCategory, ChatSearchModel.SearchQuestion, ChatSearchModel.SearchModel, ChatSearchModel.LanguageRequired, strictMode: true);
+            Response = await RagAiService.AskQuestionAsync(ChatSearchModel.SearchCategory, ChatSearchModel.SearchQuestion, ChatSearchModel.SearchModel, ChatSearchModel.LanguageRequired, strictMode: true);
             if (string.IsNullOrWhiteSpace(Response))
                 Response = "❌ Could not get an answer from this model. Please try a different model.";
         }

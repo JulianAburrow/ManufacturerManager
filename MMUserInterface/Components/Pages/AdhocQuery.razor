@@ -1,0 +1,46 @@
+﻿@page "/adhocquery"
+@inherits AdhocQueryBasePageClass
+
+<PageTitle>Adhoc Query</PageTitle>
+
+<h1>Adhoc Query</h1>
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudTextField Lines="5"
+                    T="string"
+                    id="txtAdhocQuery"
+                    Label="Type your query here"
+                    AutoFocus="true"
+                    data-testid="adhoc-query-input"
+                    @bind-Value="QueryText" />
+            </MudCardContent>
+
+            <MudCardActions>
+                <button class="btn btn-primary" onclick="@OnQueryClicked" disabled="@IsThinking">Submit</button>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<br />
+<br />
+
+@if (IsThinking)
+{
+    <ThinkingComponent />
+}
+
+@if (ErrorMessage is not null)
+{
+    <MudAlert Severity="Severity.Error">
+        @ErrorMessage
+    </MudAlert>
+}
+
+@if (ResultsDataTable is not null && !IsThinking)
+{
+    <AdHocQueryResultsComponent AdhocQueryResults="ResultsDataTable" />
+}

@@ -13,7 +13,7 @@ public partial class Index
             LLMs =
             [
                 .. (
-                    await ChatService.GetAvailableModelsAsync())
+                    await ModelManagementService.GetAvailableModelsAsync())
                     .OrderBy(a => a.Size)
                     .ThenBy(a => a.Name),
             ];

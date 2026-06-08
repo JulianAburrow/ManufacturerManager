@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="SeedData" />
+    <Folder Include="Permissions" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\SeedColour.sql" />
@@ -68,6 +69,7 @@
     <None Include="MMDatabase.publish.xml" />
     <None Include="SeedData\SeedCategory.sql" />
     <None Include="SeedData\SeedMyMMStatus.sql" />
+    <None Include="Permissions\AddMCPPermissions.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Manufacturer.sql" />

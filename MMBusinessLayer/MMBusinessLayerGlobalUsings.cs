@@ -1,5 +1,6 @@
 ﻿global using MMBusinessLayer.Interfaces;
 global using MMBusinessLayer.Models;
+global using MMBusinessLayer.Shared.CommonValues;
 global using MMUserInterface.Models;
 global using System.Net.Http.Json;
 global using System.Text;

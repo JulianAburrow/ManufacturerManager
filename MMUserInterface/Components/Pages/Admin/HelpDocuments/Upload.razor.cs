@@ -1,5 +1,3 @@
-
-
 namespace MMUserInterface.Components.Pages.Admin.HelpDocuments;
 
 public partial class Upload

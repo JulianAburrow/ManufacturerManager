@@ -16,3 +16,4 @@ Post-Deployment Script Template
 :r .\SeedData\SeedManufacturerStatus.sql
 :r .\SeedData\SeedMyMMStatus.sql
 :r .\SeedData\SeedWidgetStatus.sql
+:r .\Permissions\AddMCPPermissions.sql
