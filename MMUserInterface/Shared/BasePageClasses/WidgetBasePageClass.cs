@@ -65,7 +65,6 @@ public abstract class WidgetBasePageClass : BasePageClass
             : SharedValues.NoneValue;
         WidgetDisplayModel.StatusId = WidgetModel.StatusId;
         WidgetDisplayModel.Manufacturer = WidgetModel.Manufacturer;
-        WidgetDisplayModel.WidgetImage = WidgetModel.WidgetImage;
         WidgetDisplayModel.CostPrice = WidgetModel.CostPrice;
         WidgetDisplayModel.RetailPrice = WidgetModel.RetailPrice;
         WidgetDisplayModel.StockLevel = WidgetModel.StockLevel;
