@@ -32,7 +32,5 @@ public class WidgetDisplayModel
     [Display(Name = "Stock Level")]
     public int StockLevel {  get; set; }
 
-    public byte[]? WidgetImage { get; set; }
-
     public ManufacturerModel Manufacturer { get; set; } = null!;
 }

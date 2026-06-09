@@ -1,6 +1,6 @@
 ﻿<h3>Your Query Results</h3>
 
-@if (AdhocQueryResults is null)
+@if (AdhocQueryResults is null || AdhocQueryResults.Rows.Count == 0)
 {
     <p>No results to display.</p>
     return;

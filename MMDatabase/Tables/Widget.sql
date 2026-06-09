@@ -8,7 +8,6 @@
 	CostPrice DECIMAL(18,2) NOT NULL,
 	RetailPrice DECIMAL(18,2) NOT NULL,
 	StockLevel INT NOT NULL,
-	WidgetImage VARBINARY(MAX) NULL,
 	CONSTRAINT PK_Widget PRIMARY KEY (WidgetId),
 	CONSTRAINT FK_Widget_Manufacturer FOREIGN KEY (ManufacturerId)
 		REFERENCES Manufacturer (ManufacturerId),

@@ -82,6 +82,13 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("- SQL keywords must be followed by a space.");
         builder.AppendLine("- Do not compress SQL. Use normal spacing.");
         builder.AppendLine("- If the request is ambiguous, choose the most reasonable interpretation.");
+        builder.AppendLine("- When the user says 'only X widgets', interpret this as: the manufacturer has at least one widget AND every widget satisfies condition X. Do NOT interpret 'only X' as 'has at least one X'.");
+        builder.AppendLine("- When the user says 'no widgets' or 'none', interpret this as: the manufacturer has zero widgets. Use LEFT JOIN and filter with WHERE WidgetId IS NULL.");
+        builder.AppendLine("- When the user says 'all widgets', interpret this as: the manufacturer has at least one widget AND every widget satisfies the condition. Use GROUP BY with HAVING COUNT(*) = COUNT(CASE WHEN condition THEN 1 END).");
+        builder.AppendLine("- When the user says 'at least one', interpret this as: the manufacturer has one or more widgets satisfying the condition. Use EXISTS or HAVING COUNT(CASE WHEN condition THEN 1 END) >= 1.");
+        builder.AppendLine("- When the user says 'at most one', interpret this as: the manufacturer has zero or one widgets satisfying the condition. Use HAVING COUNT(CASE WHEN condition THEN 1 END) <= 1.");
+        builder.AppendLine("- When the user says 'more than one', interpret this as: the manufacturer has at least two widgets satisfying the condition. Use HAVING COUNT(CASE WHEN condition THEN 1 END) > 1.");
+        builder.AppendLine("- When combining multiple quantifier conditions with OR or AND, evaluate each condition independently in the HAVING clause. Never nest one aggregate inside another. Never place COUNT, SUM, AVG, MIN, or MAX inside a CASE expression that itself contains an aggregate.\r\n");
         builder.AppendLine();
 
         builder.AppendLine("==========================");
@@ -129,7 +136,6 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("    CostPrice DECIMAL(18,2) NOT NULL,");
         builder.AppendLine("    RetailPrice DECIMAL(18,2) NOT NULL,");
         builder.AppendLine("    StockLevel INT NOT NULL,");
-        builder.AppendLine("    WidgetImage VARBINARY(MAX) NULL");
         builder.AppendLine(")");
         builder.AppendLine();
 

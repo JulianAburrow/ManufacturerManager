@@ -32,7 +32,6 @@ public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetC
         widgetToUpdate.CostPrice = widget.CostPrice;
         widgetToUpdate.RetailPrice = widget.RetailPrice;
         widgetToUpdate.StockLevel = widget.StockLevel;
-        widgetToUpdate.WidgetImage = widget.WidgetImage;
 
         if (callSaveChanges)
             await SaveChangesAsync();
