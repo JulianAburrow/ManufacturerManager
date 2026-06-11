@@ -13,7 +13,7 @@ public class ErrorQueryTests
     }
 
     [Fact]
-    public async Task GetErrorGetsError()
+    public async Task GetError_GetsError()
     {
         _manufacturerManagerContext.Errors.Add(_testErrors[0]);
         _manufacturerManagerContext.SaveChanges();
@@ -24,7 +24,7 @@ public class ErrorQueryTests
     }
 
     [Fact]
-    public async Task GetErrorsGetsErrors()
+    public async Task GetErrors_GetsErrors()
     {
         var initialCount = _manufacturerManagerContext.Errors.Count();
 

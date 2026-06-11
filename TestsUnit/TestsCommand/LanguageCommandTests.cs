@@ -13,7 +13,7 @@ public class LanguageCommandTests
     }
 
     [Fact]
-    public async Task SetUnsetUseForHelpPageSetsUnsetsUseforHelpPage()
+    public async Task SetUnsetUseForHelpPage_SetsUnsetsUseforHelpPage()
     {
         var initialCount = _manufacturerManagerContext.Languages.Count();
         _testLanguages[0].UseInHelpPage = false;

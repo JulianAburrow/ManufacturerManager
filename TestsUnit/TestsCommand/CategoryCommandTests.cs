@@ -13,7 +13,7 @@ public class CategoryCommandTests
     }
 
     [Fact]
-    public async Task CreateCatgeoryCreatesCategory()
+    public async Task CreateCategory_CreatesCategory()
     {
         var initialCount = _manufacturerManagerContext.Categories.Count();
 
@@ -26,7 +26,7 @@ public class CategoryCommandTests
     }
 
     [Fact]
-    public async Task DeleteCategoryDeletesCategory()
+    public async Task DeleteCategory_DeletesCategory()
     {
         int categoryId;
 
@@ -42,7 +42,7 @@ public class CategoryCommandTests
     }
 
     [Fact]
-    public async Task UpdateCategoryUpdatesCategory()
+    public async Task UpdateCategory_UpdatesCategory()
     {
         var newCategoryName = "NewCategory";
 

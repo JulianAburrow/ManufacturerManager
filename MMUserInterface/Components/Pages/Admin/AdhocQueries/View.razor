@@ -1,0 +1,33 @@
+﻿@page "/adhocquery/view/{AdhocQueryId:int}"
+@inherits AdhocQueryBasePageClass
+
+<PageTitle>View Ad Hoc Query</PageTitle>
+
+@if (AdhocQueryModel.AdhocQueryId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@AdhocQuerySingular" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudField Label="Name">@AdhocQueryModel.NaturalLanguageQuery</MudField>
+                <MudField Label="Message or Sql Returned">@AdhocQueryModel.MessageOrSqlReturned</MudField>
+                <MudField Label="When Run">@AdhocQueryModel.WhenRun</MudField>
+                <MudField Label="Is Successful">@AdhocQueryModel.IsSuccessful</MudField>
+            </MudCardContent>
+            <MudCardActions>
+                <a class="btn btn-danger" href="/adhocquery/delete/@AdhocQueryModel.AdhocQueryId">Delete</a>
+                @if (AdhocQueryModel.IsSuccessful)
+                {
+                    @:&nbsp;
+                    <button class="btn btn-primary" @onclick="CopySql">Copy SQL</button>
+                }
+                &nbsp;
+                <a class="btn btn-primary" href="/adhocqueries/index">Cancel</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

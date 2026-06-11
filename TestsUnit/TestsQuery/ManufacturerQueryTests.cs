@@ -15,7 +15,7 @@ public class ManufacturerQueryTests
     }
 
     [Fact]
-    public async Task GetManufacturerGetsManufacturer()
+    public async Task GetManufacturer_GetsManufacturer()
     {
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[3]);
         _manufacturerManagerContext.SaveChanges();
@@ -26,7 +26,7 @@ public class ManufacturerQueryTests
     }
 
     [Fact]
-    public async Task GetManufacturersGetsManufacturers()
+    public async Task GetManufacturers_GetsManufacturers()
     {
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 

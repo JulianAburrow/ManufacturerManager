@@ -13,7 +13,7 @@ public class ColourCommandTests
     }
 
     [Fact]
-    public async Task CreateColourCreatesColour()
+    public async Task CreateColour_CreatesColour()
     {
         var initialCount = _manufacturerManagerContext.Colours.Count();
 
@@ -26,7 +26,7 @@ public class ColourCommandTests
     }
 
     [Fact]
-    public async Task DeleteColourDeletesColour()
+    public async Task DeleteColour_DeletesColour()
     {
         int colourId;
 
@@ -42,7 +42,7 @@ public class ColourCommandTests
     }
 
     [Fact]
-    public async Task UpdateColourUpdatesColour()
+    public async Task UpdateColour_UpdatesColour()
     {
         var newColourName = "NewColour";
 

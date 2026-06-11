@@ -1,5 +1,6 @@
 ﻿global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Forms;
+global using Microsoft.Data.SqlClient;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.JSInterop;
 global using MMBusinessLayer.Interfaces;

@@ -15,7 +15,7 @@ public class MyMMCommandTests
     }
     
     [Fact]
-    public async Task CreateMyMMCreatesMyMM()
+    public async Task CreateMyMM_CreatesMyMM()
     {
         var initialCount = _manufacturerManagerContext.MyMMs.Count();
 
@@ -26,7 +26,7 @@ public class MyMMCommandTests
     }
 
     [Fact]
-    public async Task DeleteMyMMDeletesMyMM()
+    public async Task DeleteMyMM_DeletesMyMM()
     {
         int myMMId;
 
@@ -40,7 +40,7 @@ public class MyMMCommandTests
     }
 
     [Fact]
-    public async Task UpdateMyMMUpdatesMyMM()
+    public async Task UpdateMyMM_UpdatesMyMM()
     {
         var newTitle = "UpdatedTitle";
 

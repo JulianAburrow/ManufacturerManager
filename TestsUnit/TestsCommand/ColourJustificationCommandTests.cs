@@ -15,7 +15,7 @@ public class ColourJustificationCommandTests
     
 
     [Fact]
-    public async Task CreateColourJustificationCreatesColourJustification()
+    public async Task CreateColourJustification_CreatesColourJustification()
     {
         var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
 
@@ -28,7 +28,7 @@ public class ColourJustificationCommandTests
     }
 
     [Fact]
-    public async Task DeleteColourJustificationDeletesColourJustification()
+    public async Task DeleteColourJustification_DeletesColourJustification()
     {
         int colourJustificationId;
 
@@ -44,7 +44,7 @@ public class ColourJustificationCommandTests
     }
 
     [Fact]
-    public async Task UpdateColourJustificationUpdatesColourJustification()
+    public async Task UpdateColourJustification_UpdatesColourJustification()
     {
         var newJustification = "newJustification";
 

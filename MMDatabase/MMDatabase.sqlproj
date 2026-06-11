@@ -84,6 +84,7 @@
     <Build Include="Tables\MyMMStatus.sql" />
     <Build Include="Tables\Language.sql" />
     <None Include="SeedData\SeedLanguage.sql" />
+    <Build Include="Tables\AdHocQuery.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MMDatabase.refactorlog" />

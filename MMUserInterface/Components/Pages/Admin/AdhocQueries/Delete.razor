@@ -1,0 +1,19 @@
+﻿@page "/adhocquery/delete/{AdHocQueryId:int}"
+@inherits AdhocQueryBasePageClass
+
+<PageTitle>Delete Ad Hoc Query</PageTitle>
+
+@if (AdhocQueryModel.AdhocQueryId == 0)
+{
+    <LoadingMessageComponent ValueToShow="@AdhocQuerySingular" />
+    return;
+}
+
+<ConfirmDeleteComponent ObjectType="@AdhocQuerySingular" ObjectName="@AdhocQueryModel.NaturalLanguageQuery" />
+
+<br />
+<br />
+
+<button class="btn btn-danger" @onclick="DeleteAdhocQuery">Delete</button>
+&nbsp;
+<a class="btn btn-primary" href="/adhocqueries/index">Cancel</a>

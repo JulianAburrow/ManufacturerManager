@@ -19,6 +19,8 @@ public static class ServiceExtensions
     public static void AddDependencies(this IServiceCollection services)
     {
         services.AddHttpClient<IOllamaService, OllamaService>();
+        services.AddTransient<IAdhocQueryCommandHandler, AdhocQueryCommandHandler>();
+        services.AddTransient<IAdhocQueryQueryHandler, AdhocQueryQueryHandler>();
         services.AddTransient<ICategoryCommandHandler, CategoryCommandHandler>();
         services.AddTransient<ICategoryHelper, CategoryHelper>();
         services.AddTransient<ICategoryQueryHandler, CategoryQueryHandler>();

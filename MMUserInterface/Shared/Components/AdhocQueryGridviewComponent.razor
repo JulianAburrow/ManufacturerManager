@@ -1,0 +1,37 @@
+﻿<MudTable Items="AdhocQueries"
+          SortLabel="SortBy"
+          Hover
+          RowsPerPage="5"
+          FixedHeader>
+    <HeaderContent>
+        <MudTh title="Sort by Name">
+            <MudTableSortLabel SortBy="new Func<AdhocQueryModel, object>(x => x.NaturalLanguageQuery)">
+                Natural Language Query
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Is Successful">
+            <MudTableSortLabel SortBy="new Func<AdhocQueryModel, object>(x => x.IsSuccessful)">
+                Is Successful
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by When Run">
+            <MudTableSortLabel SortBy="new Func<AdhocQueryModel, object>(x => x.WhenRun)">
+                When Run
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.NaturalLanguageQuery</MudTd>
+        <MudTd>@context.IsSuccessful</MudTd>
+        <MudTd>@context.WhenRun</MudTd>
+        <MudTd>
+            <a class="btn btn-primary" href="/adhocquery/view/@context.AdhocQueryId">View</a>
+            &nbsp;
+            <a class="btn btn-danger" href="/adhocquery/delete/@context.AdhocQueryId">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

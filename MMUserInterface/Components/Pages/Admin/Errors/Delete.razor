@@ -5,11 +5,11 @@
 
 @if (ErrorModel.ErrorId == 0)
 {
-    <LoadingMessageComponent ValueToShow="@Error" />
+    <LoadingMessageComponent ValueToShow="@ErrorSingular" />
     return;
 }
 
-<ConfirmDeleteComponent ObjectType="@Error" ObjectName="@ErrorModel.ErrorMessage" />
+<ConfirmDeleteComponent ObjectType="@ErrorSingular" ObjectName="@ErrorModel.ErrorMessage" />
 
 <br />
 <br />

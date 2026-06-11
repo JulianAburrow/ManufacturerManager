@@ -15,7 +15,7 @@ public class WidgetCommandTests
     }    
 
     [Fact]
-    public async Task CreateWidgetCreatesWidget()
+    public async Task CreateWidget_CreatesWidget()
     {
         var initialCount = _manufacturerManagerContext.Widgets.Count();
 
@@ -26,7 +26,7 @@ public class WidgetCommandTests
     }
 
     [Fact]
-    public async Task DeleteWidgetDeletesWidget()
+    public async Task DeleteWidget_DeletesWidget()
     {
         int widgetId;
 
@@ -40,7 +40,7 @@ public class WidgetCommandTests
     }
 
     [Fact]
-    public async Task UpdateWidgetUpdatesWidget()
+    public async Task UpdateWidget_UpdatesWidget()
     {
         var newWidget = "AcmeWidget";
 

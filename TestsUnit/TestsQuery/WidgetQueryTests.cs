@@ -13,7 +13,7 @@ public class WidgetQueryTests
     }
 
     [Fact]
-    public async Task GetWidgetGetsWidget()
+    public async Task GetWidget_GetsWidget()
     {
         _manufacturerManagerContext.Widgets.Add(_testWidgets[1]);
         _manufacturerManagerContext.SaveChanges();
@@ -25,7 +25,7 @@ public class WidgetQueryTests
     }
 
     [Fact]
-    public async Task GetWidgetsGetsWidgets()
+    public async Task GetWidgets_GetsWidgets()
     {
         var initialCount = _manufacturerManagerContext.Widgets.Count();
 

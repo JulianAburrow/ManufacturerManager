@@ -13,7 +13,7 @@ public class MyMMStatusQueryTests
     }
 
     [Fact]
-    public async Task GetMyMMStatusesGetsMyMMStatuses()
+    public async Task GetMyMMStatuses_GetsMyMMStatuses()
     {
         var initialCount = _manufacturerManagerContext.MyMMStatuses.Count();
 
@@ -27,7 +27,7 @@ public class MyMMStatusQueryTests
     }
 
     [Fact]
-    public async Task GetMyMMStatusGetsMyMMStatus()
+    public async Task GetMyMMStatus_GetsMyMMStatus()
     {
         _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
         _manufacturerManagerContext.SaveChanges();

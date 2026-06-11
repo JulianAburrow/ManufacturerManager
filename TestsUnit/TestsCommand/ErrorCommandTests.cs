@@ -14,7 +14,7 @@ public class ErrorCommandTests
     }
 
     [Fact]
-    public async Task CreateErrorCreatesError()
+    public async Task CreateError_CreatesError()
     {
         var initialCount = _manufacturerManagerContext.Errors.Count();
 
@@ -25,7 +25,7 @@ public class ErrorCommandTests
     }
 
     [Fact]
-    public async Task DeleteErrorDeletesError()
+    public async Task DeleteError_DeletesError()
     {
         int errorId;
 
@@ -41,7 +41,7 @@ public class ErrorCommandTests
     }
 
     [Fact]
-    public async Task UpdateErrorUpdatesError()
+    public async Task UpdateError_UpdatesError()
     {
         var newErrorMessage = "UpdatedError1";
         var resolvedDate = DateTime.Now;

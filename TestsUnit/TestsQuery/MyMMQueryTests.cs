@@ -13,7 +13,7 @@ public class MyMMQueryTests
     }
 
     [Fact]
-    public async Task GetMyMMGetsMyMM()
+    public async Task GetMyMM_GetsMyMM()
     {
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[1]);
         _manufacturerManagerContext.SaveChanges();
@@ -29,7 +29,7 @@ public class MyMMQueryTests
     }
 
     [Fact]
-    public async Task GetMyMMsGetsMyMMs()
+    public async Task GetMyMMs_GetsMyMMs()
     {
         var initialCount = _manufacturerManagerContext.MyMMs.Count();
 
@@ -43,7 +43,7 @@ public class MyMMQueryTests
     }
 
     [Fact]
-    public async Task GetMyMMsForHomePageGetsOnlyPastAndTodayMyMMs()
+    public async Task GetMyMMsForHomePage_GetsOnlyPastAndTodayMyMMs()
     {
         _testMyMMs[0].ActionDate = DateTime.Today.AddDays(-1);
         _testMyMMs[0].StatusId = (int)PublicEnums.MyMMStatusEnum.Active;

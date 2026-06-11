@@ -15,7 +15,7 @@ public class ColourJustificationQueryTests
     }
 
     [Fact]
-    public async Task GetColourJustificationGetsColourJustification()
+    public async Task GetColourJustification_GetsColourJustification()
     {
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[0]);
         _manufacturerManagerContext.SaveChanges();
@@ -26,7 +26,7 @@ public class ColourJustificationQueryTests
     }
 
     [Fact]
-    public async Task GetColourJustificationsGetsColourJustifications()
+    public async Task GetColourJustifications_GetsColourJustifications()
     {
         var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
 

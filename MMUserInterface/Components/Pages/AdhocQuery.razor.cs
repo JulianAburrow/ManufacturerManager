@@ -1,8 +1,10 @@
+using Microsoft.Extensions.ObjectPool;
+
 namespace MMUserInterface.Components.Pages;
 
 public partial class AdhocQuery
 {
-    [Inject] McpSqlExecutor SqlExecutor { get; set; } = null!;
+    [Inject] private McpSqlExecutor SqlExecutor { get; set; } = null!;
 
     private DataTable? ResultsDataTable;
 
@@ -10,13 +12,18 @@ public partial class AdhocQuery
 
     private string SqlReturned = string.Empty;
 
-    private string? ErrorMessage = null;
+    private string? MessageToDisplay = null;
 
     private bool IsThinking = false;
+
+    private bool ShowLastXPanel = true;
+
+    private List<AdhocQueryListModel> LastXSuccessfulAdhocQueries { get; set; } = null!;
 
     protected async override Task OnInitializedAsync()
     {
         MainLayout.SetHeaderValue("Ad Hoc Query");
+        await GetLastXSuccessfulAdhocQueries();
     }
 
     protected override void OnInitialized()
@@ -31,12 +38,13 @@ public partial class AdhocQuery
     protected async Task OnQueryClicked()
     {
         IsThinking = true;
-        ErrorMessage = null;
+        MessageToDisplay = null;
         ResultsDataTable = null;
+        ShowLastXPanel = false;
 
         if (string.IsNullOrWhiteSpace(QueryText))
         {
-            ErrorMessage = "Please enter a query.";
+            MessageToDisplay = "Please enter a query.";
             IsThinking = false;
             return;
         }
@@ -45,22 +53,61 @@ public partial class AdhocQuery
         {
             SqlReturned = await McpService.GetSqlStringFromNaturalQuery(QueryText);
 
-            // Detect the model's safe refusal message
-            if (SqlReturned.Contains("I can only generate safe read-only SELECT queries."))
+            // Detect refusal messages from the model or service
+            // Detect any refusal message
+            if (SqlReturned.StartsWith("REFUSAL:"))
             {
-                ErrorMessage = SqlReturned; // Show the model's own message
-                return;                     // Do NOT execute SQL
+                MessageToDisplay = SqlReturned.Substring("REFUSAL:".Length).Trim();
+                await LogAdhocQuery(SqlReturned);
+                return;
             }
 
             ResultsDataTable = await SqlExecutor.ExecuteQueryAsync(SqlReturned);
+
+            // SUCCESS LOG
+            await LogAdhocQuery(null);
+        }
+        catch (SqlException ex)
+        {
+            MessageToDisplay = "There was an error executing the command. Try simplifying the query.";
+            await LogAdhocQuery(ex.Message);       // log failure
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"An error occurred while processing the query: {ex.Message}";
+            MessageToDisplay = "An error occurred while processing the query.";
+            await LogAdhocQuery(ex.Message);       // log failure
         }
         finally
         {
             IsThinking = false;
+            await GetLastXSuccessfulAdhocQueries();
+            StateHasChanged();
         }
     }
+
+    private async Task LogAdhocQuery(string? errorMessage)
+    {
+        var adhocQueryModel = new AdhocQueryModel
+        {
+            NaturalLanguageQuery = QueryText,
+            MessageOrSqlReturned = errorMessage is null ? SqlReturned : errorMessage,
+            IsSuccessful = errorMessage is null,
+            WhenRun = DateTime.UtcNow,
+        };
+
+        await AdhocQueryCommandHandler.CreateAdhocQueryAsync(adhocQueryModel, true);
+    }
+
+    private async Task GetLastXSuccessfulAdhocQueries()
+    {
+        LastXSuccessfulAdhocQueries = await AdhocQueryQueryHandler.GetLastXSuccessfulAdhocQueries(5);
+    }
+
+    private async Task HandleRerunQuery(string queryText)
+    {
+        ShowLastXPanel = false;
+        QueryText = queryText;
+        await OnQueryClicked();
+    }
+
 }

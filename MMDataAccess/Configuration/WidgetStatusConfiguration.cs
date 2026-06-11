@@ -5,6 +5,6 @@ public class WidgetStatusConfiguration : IEntityTypeConfiguration<WidgetStatusMo
     public void Configure(EntityTypeBuilder<WidgetStatusModel> builder)
     {
         builder.ToTable("WidgetStatus");
-        builder.HasKey(nameof(WidgetStatusModel.StatusId));
+        builder.HasKey(w => w.StatusId);
     }
 }

@@ -15,7 +15,7 @@ public class ManufacturerCommandTests
     }
 
     [Fact]
-    public async Task CreateManufacturerCreatesManufacturer()
+    public async Task CreateManufacturer_CreatesManufacturer()
     {
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 
@@ -28,7 +28,7 @@ public class ManufacturerCommandTests
     }
 
     [Fact]
-    public async Task DeleteManufacturerDeletesManufacturer()
+    public async Task DeleteManufacturer_DeletesManufacturer()
     {
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
         _manufacturerManagerContext.SaveChanges();
@@ -40,7 +40,7 @@ public class ManufacturerCommandTests
     }
 
     [Fact]
-    public async Task SetManufacturerInactiveSetsWidgetsForManufacturerInactive()
+    public async Task SetManufacturerInactive_SetsWidgetsForManufacturerInactive()
     {
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
         _manufacturerManagerContext.SaveChanges();
@@ -63,7 +63,7 @@ public class ManufacturerCommandTests
     }
 
     [Fact]
-    public async Task UpdateManufacturerUpdatesManufacturer()
+    public async Task UpdateManufacturer_UpdatesManufacturer()
     {
         var newManufacturer = "AceWidgets";
 
