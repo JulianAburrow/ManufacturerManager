@@ -2,6 +2,7 @@
 
 public class ManufacturerManagerContext(DbContextOptions<ManufacturerManagerContext> options) : DbContext(options)
 {
+    public DbSet<AdhocQueryModel> AdhocQueries { get; set; }
     public DbSet<CategoryModel> Categories { get; set; }
     public DbSet<ColourJustificationModel> ColourJustifications { get; set; }
     public DbSet<ColourModel> Colours { get; set; }
@@ -23,6 +24,7 @@ public class ManufacturerManagerContext(DbContextOptions<ManufacturerManagerCont
             property.SetIsUnicode(false);
         }
 
+        builder.ApplyConfiguration(new AdhocQueryConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new ColourConfiguration());
         builder.ApplyConfiguration(new ColourJustificationConfiguration());

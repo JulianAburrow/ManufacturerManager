@@ -58,7 +58,28 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("- Comments");
         builder.AppendLine();
         builder.AppendLine(@"If the user asks for anything unsafe, respond with:
-""I can only generate safe read‑only SELECT queries.""");
+""REFUSAL: I can only generate safe read‑only SELECT queries.""");
+        builder.AppendLine();
+
+        builder.AppendLine("==========================");
+        builder.AppendLine("AMBIGUITY REFUSAL RULES");
+        builder.AppendLine("==========================");
+        builder.AppendLine(@"If the user asks for information that could refer to multiple possible interpretations within the schema, respond with:
+""REFUSAL: I can only generate safe read-only SELECT queries. Your request is unclear. Please clarify your intent.""");
+        builder.AppendLine("Examples include:");
+        builder.AppendLine("- Asking for a 'specific colour' of a manufacturer without defining how that colour should be determined.");
+        builder.AppendLine("- Asking for a 'default' or 'primary' widget when no such concept exists in the schema.");
+        builder.AppendLine("- Asking for a property that could apply to multiple tables without specifying which one.");
+        builder.AppendLine();
+
+        builder.AppendLine("==========================");
+        builder.AppendLine("SCHEMA‑AWARE REFUSAL RULES");
+        builder.AppendLine("==========================");
+        builder.AppendLine(@"If the user asks for data, tables, fields, or relationships that do not exist in the schema, respond with:
+""REFUSAL: I’m sorry — the database does not contain any tables or fields related to that request.""");
+        builder.AppendLine("Do NOT invent tables, fields, or relationships.");
+        builder.AppendLine("Do NOT guess or infer meaning.");
+        builder.AppendLine("If the request cannot be satisfied using the schema exactly as defined, refuse.");
         builder.AppendLine();
 
         builder.AppendLine("==========================");
@@ -88,44 +109,38 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("- When the user says 'at least one', interpret this as: the manufacturer has one or more widgets satisfying the condition. Use EXISTS or HAVING COUNT(CASE WHEN condition THEN 1 END) >= 1.");
         builder.AppendLine("- When the user says 'at most one', interpret this as: the manufacturer has zero or one widgets satisfying the condition. Use HAVING COUNT(CASE WHEN condition THEN 1 END) <= 1.");
         builder.AppendLine("- When the user says 'more than one', interpret this as: the manufacturer has at least two widgets satisfying the condition. Use HAVING COUNT(CASE WHEN condition THEN 1 END) > 1.");
-        builder.AppendLine("- When combining multiple quantifier conditions with OR or AND, evaluate each condition independently in the HAVING clause. Never nest one aggregate inside another. Never place COUNT, SUM, AVG, MIN, or MAX inside a CASE expression that itself contains an aggregate.\r\n");
+        builder.AppendLine("- When combining multiple quantifier conditions with OR or AND, evaluate each condition independently in the HAVING clause. Never nest one aggregate inside another. Never place COUNT, SUM, AVG, MIN, or MAX inside a CASE expression that itself contains an aggregate.");
         builder.AppendLine();
 
         builder.AppendLine("==========================");
         builder.AppendLine("DATABASE SCHEMA");
         builder.AppendLine("==========================");
-
         builder.AppendLine("TABLE Category (");
         builder.AppendLine("    CategoryId INT PRIMARY KEY,");
         builder.AppendLine("    Name NVARCHAR(25) NOT NULL");
         builder.AppendLine(")");
         builder.AppendLine();
-
         builder.AppendLine("TABLE Colour (");
         builder.AppendLine("    ColourId INT PRIMARY KEY,");
         builder.AppendLine("    Name NVARCHAR(25) NOT NULL");
         builder.AppendLine(")");
         builder.AppendLine();
-
         builder.AppendLine("TABLE ColourJustification (");
         builder.AppendLine("    ColourJustificationId INT PRIMARY KEY,");
         builder.AppendLine("    Justification NVARCHAR(100) NOT NULL");
         builder.AppendLine(")");
         builder.AppendLine();
-
         builder.AppendLine("TABLE Manufacturer (");
         builder.AppendLine("    ManufacturerId INT PRIMARY KEY,");
         builder.AppendLine("    Name NVARCHAR(100) NOT NULL,");
         builder.AppendLine("    StatusId INT NOT NULL FOREIGN KEY REFERENCES ManufacturerStatus(StatusId)");
         builder.AppendLine(")");
         builder.AppendLine();
-
         builder.AppendLine("TABLE ManufacturerStatus (");
         builder.AppendLine("    StatusId INT PRIMARY KEY,");
         builder.AppendLine("    StatusName NVARCHAR(20) NOT NULL");
         builder.AppendLine(")");
         builder.AppendLine();
-
         builder.AppendLine("TABLE Widget (");
         builder.AppendLine("    WidgetId INT PRIMARY KEY,");
         builder.AppendLine("    Name NVARCHAR(100) NOT NULL,");
@@ -138,7 +153,6 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("    StockLevel INT NOT NULL,");
         builder.AppendLine(")");
         builder.AppendLine();
-
         builder.AppendLine("TABLE WidgetStatus (");
         builder.AppendLine("    StatusId INT PRIMARY KEY,");
         builder.AppendLine("    StatusName NVARCHAR(20) NOT NULL");
@@ -152,8 +166,6 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("- StockLevel is the quantity of units in stock.");
         builder.AppendLine("- The total cost value of a widget is (CostPrice * StockLevel).");
         builder.AppendLine("- The total retail value of a widget is (RetailPrice * StockLevel).");
-        builder.AppendLine("- When the user asks for total cost, total retail, total value, sum of prices, or similar phrases, interpret this as:");
-        builder.AppendLine("    SUM(CostPrice * StockLevel) or SUM(RetailPrice * StockLevel).");
         builder.AppendLine("- Manufacturer-level totals must be calculated using window functions:");
         builder.AppendLine("    SUM(CostPrice * StockLevel) OVER (PARTITION BY ManufacturerId)");
         builder.AppendLine("    SUM(RetailPrice * StockLevel) OVER (PARTITION BY ManufacturerId)");
@@ -167,8 +179,6 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("- When the user says 'active manufacturer', interpret this as:");
         builder.AppendLine("    ManufacturerStatus.StatusName = 'Active'.");
         builder.AppendLine("- Never confuse widget status with manufacturer status.");
-        builder.AppendLine();
-
         builder.AppendLine();
 
         builder.AppendLine("==========================");
@@ -209,7 +219,30 @@ public class McpService(IOllamaService ollamaService) : IMcpService
         builder.AppendLine("If the user’s request is unclear, choose the most reasonable interpretation and generate SQL accordingly.");
         builder.AppendLine();
 
-        builder.AppendLine("Convert the following natural language request into SQL:");
+        builder.AppendLine("==========================");
+        builder.AppendLine("STRICT ANTI-HALLUCINATION RULES");
+        builder.AppendLine("==========================");
+        builder.AppendLine("- Never infer relationships between tables unless the user explicitly states them.");
+        builder.AppendLine("- Never join tables unless the natural language request clearly requires that specific join.");
+        builder.AppendLine("- Never assume that a table has a column unless it is explicitly defined in the schema.");
+        builder.AppendLine("- Never assume that a relationship exists unless it is explicitly defined in the schema.");
+        builder.AppendLine(@"If the user asks for a field that does not exist on the referenced table, respond with:
+""I’m sorry — the database does not contain any tables or fields related to that request.""");
+        builder.AppendLine(@"If the user asks for a relationship that does not exist in the schema, respond with:
+""I’m sorry — the database does not contain any tables or fields related to that request.""");
+        builder.AppendLine(@"If the user asks for information that cannot be derived from the schema without inventing data, respond with:
+""I’m sorry — the database does not contain any tables or fields related to that request.""");
+        builder.AppendLine("- Do NOT guess, infer, or assume meaning. If the request is ambiguous, refuse rather than hallucinate.");
+        builder.AppendLine("- Do NOT join Widget to Colour or ColourJustification unless the user explicitly mentions widgets.");
+        builder.AppendLine("- Do NOT join Manufacturer to Colour or ColourJustification unless the user explicitly mentions widgets.");
+        builder.AppendLine("- Do NOT join tables simply because they share similar column names.");
+        builder.AppendLine("- Only join tables when the natural language request explicitly describes the relationship (e.g., 'colour of their widgets').");
+        builder.AppendLine("- If the user asks for a property that belongs to widgets but does not mention widgets, refuse.");
+        builder.AppendLine("- If the user asks for a property that belongs to colours but does not mention colours, refuse.");
+        builder.AppendLine("- If the user asks for a property that belongs to colour justifications but does not mention colour justifications, refuse.");
+        builder.AppendLine("- Never attempt to reinterpret the user's intent to make an invalid query appear valid.");
+        builder.AppendLine("- When in doubt, refuse rather than hallucinate.");
+        builder.AppendLine();
 
         return builder.ToString();
     }

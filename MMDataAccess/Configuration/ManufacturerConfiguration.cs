@@ -7,7 +7,7 @@ public class ManufacturerConfiguration : IEntityTypeConfiguration<ManufacturerMo
     public void Configure(EntityTypeBuilder<ManufacturerModel> builder)
     {
         builder.ToTable("Manufacturer");
-        builder.HasKey(nameof(ManufacturerModel.ManufacturerId));
+        builder.HasKey(m => m.ManufacturerId);
         builder.HasOne(e => e.Status)
             .WithMany(e => e.Manufacturers)
             .HasForeignKey(e => e.StatusId)

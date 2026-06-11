@@ -6,7 +6,7 @@ public class MyMMConfiguration : IEntityTypeConfiguration<MyMMModel>
     {
         
         builder.ToTable("MyMM");
-        builder.HasKey(nameof(MyMMModel.MyMMId));
+        builder.HasKey(m => m.MyMMId);
         builder.HasOne(m => m.Status)
                .WithMany(s => s.MyMMs)
                .HasForeignKey(m => m.StatusId)

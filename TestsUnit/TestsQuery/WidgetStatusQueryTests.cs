@@ -13,7 +13,7 @@ public class WidgetStatusQueryTests
     }
 
     [Fact]
-    public async Task GetWidgetStatusesGetsWidgetStatuses()
+    public async Task GetWidgetStatuses_GetsWidgetStatuses()
     {
         var initialCount = _manufacturerManagerContext.WidgetStatuses.Count();
 

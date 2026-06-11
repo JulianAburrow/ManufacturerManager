@@ -33,6 +33,6 @@ public partial class WidgetCreateUpdateComponent
         ManufacturerIsInactive = manufacturerStatusId == (int)ManufacturerStatusEnum.Inactive;
         WidgetDisplayModel.StatusId = ManufacturerIsInactive
             ? (int)WidgetStatusEnum.Inactive
-            : SharedValues.PleaseSelectValue;
+            : WidgetDisplayModel.StatusId;
     }
 }

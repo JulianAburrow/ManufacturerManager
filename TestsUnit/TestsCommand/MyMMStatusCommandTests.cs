@@ -15,7 +15,7 @@ public class MyMMStatusCommandTests
     }
 
     [Fact]
-    public async Task CreateMyMMStatusCreatesMyMMStatus()
+    public async Task CreateMyMMStatus_CreatesMyMMStatus()
     {
         var initialCount = _manufacturerManagerContext.MyMMStatuses.Count();
 
@@ -26,7 +26,7 @@ public class MyMMStatusCommandTests
     }
 
     [Fact]
-    public async Task DeleteMyMMStatusDeletesMyMMStatus()
+    public async Task DeleteMyMMStatus_DeletesMyMMStatus()
     {
         int myMMStatusId;
 
@@ -40,7 +40,7 @@ public class MyMMStatusCommandTests
     }
 
     [Fact]
-    public async Task UpdateMyMMStatusUpdatesMyMMStatus()
+    public async Task UpdateMyMMStatus_UpdatesMyMMStatus()
     {
         var newStatusName = "UpdatedStatus";
 

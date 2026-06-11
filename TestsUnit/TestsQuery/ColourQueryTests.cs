@@ -13,7 +13,7 @@ public class ColourQueryTests
     }
 
     [Fact]
-    public async Task GetColourGetsColour()
+    public async Task GetColour_GetsColour()
     {
         _manufacturerManagerContext.Colours.Add(_testColours[3]);
         _manufacturerManagerContext.SaveChanges();
@@ -24,7 +24,7 @@ public class ColourQueryTests
     }
 
     [Fact]
-    public async Task GetColoursGetsColours()
+    public async Task GetColours_GetsColours()
     {
         var initialCount = _manufacturerManagerContext.Colours.Count();
 

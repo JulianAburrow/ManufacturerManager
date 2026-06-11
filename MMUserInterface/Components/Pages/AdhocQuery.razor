@@ -3,7 +3,30 @@
 
 <PageTitle>Ad Hoc Query</PageTitle>
 
+@if (LastXSuccessfulAdhocQueries is null)
+{
+    <LoadingMessageComponent ValueToShow="@AdhocQueryPlural" />
+    return;
+}
+
 <h1>Ad Hoc Query</h1>
+
+@if (ShowLastXPanel)
+{
+    <AdhocQueriesListAndRerunComponent LastXSuccessfulAdhocQueries="@LastXSuccessfulAdhocQueries"
+                                       OnAdhocQuerySelected="HandleRerunQuery" />    
+}
+
+<MudButton Color="Color.Secondary"
+           Variant="Variant.Outlined"
+           Class="my-3"
+           OnClick="@(() => ShowLastXPanel = !ShowLastXPanel)"
+           Disabled="@IsThinking">
+    @(ShowLastXPanel ? "Hide" : "Show") Last @LastXSuccessfulAdhocQueries.Count @AdhocQueryPlural
+</MudButton>
+
+<br />
+<br />
 
 <MudGrid>
     <MudItem sm="7">
@@ -33,10 +56,10 @@
     <ThinkingComponent />
 }
 
-@if (ErrorMessage is not null)
+@if (MessageToDisplay is not null)
 {
-    <MudAlert Severity="Severity.Error">
-        @ErrorMessage
+    <MudAlert Severity="Severity.Error" Elevation="0" Variant="Variant.Filled" Class="mb-4">
+        @MessageToDisplay
     </MudAlert>
 }
 

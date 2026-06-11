@@ -1,0 +1,21 @@
+﻿@page "/adhocqueries/index"
+@inherits AdhocQueryBasePageClass
+
+<PageTitle>Ad hoc Queries</PageTitle>
+
+@if (AdhocQueries is null)
+{
+    <LoadingMessageComponent ValueToShow="@AdhocQueryPlural" />
+    return;
+}
+
+<br />
+<br />
+
+@if (AdhocQueries.Count == 0)
+{
+    <NoResultsComponent ObjectType="@AdhocQueryPlural" />
+    return;
+}
+
+<AdhocQueryGridviewComponent AdhocQueries="@AdhocQueries" />

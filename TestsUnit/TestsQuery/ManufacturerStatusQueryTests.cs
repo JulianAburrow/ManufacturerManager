@@ -13,7 +13,7 @@ public class ManufacturerStatusQueryTests
     }
 
     [Fact]
-    public async Task GetManufacturerStatusesGetsManufacturerStatuses()
+    public async Task GetManufacturerStatuses_GetsManufacturerStatuses()
     {
         var initialCount = _manufacturerManagerContext.ManufacturerStatuses.Count();
 

@@ -13,7 +13,7 @@ public class LanguageQueryTests
     }
 
     [Fact]
-    public async Task GetLanguagesGetsLanguages()
+    public async Task GetLanguages_GetsLanguages()
     {
         var initialCount = _manufacturerManagerContext.Languages.Count();
 
@@ -29,7 +29,7 @@ public class LanguageQueryTests
     }
 
     [Fact]
-    public async Task GetLanguagesForHelpPageGetsLanguagesForHelpPage()
+    public async Task GetLanguagesForHelpPage_GetsLanguagesForHelpPage()
     {
         var initialCount = _manufacturerManagerContext.Languages.Count();
 

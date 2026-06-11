@@ -5,7 +5,7 @@ public class ColourJustificationConfiguration : IEntityTypeConfiguration<ColourJ
     public void Configure(EntityTypeBuilder<ColourJustificationModel> builder)
     {
         builder.ToTable("ColourJustification");
-        builder.HasKey(nameof(ColourJustificationModel.ColourJustificationId));
+        builder.HasKey(c => c.ColourJustificationId);
         builder.HasMany(e => e.Widgets)
             .WithOne(e => e.ColourJustification)
             .HasForeignKey(e => e.ColourJustificationId)

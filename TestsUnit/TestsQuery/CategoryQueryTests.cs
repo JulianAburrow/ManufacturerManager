@@ -13,7 +13,7 @@ public class CategoryQueryTests
     }
 
     [Fact]
-    public async Task GetCategoriesGetsCategories()
+    public async Task GetCategories_GetsCategories()
     {
         var initialCount = _manufacturerManagerContext.Categories.Count();
 

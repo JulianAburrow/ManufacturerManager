@@ -5,7 +5,7 @@ public class WidgetConfiguration : IEntityTypeConfiguration<WidgetModel>
     public void Configure(EntityTypeBuilder<WidgetModel> builder)
     {
         builder.ToTable("Widget");
-        builder.HasKey(nameof(WidgetModel.WidgetId));
+        builder.HasKey(w => w.WidgetId);
         builder.Property(e => e.CostPrice)
             .HasColumnType("decimal")
             .HasPrecision(18, 2);

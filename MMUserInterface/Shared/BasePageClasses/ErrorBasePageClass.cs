@@ -8,7 +8,7 @@ public abstract class ErrorBasePageClass : BasePageClass
 
     protected ErrorDisplayModel ErrorDisplayModel { get; set; } = new();
 
-    protected string Error = "Error";
+    protected string ErrorSingular = "Error";
 
     protected string ErrorPlural = "Errors";
 
