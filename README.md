@@ -15,6 +15,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Automated CI/CD**: GitHub Actions for build, test, and deployment automation.
 - **Error Logging**: Centralized error handling and logging to the database for diagnostics.
 - **Document-aware RAG AI Assistant**: Search documents for help with functionality, with built‑in language selection and translation.
+- **Natural‑Language‑to‑SQL Engine**: Safe, read‑only NL→SQL query generation using local LLMs, with schema‑aware reasoning, strict refusal rules, and full query logging for auditability.
 
 ---
 
@@ -28,6 +29,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **SQL Server** (default, swapped for in-memory in unit tests)
 - **GitHub Actions** (CI/CD)
 - **Ollama/TinyLlama/gemma3:1b/qwen:0.5b** (AI Assistant)
+- **Ollama/Qwen 2.5 14B** (NL→SQL engine)
 
 ---
 
@@ -37,6 +39,17 @@ This project includes support for a document-aware AI assistant powered by [Olla
 If Ollama is not installed, assistant features will be disabled gracefully.
 
 The models in use are gemma3:1b, qwen:0.5b and tinyllama:latest
+
+---
+
+## Local NL→SQL Engine
+
+This project includes a natural‑language‑to‑SQL engine powered by local LLMs running via Ollama.
+
+The system converts user questions into safe, read‑only SQL queries, with strict schema‑aware reasoning and robust refusal rules to prevent hallucinated joins or destructive operations.
+If Ollama is not installed, NL→SQL functionality is disabled gracefully.
+
+The model in use is Qwen2.5:14b, selected for its strong structured‑reasoning performance.
 
 ---
 
