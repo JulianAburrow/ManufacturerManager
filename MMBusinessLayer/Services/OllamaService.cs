@@ -1,7 +1,12 @@
 ﻿namespace MMBusinessLayer.Services;
 
-public class OllamaService(HttpClient httpClient) : IOllamaService
+public class OllamaService(HttpClient httpClient) : ILlmClient
 {
+    public async Task<string> GenerateAsync(string prompt)
+    {
+        return await GenerateAsync(prompt, "llama3.1", true);
+    }
+
     public async Task<string> GenerateAsync(string prompt, string model, bool useStreaming)
     {
         try
@@ -66,8 +71,7 @@ public class OllamaService(HttpClient httpClient) : IOllamaService
             // Any other unexpected failure
             return "REFUSAL: Unable to retrieve available models. Please ensure that Ollama is installed and running and that at least one LLM is present.";
         }
-    }
-    
+    }   
 
     private static string StripCodeFences(string sql)
     {

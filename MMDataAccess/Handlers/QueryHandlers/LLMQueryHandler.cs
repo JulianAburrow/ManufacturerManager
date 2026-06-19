@@ -1,4 +1,6 @@
-﻿namespace MMDataAccess.Handlers.QueryHandlers;
+﻿using MMBusinessLayer.Models.Ollama;
+
+namespace MMDataAccess.Handlers.QueryHandlers;
 
 public class LLMQueryHandler : ILLMQueryHandler
 {

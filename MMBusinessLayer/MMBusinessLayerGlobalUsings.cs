@@ -1,7 +1,10 @@
-﻿global using MMBusinessLayer.Interfaces;
-global using MMBusinessLayer.Models;
+﻿global using Microsoft.Extensions.Configuration;
+global using MMBusinessLayer.Enums;
+global using MMBusinessLayer.Helpers;
+global using MMBusinessLayer.Interfaces;
+global using MMBusinessLayer.Models.Ollama;
+global using MMBusinessLayer.Models.TogetherAI;
 global using MMBusinessLayer.Shared.CommonValues;
-global using MMUserInterface.Models;
 global using System.Net.Http.Json;
 global using System.Text;
 global using System.Text.Json;

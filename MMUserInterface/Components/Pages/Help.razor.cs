@@ -4,6 +4,8 @@ public partial class Help
 {
     private List<string> HelpCategories = null!;
 
+    [Inject] IDocumentService documentService { get; set; } = null!;
+
     private readonly List<OllamaModel> AvailableModels = [];
 
     protected ChatSearchModel ChatSearchModel = new();
@@ -76,7 +78,7 @@ public partial class Help
 
         try
         {
-            MatchingFiles = RagAiService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
+            MatchingFiles = documentService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
 
             if (MatchingFiles.Count == 0)
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Razor.Internal;
+using MMBusinessLayer.Models.Ollama;
 
 namespace MMUserInterface.Shared.BasePageClasses;
 

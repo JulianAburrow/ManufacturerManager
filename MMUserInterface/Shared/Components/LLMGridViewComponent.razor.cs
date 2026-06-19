@@ -1,3 +1,5 @@
+using MMBusinessLayer.Models.Ollama;
+
 namespace MMUserInterface.Shared.Components;
 
 public partial class LLMGridViewComponent
