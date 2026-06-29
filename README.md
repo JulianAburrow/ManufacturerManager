@@ -16,6 +16,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Error Logging**: Centralized error handling and logging to the database for diagnostics.
 - **Document-aware RAG AI Assistant**: Search documents for help with functionality, with built‑in language selection and translation.
 - **Natural‑Language‑to‑SQL Engine**: Safe, read‑only NL→SQL query generation using local LLMs, with schema‑aware reasoning, strict refusal rules, and full query logging for auditability.
+- **Config key** to switch between local and cloud LLM providers.
 
 ---
 
