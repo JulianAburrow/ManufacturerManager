@@ -4,6 +4,10 @@ public partial class Help
 {
     private List<string> HelpCategories = null!;
 
+    [Inject] IDocumentService documentService { get; set; } = null!;
+
+    [Inject] IConfiguration config { get; set; } = null!;
+
     private readonly List<OllamaModel> AvailableModels = [];
 
     protected ChatSearchModel ChatSearchModel = new();
@@ -20,22 +24,30 @@ public partial class Help
 
     private string ErrorMessage = string.Empty;
 
+    private bool OfflineMode;
+
     protected override async Task OnInitializedAsync()
     {
-        try
+        OfflineMode = config.GetValue<bool>("AiModeOffline");
+
+        if (OfflineMode)
         {
-            AvailableModels.AddRange((
-                await ModelManagementService.GetAvailableModelsAsync())
-                    .OrderBy(a => a.Size)
-                    .ThenBy(a => a.Name));
+            try
+            {
+                AvailableModels.AddRange((
+                    await ModelManagementService.GetAvailableModelsAsync())
+                        .OrderBy(a => a.Size)
+                        .ThenBy(a => a.Name));
+            }
+            catch
+            {
+                IsError = true;
+                HelpCategories = [];
+                ErrorMessage = "Unable to retrieve available models. Please ensure that Ollama is installed and running and that at least one LLM is present.";
+                return;
+            }
         }
-        catch
-        {
-            IsError = true;
-            HelpCategories = [];
-            ErrorMessage = "Unable to retrieve available models. Please ensure that Ollama is installed and running and that at least one LLM is present.";
-            return;
-        }
+        
         HelpCategories = (await CategoryQueryHandler.GetCategoriesAsync()).Select(c => c.Name).ToList();
         HelpCategories.Insert(0, SharedValues.PleaseSelectText);
         Languages = await LanguageQueryHandler.GetLanguagesForHelpPageAsync();
@@ -76,7 +88,7 @@ public partial class Help
 
         try
         {
-            MatchingFiles = RagAiService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
+            MatchingFiles = documentService.GetMatchingFiles(ChatSearchModel.SearchCategory).ToList();
 
             if (MatchingFiles.Count == 0)
             {

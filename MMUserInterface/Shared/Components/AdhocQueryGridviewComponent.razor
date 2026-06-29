@@ -19,12 +19,18 @@
                 When Run
             </MudTableSortLabel>
         </MudTh>
+        <MudTh title="Sort by AI Provider">
+            <MudTableSortLabel SortBy="new Func<AdhocQueryModel, object>(x => x.AiProvider)">
+                AI Provider
+            </MudTableSortLabel>
+        </MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd>@context.NaturalLanguageQuery</MudTd>
         <MudTd>@context.IsSuccessful</MudTd>
         <MudTd>@context.WhenRun</MudTd>
+        <MudTd>@context.AiProvider</MudTd>
         <MudTd>
             <a class="btn btn-primary" href="/adhocquery/view/@context.AdhocQueryId">View</a>
             &nbsp;

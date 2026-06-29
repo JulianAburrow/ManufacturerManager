@@ -1,4 +1,4 @@
-﻿namespace MMUserInterface.Models;
+﻿namespace MMBusinessLayer.Models.Ollama;
 
 public class OllamaTags
 {

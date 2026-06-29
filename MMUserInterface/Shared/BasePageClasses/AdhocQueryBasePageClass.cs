@@ -6,7 +6,7 @@ public class AdhocQueryBasePageClass : BasePageClass
 
     protected AdhocQueryModel AdhocQueryModel { get; set; } = new();
 
-    [Inject] protected IMcpService McpService { get; set; } = default!;
+    [Inject] protected INaturalLanguageService McpService { get; set; } = default!;
 
     [Inject] protected IAdhocQueryCommandHandler AdhocQueryCommandHandler { get; set; } = default!;
 

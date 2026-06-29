@@ -1,20 +1,39 @@
 ﻿namespace MMBusinessLayer.Services;
 
-public class OllamaService(HttpClient httpClient) : IOllamaService
+public class OllamaService : ILlmClient
 {
-    public async Task<string> GenerateAsync(string prompt, string model, bool useStreaming)
+    private readonly HttpClient _http;
+    private readonly string _defaultmodel;
+
+    public OllamaService(HttpClient http, IConfiguration config)
+    {
+        _http = http;
+        _defaultmodel = config["Ollama:Model"] ?? "qwen2.5:14B";
+    }
+
+    // NL→SQL offline mode uses this
+    public Task<string> GenerateAsync(string prompt)
+    {
+        return GenerateAsync(prompt, _defaultmodel, useStreaming: false);
+    }
+
+    // RAG offline mode uses this
+    public async Task<string> GenerateAsync(string prompt, string? model, bool useStreaming)
     {
         try
         {
-            var client = httpClient;
+            var chosenModel = string.IsNullOrWhiteSpace(model)
+                ? _defaultmodel
+                : model;
+
             var request = new
             {
-                model,
+                model = chosenModel,
                 prompt,
-                stream = useStreaming,
+                stream = useStreaming
             };
 
-            var response = await client.PostAsJsonAsync($"{SharedValues.ApiAddress}/generate", request);
+            var response = await _http.PostAsJsonAsync($"{SharedValues.ApiAddress}/generate", request);
             response.EnsureSuccessStatusCode();
 
             using var stream = await response.Content.ReadAsStreamAsync();
@@ -34,8 +53,6 @@ public class OllamaService(HttpClient httpClient) : IOllamaService
                     {
                         string text = fragment.Response;
 
-                        // If the last char is alphanumeric AND the next fragment starts with alphanumeric,
-                        // insert a space to avoid glued tokens like "ORDER BYm.Name"
                         if (outputBuilder.Length > 0 &&
                             char.IsLetterOrDigit(outputBuilder[^1]) &&
                             char.IsLetterOrDigit(text[0]))
@@ -48,7 +65,7 @@ public class OllamaService(HttpClient httpClient) : IOllamaService
                 }
                 catch
                 {
-                    // Could log the exception here if needed
+                    // swallow malformed fragments
                 }
             }
 
@@ -58,16 +75,13 @@ public class OllamaService(HttpClient httpClient) : IOllamaService
         }
         catch (HttpRequestException)
         {
-            // Ollama not installed, not running, or endpoint unreachable
             return "REFUSAL: Unable to retrieve available models. Please ensure that Ollama is installed and running and that at least one LLM is present.";
         }
         catch (Exception)
         {
-            // Any other unexpected failure
             return "REFUSAL: Unable to retrieve available models. Please ensure that Ollama is installed and running and that at least one LLM is present.";
         }
     }
-    
 
     private static string StripCodeFences(string sql)
     {

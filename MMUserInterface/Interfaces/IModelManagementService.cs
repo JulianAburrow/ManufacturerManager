@@ -1,4 +1,6 @@
-﻿namespace MMUserInterface.Interfaces;
+﻿using MMBusinessLayer.Models.Ollama;
+
+namespace MMUserInterface.Interfaces;
 
 public interface IModelManagementService
 {

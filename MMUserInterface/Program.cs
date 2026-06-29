@@ -8,7 +8,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddMudServices();
 builder.Services.ConfigureSqlConnections(configuration);
-builder.Services.AddDependencies();
+builder.Services.AddDependencies(configuration);
 
 var app = builder.Build();
 
