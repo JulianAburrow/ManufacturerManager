@@ -5,6 +5,7 @@ global using MMBusinessLayer.Interfaces;
 global using MMBusinessLayer.Models.Ollama;
 global using MMBusinessLayer.Models.TogetherAI;
 global using MMBusinessLayer.Shared.CommonValues;
+global using System.Net.Http.Headers;
 global using System.Net.Http.Json;
 global using System.Text;
 global using System.Text.Json;

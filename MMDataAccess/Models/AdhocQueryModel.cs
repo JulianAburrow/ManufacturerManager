@@ -11,4 +11,6 @@ public class AdhocQueryModel
     public DateTime WhenRun { get; set; }
 
     public bool IsSuccessful { get; set; }
+
+    public string AiProvider { get; set; } = string.Empty;
 }

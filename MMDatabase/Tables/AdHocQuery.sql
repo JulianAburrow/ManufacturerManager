@@ -5,5 +5,6 @@
 	MessageOrSqlReturned NVARCHAR(MAX) NOT NULL,
 	WhenRun DATETIME NOT NULL,
 	IsSuccessful BIT NOT NULL,
-	CONSTRAINT PK_AdhocQuery PRIMARY KEY (AdhocQueryId)
+	AiProvider NVARCHAR(50) NOT NULL DEFAULT 'Offline', 
+    CONSTRAINT PK_AdhocQuery PRIMARY KEY (AdhocQueryId)
 )

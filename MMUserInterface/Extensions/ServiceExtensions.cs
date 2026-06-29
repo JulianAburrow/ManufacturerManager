@@ -1,6 +1,4 @@
-﻿using MMDataAccess.MCP;
-
-namespace MMUserInterface.Extensions;
+﻿namespace MMUserInterface.Extensions;
 
 public static class ServiceExtensions
 {
@@ -16,7 +14,7 @@ public static class ServiceExtensions
                             errorNumbersToAdd: null);
                     }));
 
-    public static void AddDependencies(this IServiceCollection services)
+    public static void AddDependencies(this IServiceCollection services, IConfiguration config)
     {
         services.AddTransient<IAdhocQueryCommandHandler, AdhocQueryCommandHandler>();
         services.AddTransient<IAdhocQueryQueryHandler, AdhocQueryQueryHandler>();
@@ -43,13 +41,22 @@ public static class ServiceExtensions
         services.AddTransient<IMyMMQueryHandler, MyMMQueryHandler>();
         services.AddTransient<IMyMMStatusCommandHandler, MyMMStatusCommandHandler>();
         services.AddTransient<IMyMMStatusQueryHandler, MyMMStatusQueryHandler>();
-        services.AddSingleton<ILlmClient, OllamaService>();
         services.AddTransient<IRagAiService, RagAiService>();
         services.AddTransient<IWidgetCommandHandler, WidgetCommandHandler>();
         services.AddTransient<IWidgetQueryHandler, WidgetQueryHandler>();
         services.AddTransient<IWidgetStatusQueryHandler, WidgetStatusQueryHandler>();
         services.AddSingleton<McpSqlExecutor>();
         services.AddTransient<INaturalLanguageService, NaturalLanguageService>();
-        services.AddHttpClient<ILlmClient, OllamaService>();
+
+        if (config.GetValue<bool>("AiModeOffline"))
+        {
+            services.AddHttpClient<OllamaService>();
+            services.AddSingleton<ILlmClient, OllamaService>();
+        }
+        else
+        {
+            services.AddHttpClient<GroqService>();
+            services.AddSingleton<ILlmClient, GroqService>();
+        }        
     }
 }

@@ -1,10 +1,10 @@
-using Microsoft.Extensions.ObjectPool;
-
 namespace MMUserInterface.Components.Pages;
 
 public partial class AdhocQuery
 {
     [Inject] private McpSqlExecutor SqlExecutor { get; set; } = null!;
+
+    [Inject] private ILlmClient LlmClient { get; set; } = null!;
 
     private DataTable? ResultsDataTable;
 
@@ -93,6 +93,7 @@ public partial class AdhocQuery
             MessageOrSqlReturned = errorMessage is null ? SqlReturned : errorMessage,
             IsSuccessful = errorMessage is null,
             WhenRun = DateTime.UtcNow,
+            AiProvider = LlmClient.GetType().Name,
         };
 
         await AdhocQueryCommandHandler.CreateAdhocQueryAsync(adhocQueryModel, true);

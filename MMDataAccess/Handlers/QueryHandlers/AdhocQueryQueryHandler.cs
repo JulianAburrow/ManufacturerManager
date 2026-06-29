@@ -18,13 +18,17 @@ public class AdhocQueryQueryHandler(ManufacturerManagerContext context) : IAdhoc
     {
         return await context.AdhocQueries
             .Where(a => a.IsSuccessful)
-            .OrderByDescending(a => a.WhenRun)
-            .Select(a => a.NaturalLanguageQuery)
-            .Distinct() // EF translates this fine because it's just a string
-            .Take(numberOfQueriesRequired)
-            .Select(q => new AdhocQueryListModel
+            .GroupBy(a => a.NaturalLanguageQuery)
+            .Select(g => new
             {
-                NaturalLanguageQuery = q 
+                NaturalLanguageQuery = g.Key,
+                LatestWhenRun = g.Max(x => x.WhenRun)
+            })
+            .OrderByDescending(x => x.LatestWhenRun)
+            .Take(numberOfQueriesRequired)
+            .Select(x => new AdhocQueryListModel
+            {
+                NaturalLanguageQuery = x.NaturalLanguageQuery
             })
             .ToListAsync();
     }
