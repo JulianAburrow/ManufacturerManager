@@ -18,7 +18,7 @@ public partial class Create
         CopyDisplayModelToModel();
 
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ColourCommandHandler.CreateColourAsync(ColourModel, true),
+            async () => await ColourCommandHandler.CreateColourAsync(ColourModel),
             $"Colour {ColourModel.Name} successfully created.",
             $"An error occurred creating colour {ColourModel.Name}. Please try again."
         );

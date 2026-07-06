@@ -2,11 +2,9 @@
 
 public interface IMyMMStatusCommandHandler
 {
-    Task CreateMyMMStatusAsync(MyMMStatusModel myMMStatusModel, bool callSaveChanges);
+    Task CreateMyMMStatusAsync(MyMMStatusModel myMMStatusModel);
 
-    Task DeleteMyMMStatusAsync(int myMMStatusId, bool callSaveChanges);
+    Task DeleteMyMMStatusAsync(int myMMStatusId);
 
-    Task UpdateMyMMStatusAsync(MyMMStatusModel myMMStatusModel, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task UpdateMyMMStatusAsync(MyMMStatusModel myMMStatusModel);
 }

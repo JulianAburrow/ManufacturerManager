@@ -20,7 +20,7 @@ public class CrudWithErrorHandlingHelper(ISnackbar snackbar, IErrorCommandHandle
         }
         catch (Exception ex)
         {
-            await _errorCommandHandler.CreateErrorAsync(ex, true);
+            await _errorCommandHandler.CreateErrorAsync(ex);
             _snackbar.Add(errorMessage, Severity.Error);
             success = false;
         }

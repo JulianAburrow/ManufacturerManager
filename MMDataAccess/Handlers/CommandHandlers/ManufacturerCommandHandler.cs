@@ -2,24 +2,22 @@
 
 public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IManufacturerCommandHandler
 {
-    public async Task CreateManufacturerAsync(ManufacturerModel manufacturer, bool callSaveChanges)
+    public async Task CreateManufacturerAsync(ManufacturerModel manufacturer)
     {
         context.Manufacturers.Add(manufacturer);
-        if (callSaveChanges)
-            await SaveChangesAsync();
+        await SaveChangesAsync();
     }
 
-    public async Task DeleteManufacturerAsync(int manufacturerId, bool callSaveChanges)
+    public async Task DeleteManufacturerAsync(int manufacturerId)
     {
         var manufacturerToDelete = context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturerId);
         if (manufacturerToDelete is null)
             return;
         context.Manufacturers.Remove(manufacturerToDelete);
-        if (callSaveChanges)
-            await SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
-    public async Task UpdateManufacturerAsync(ManufacturerModel manufacturer, bool callSaveChanges)
+    public async Task UpdateManufacturerAsync(ManufacturerModel manufacturer)
     {
         using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
@@ -40,8 +38,7 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
             }
         }
 
-        if (callSaveChanges)
-            await SaveChangesAsync();
+        await context.SaveChangesAsync();
 
         scope.Complete();
     }

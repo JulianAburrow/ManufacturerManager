@@ -20,7 +20,7 @@ public partial class Index
         var language = Languages?.FirstOrDefault(l => l.LanguageId == languageId);
         language?.UseInHelpPage = isChecked;
 
-        await LanguageCommandHandler.SetUnsetUseForHelpPage(languageId, isChecked, true);
+        await LanguageCommandHandler.SetUnsetUseForHelpPage(languageId, isChecked);
 
         StateHasChanged();
 
@@ -53,7 +53,7 @@ public partial class Index
 
         language.UseInHelpPage = false;
 
-        await LanguageCommandHandler.SetUnsetUseForHelpPage(languageId, false, true );
+        await LanguageCommandHandler.SetUnsetUseForHelpPage(languageId, false);
 
         Snackbar.Add($"Language {language.EnglishName} has been removed from the list of languages available to the Help page.", Severity.Info);
     }

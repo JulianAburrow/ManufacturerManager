@@ -22,7 +22,7 @@ public partial class Delete
     private async Task DeleteColour()
     {
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ColourCommandHandler.DeleteColourAsync(ColourId, true),
+            async () => await ColourCommandHandler.DeleteColourAsync(ColourId),
             $"Colour {ColourModel.Name} successfully deleted.",
             $"An error occurred deleting colour {ColourModel.Name}. Please try again."
         );

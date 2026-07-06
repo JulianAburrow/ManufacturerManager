@@ -46,7 +46,7 @@ public partial class Edit
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await WidgetCommandHandler.UpdateWidgetAsync(WidgetModel, true),
+            async () => await WidgetCommandHandler.UpdateWidgetAsync(WidgetModel),
             $"Widget {WidgetModel.Name} successfully updated.",
             $"An error occurred updating widget {WidgetModel.Name}. Please try again."
         );

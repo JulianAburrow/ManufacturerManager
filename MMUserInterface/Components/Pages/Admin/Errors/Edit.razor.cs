@@ -33,7 +33,7 @@ public partial class Edit
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ErrorCommandHandler.UpdateErrorAsync(ErrorModel, true),
+            async () => await ErrorCommandHandler.UpdateErrorAsync(ErrorModel),
             $"Error {ErrorModel.ErrorId} successfully updated.",
             $"An error occurred updating error {ErrorModel.ErrorId}. Please try again."
         );

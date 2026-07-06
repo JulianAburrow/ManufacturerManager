@@ -17,10 +17,10 @@ public class ColourCommandTests
     {
         var initialCount = _manufacturerManagerContext.Colours.Count();
 
-        await _colourCommandHandler.CreateColourAsync(_testColours[0], false);
-        await _colourCommandHandler.CreateColourAsync(_testColours[1], false);
-        await _colourCommandHandler.CreateColourAsync(_testColours[2], false);
-        await _colourCommandHandler.CreateColourAsync(_testColours[3], true);
+        await _colourCommandHandler.CreateColourAsync(_testColours[0]);
+        await _colourCommandHandler.CreateColourAsync(_testColours[1]);
+        await _colourCommandHandler.CreateColourAsync(_testColours[2]);
+        await _colourCommandHandler.CreateColourAsync(_testColours[3]);
 
         _manufacturerManagerContext.Colours.Count().Should().Be(initialCount + 4);
     }
@@ -34,7 +34,7 @@ public class ColourCommandTests
         _manufacturerManagerContext.SaveChanges();
         colourId = _testColours[1].ColourId;
 
-        await _colourCommandHandler.DeleteColourAsync(colourId, true);
+        await _colourCommandHandler.DeleteColourAsync(colourId);
 
         var deletedColour = _manufacturerManagerContext.Colours.FirstOrDefault(c => c.ColourId == colourId);
 
@@ -51,7 +51,7 @@ public class ColourCommandTests
 
         var colourToUpdate = _manufacturerManagerContext.Colours.First(c => c.ColourId == _testColours[0].ColourId);
         colourToUpdate.Name = newColourName;
-        await _colourCommandHandler.UpdateColourAsync(colourToUpdate, true);
+        await _colourCommandHandler.UpdateColourAsync(colourToUpdate);
 
         var updatedColour = _manufacturerManagerContext.Colours.First(c => c.ColourId == _testColours[0].ColourId);
         updatedColour.Name.Should().Be(newColourName);

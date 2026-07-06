@@ -2,11 +2,9 @@
 
 public interface ICategoryCommandHandler
 {
-    Task CreateCategoryAsync(CategoryModel category, bool callSaveChanges);
+    Task CreateCategoryAsync(CategoryModel category);
 
-    Task UpdateCategoryAsync(CategoryModel category, bool callSaveChanges);
+    Task UpdateCategoryAsync(CategoryModel category);
 
-    Task DeleteCategoryAsync(int categoryId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteCategoryAsync(int categoryId);
 }

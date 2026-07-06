@@ -23,7 +23,7 @@ public partial class Delete
     private async Task DeleteColourJustification()
     {
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ColourJustificationCommandHandler.DeleteColourJustificationAsync(ColourJustificationId, true),
+            async () => await ColourJustificationCommandHandler.DeleteColourJustificationAsync(ColourJustificationId),
             $"Colour Justification {ColourJustificationModel.Justification} successfully deleted.",
             $"An error occurred deleting Colour Justification {ColourJustificationModel.Justification}. Please try again."
         );

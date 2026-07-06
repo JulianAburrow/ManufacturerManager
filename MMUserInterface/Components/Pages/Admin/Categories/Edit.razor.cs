@@ -41,7 +41,7 @@ public partial class Edit
         CategoryHelper.CreateCategoryDirectory(CategoryModel.Name);
 
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await CategoryCommandHandler.UpdateCategoryAsync(CategoryModel, true),
+            async () => await CategoryCommandHandler.UpdateCategoryAsync(CategoryModel),
             $"Category {CategoryModel.Name} successfully updated.",
             $"An error occurred updating category {CategoryModel.Name}. Please try again."
         );

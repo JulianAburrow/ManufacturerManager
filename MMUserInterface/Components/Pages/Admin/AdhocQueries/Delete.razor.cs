@@ -21,7 +21,7 @@ public partial class Delete
     private async Task DeleteAdhocQuery()
     {
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await AdhocQueryCommandHandler.DeleteAdhocQueryAsync(AdhocQueryId, true),
+            async () => await AdhocQueryCommandHandler.DeleteAdhocQueryAsync(AdhocQueryId),
             $"Ad hoc query {AdhocQueryModel.NaturalLanguageQuery} successfully deleted",
             $"An error occurred deleting ad hoc query {AdhocQueryModel.NaturalLanguageQuery}. Please try again"
         );

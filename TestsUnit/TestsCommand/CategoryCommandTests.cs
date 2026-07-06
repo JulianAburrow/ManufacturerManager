@@ -17,10 +17,10 @@ public class CategoryCommandTests
     {
         var initialCount = _manufacturerManagerContext.Categories.Count();
 
-        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[0], false);
-        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[1], false);
-        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[2], false);
-        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[3], true);
+        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[0]);
+        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[1]);
+        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[2]);
+        await _categoryCommandHandler.CreateCategoryAsync(_testCategories[3]);
 
         _manufacturerManagerContext.Categories.Count().Should().Be(initialCount + 4);
     }
@@ -34,7 +34,7 @@ public class CategoryCommandTests
         _manufacturerManagerContext.SaveChanges();
         categoryId = _testCategories[1].CategoryId;
 
-        await _categoryCommandHandler.DeleteCategoryAsync(categoryId, true);
+        await _categoryCommandHandler.DeleteCategoryAsync(categoryId);
 
         var deletedCategory = _manufacturerManagerContext.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
 
@@ -51,8 +51,8 @@ public class CategoryCommandTests
         
         var categoryToUpdate = _manufacturerManagerContext.Categories.First(c => c.CategoryId == _testCategories[0].CategoryId);
         categoryToUpdate.Name = newCategoryName;
-        await _categoryCommandHandler.UpdateCategoryAsync(categoryToUpdate, true);
-        
+        await _categoryCommandHandler.UpdateCategoryAsync(categoryToUpdate);
+
         var updatedCategory = _manufacturerManagerContext.Categories.First(c => c.CategoryId == _testCategories[0].CategoryId);
         updatedCategory.Name.Should().Be(newCategoryName);
     }

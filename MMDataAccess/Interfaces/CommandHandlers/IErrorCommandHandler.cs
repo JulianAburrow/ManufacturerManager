@@ -2,11 +2,9 @@
 
 public interface IErrorCommandHandler
 {
-    Task CreateErrorAsync(Exception ex, bool callSaveChanges);
+    Task CreateErrorAsync(Exception ex);
 
-    Task UpdateErrorAsync(ErrorModel error, bool callSaveChanges);
+    Task UpdateErrorAsync(ErrorModel error);
 
-    Task DeleteErrorAsync(int errorId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteErrorAsync(int errorId);
 }

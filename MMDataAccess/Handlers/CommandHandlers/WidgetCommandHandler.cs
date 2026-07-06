@@ -2,24 +2,23 @@
 
 public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetCommandHandler
 {    
-    public async Task CreateWidgetAsync(WidgetModel widget, bool callSaveChanges)
+    public async Task CreateWidgetAsync(WidgetModel widget)
     {
         context.Widgets.Add(widget);
-        if (callSaveChanges)
-            await SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
-    public async Task DeleteWidgetAsync(int widgetId, bool callSaveChanges)
+    public async Task DeleteWidgetAsync(int widgetId)
     {
         var widgetToDelete = context.Widgets.SingleOrDefault(w => w.WidgetId == widgetId);
         if (widgetToDelete is null)
             return;
         context.Widgets.Remove(widgetToDelete);
-        if (callSaveChanges)
-            await SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
-    public async Task UpdateWidgetAsync(WidgetModel widget, bool callSaveChanges)
+    public async Task UpdateWidgetAsync(WidgetModel widget)
+
     {
         var widgetToUpdate = context.Widgets.SingleOrDefault(w => w.WidgetId == widget.WidgetId);
         if (widgetToUpdate is null)
@@ -33,10 +32,6 @@ public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetC
         widgetToUpdate.RetailPrice = widget.RetailPrice;
         widgetToUpdate.StockLevel = widget.StockLevel;
 
-        if (callSaveChanges)
-            await SaveChangesAsync();
-    }
-
-    public async Task SaveChangesAsync() =>
         await context.SaveChangesAsync();
+    }
 }

@@ -2,11 +2,9 @@
 
 public interface IColourCommandHandler
 {
-    Task CreateColourAsync(ColourModel colour, bool callSaveChanges);
+    Task CreateColourAsync(ColourModel colour);
 
-    Task UpdateColourAsync(ColourModel colour, bool callSaveChanges);
+    Task UpdateColourAsync(ColourModel colour);
 
-    Task DeleteColourAsync(int colourId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteColourAsync(int colourId);
 }

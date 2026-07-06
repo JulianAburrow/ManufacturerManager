@@ -43,7 +43,7 @@ public partial class MainLayout
             StatusId = (int)SharedValues.MyMMStatuses.Pending,
         };
 
-        await MyMMCommandHandler.CreateMyMMAsync(myMM, true);
+        await MyMMCommandHandler.CreateMyMMAsync(myMM);
         Snackbar.Add("Page saved to MyMM successfully.", Severity.Success);
     }
 }

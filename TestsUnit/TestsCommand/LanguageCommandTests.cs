@@ -20,14 +20,14 @@ public class LanguageCommandTests
         _manufacturerManagerContext.Languages.Add(_testLanguages[0]);
         _manufacturerManagerContext.SaveChanges();
 
-        await _languageCommandHandler.SetUnsetUseForHelpPage(_testLanguages[0].LanguageId, true, true);
+        await _languageCommandHandler.SetUnsetUseForHelpPage(_testLanguages[0].LanguageId, true);
 
         var updated = _manufacturerManagerContext.Languages
             .Single(l => l.LanguageId == _testLanguages[0].LanguageId);
 
         updated.UseInHelpPage.Should().BeTrue();
 
-        await _languageCommandHandler.SetUnsetUseForHelpPage(_testLanguages[0].LanguageId, false, true);
+        await _languageCommandHandler.SetUnsetUseForHelpPage(_testLanguages[0].LanguageId, false);
 
         var updatedAgain = _manufacturerManagerContext.Languages
             .Single(l => l.LanguageId == _testLanguages[0].LanguageId);

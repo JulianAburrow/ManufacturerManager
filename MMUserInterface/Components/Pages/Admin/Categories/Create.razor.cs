@@ -25,7 +25,7 @@ public partial class Create
         }
 
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await CategoryCommandHandler.CreateCategoryAsync(CategoryModel, true),
+            async () => await CategoryCommandHandler.CreateCategoryAsync(CategoryModel),
             $"Category {CategoryModel.Name} succcessfully created",
             $"An error occurred creating colour {CategoryModel.Name}. Please try again."
         );

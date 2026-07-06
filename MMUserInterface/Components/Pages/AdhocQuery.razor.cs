@@ -96,7 +96,7 @@ public partial class AdhocQuery
             AiProvider = LlmClient.GetType().Name,
         };
 
-        await AdhocQueryCommandHandler.CreateAdhocQueryAsync(adhocQueryModel, true);
+        await AdhocQueryCommandHandler.CreateAdhocQueryAsync(adhocQueryModel);
     }
 
     private async Task GetLastXSuccessfulAdhocQueries()

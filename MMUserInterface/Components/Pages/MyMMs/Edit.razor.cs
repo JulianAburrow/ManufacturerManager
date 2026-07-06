@@ -24,7 +24,7 @@ public partial class Edit
     {
         CopyDisplayModelToModel();
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await MyMMCommandHandler.UpdateMyMMAsync(MyMMModel, true),
+            async () => await MyMMCommandHandler.UpdateMyMMAsync(MyMMModel),
             $"MyMM {MyMMModel.Title} successfully updated.",
             $"An error occurred updating MyMM {MyMMModel.Title}. Please try again."
         );

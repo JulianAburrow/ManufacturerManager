@@ -37,7 +37,7 @@ public class HelpDocumentService(IWebHostEnvironment env, IErrorCommandHandler e
         }
         catch (Exception ex)
         {
-            await errorCommandHandler.CreateErrorAsync(ex, true);
+            await errorCommandHandler.CreateErrorAsync(ex);
         }
     }
 
@@ -53,7 +53,7 @@ public class HelpDocumentService(IWebHostEnvironment env, IErrorCommandHandler e
         }
         catch (Exception ex)
         {
-            await errorCommandHandler.CreateErrorAsync(ex, true);
+            await errorCommandHandler.CreateErrorAsync(ex);
         }
     }
 

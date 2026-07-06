@@ -18,8 +18,8 @@ public class ErrorCommandTests
     {
         var initialCount = _manufacturerManagerContext.Errors.Count();
 
-        await _errorCommandHandler.CreateErrorAsync(_testExceptions[0], false);
-        await _errorCommandHandler.CreateErrorAsync(_testExceptions[1], true);
+        await _errorCommandHandler.CreateErrorAsync(_testExceptions[0]);
+        await _errorCommandHandler.CreateErrorAsync(_testExceptions[1]);
 
         _manufacturerManagerContext.Errors.Count().Should().Be(initialCount + 2);
     }
@@ -33,7 +33,7 @@ public class ErrorCommandTests
         _manufacturerManagerContext.SaveChanges();
         errorId = _testErrors[1].ErrorId;
 
-        await _errorCommandHandler.DeleteErrorAsync(errorId, true);
+        await _errorCommandHandler.DeleteErrorAsync(errorId);
 
         var deletedError = _manufacturerManagerContext.Errors.FirstOrDefault(e => e.ErrorId == errorId);
 
@@ -53,7 +53,7 @@ public class ErrorCommandTests
         errorToUpdate.ErrorMessage = newErrorMessage;
         errorToUpdate.Resolved = true;
         errorToUpdate.ResolvedDate = resolvedDate;
-        await _errorCommandHandler.UpdateErrorAsync(errorToUpdate, true);
+        await _errorCommandHandler.UpdateErrorAsync(errorToUpdate);
 
         var updatedError = _manufacturerManagerContext.Errors.First(e => e.ErrorId == _testErrors[0].ErrorId);
         updatedError.Should().NotBeNull();

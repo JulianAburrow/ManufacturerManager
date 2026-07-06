@@ -2,9 +2,7 @@
 
 public interface IAdhocQueryCommandHandler
 {
-    Task CreateAdhocQueryAsync(AdhocQueryModel adhocQueryModel, bool callSaveChanges);
+    Task CreateAdhocQueryAsync(AdhocQueryModel adhocQueryModel);
 
-    Task DeleteAdhocQueryAsync(int adhocQueryId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteAdhocQueryAsync(int adhocQueryId);
 }

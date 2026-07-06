@@ -19,8 +19,8 @@ public class MyMMStatusCommandTests
     {
         var initialCount = _manufacturerManagerContext.MyMMStatuses.Count();
 
-        await _myMMStatusCommandHandler.CreateMyMMStatusAsync(_testMyMMStatuses[0], false);
-        await _myMMStatusCommandHandler.CreateMyMMStatusAsync(_testMyMMStatuses[1], true);
+        await _myMMStatusCommandHandler.CreateMyMMStatusAsync(_testMyMMStatuses[0]);
+        await _myMMStatusCommandHandler.CreateMyMMStatusAsync(_testMyMMStatuses[1]);
 
         _manufacturerManagerContext.MyMMStatuses.Count().Should().Be(initialCount + 2);
     }
@@ -34,7 +34,7 @@ public class MyMMStatusCommandTests
         _manufacturerManagerContext.SaveChanges();
         myMMStatusId = _testMyMMStatuses[0].StatusId;
 
-        await _myMMStatusCommandHandler.DeleteMyMMStatusAsync(myMMStatusId, true);
+        await _myMMStatusCommandHandler.DeleteMyMMStatusAsync(myMMStatusId);
         Func<Task> act = async () => await _myMMStuStatusQueryHandler.GetMyMMStatusAsync(myMMStatusId);
         await act.Should().ThrowAsync<ArgumentNullException>();
     }
@@ -49,7 +49,7 @@ public class MyMMStatusCommandTests
 
         var myMMStatusToUpdate = _manufacturerManagerContext.MyMMStatuses.First(m => m.StatusId == _testMyMMStatuses[0].StatusId);
         myMMStatusToUpdate.StatusName = newStatusName;
-        await _myMMStatusCommandHandler.UpdateMyMMStatusAsync(myMMStatusToUpdate, true);
+        await _myMMStatusCommandHandler.UpdateMyMMStatusAsync(myMMStatusToUpdate);
 
         var updatedMyMMStatus = _manufacturerManagerContext.MyMMStatuses.First(m => m.StatusId == _testMyMMStatuses[0].StatusId);
         updatedMyMMStatus.StatusName.Should().Be(newStatusName);
