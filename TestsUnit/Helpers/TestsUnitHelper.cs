@@ -2,11 +2,11 @@
 
 public static class TestsUnitHelper
 {
-    public static ManufacturerManagerContext GetContextWithOptions()
+    public static IDbContextFactory<ManufacturerManagerContext> GetInMemoryFactory()
     {
         var options = new DbContextOptionsBuilder<ManufacturerManagerContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
-        return new ManufacturerManagerContext(options);
+        return new PooledDbContextFactory<ManufacturerManagerContext>(options);
     }
 }

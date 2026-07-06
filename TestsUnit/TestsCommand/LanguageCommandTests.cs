@@ -2,34 +2,45 @@
 
 public class LanguageCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly ILanguageCommandHandler _languageCommandHandler;
     private readonly List<LanguageModel> _testLanguages = LanguageObjectFactory.GetTestLanguages();
 
     public LanguageCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _languageCommandHandler = new LanguageCommandHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _languageCommandHandler = new LanguageCommandHandler(_factory);
     }
 
     [Fact]
     public async Task SetUnsetUseForHelpPage_SetsUnsetsUseforHelpPage()
     {
-        var initialCount = _manufacturerManagerContext.Languages.Count();
-        _testLanguages[0].UseInHelpPage = false;
-        _manufacturerManagerContext.Languages.Add(_testLanguages[0]);
-        _manufacturerManagerContext.SaveChanges();
+        // Arrange: seed using a fresh context
+        await using (var seedContext = await _factory.CreateDbContextAsync())
+        {
+            _testLanguages[0].UseInHelpPage = false;
+            seedContext.Languages.Add(_testLanguages[0]);
+            await seedContext.SaveChangesAsync();
+        }
 
+        // Act: call handler (it uses its own fresh context)
         await _languageCommandHandler.SetUnsetUseForHelpPage(_testLanguages[0].LanguageId, true);
 
-        var updated = _manufacturerManagerContext.Languages
-            .Single(l => l.LanguageId == _testLanguages[0].LanguageId);
+        // Assert: read using a new fresh context
+        await using (var assertContext = await _factory.CreateDbContextAsync())
+        {
+            var updated = assertContext.Languages
+                .Single(l => l.LanguageId == _testLanguages[0].LanguageId);
 
-        updated.UseInHelpPage.Should().BeTrue();
+            updated.UseInHelpPage.Should().BeTrue();
+        }
 
+        // Act again
         await _languageCommandHandler.SetUnsetUseForHelpPage(_testLanguages[0].LanguageId, false);
 
-        var updatedAgain = _manufacturerManagerContext.Languages
+        // Assert again using another fresh context
+        await using var assertContext2 = await _factory.CreateDbContextAsync();
+        var updatedAgain = assertContext2.Languages
             .Single(l => l.LanguageId == _testLanguages[0].LanguageId);
 
         updatedAgain.UseInHelpPage.Should().BeFalse();

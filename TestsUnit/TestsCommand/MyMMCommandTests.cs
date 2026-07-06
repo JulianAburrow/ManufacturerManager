@@ -2,21 +2,22 @@
 
 public class MyMMCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IMyMMCommandHandler _myMMCommandHandler;
     private readonly IMyMMQueryHandler _myMMQueryHandler;
     private readonly List<MyMMModel> _testMyMMs = MyMMObjectFactory.GetTestMyMMs();
 
     public MyMMCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _myMMCommandHandler = new MyMMCommandHandler(_manufacturerManagerContext);
-        _myMMQueryHandler = new MyMMQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _myMMCommandHandler = new MyMMCommandHandler(_factory);
+        _myMMQueryHandler = new MyMMQueryHandler(_factory);
     }
     
     [Fact]
     public async Task CreateMyMM_CreatesMyMM()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.MyMMs.Count();
 
         await _myMMCommandHandler.CreateMyMMAsync(_testMyMMs[0]);
@@ -28,20 +29,23 @@ public class MyMMCommandTests
     [Fact]
     public async Task DeleteMyMM_DeletesMyMM()
     {
-        int myMMId;
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        {
+            _manufacturerManagerContext.MyMMs.Add(_testMyMMs[0]);
+            await _manufacturerManagerContext.SaveChangesAsync();
+        }
 
-        _manufacturerManagerContext.MyMMs.Add(_testMyMMs[0]);
-        _manufacturerManagerContext.SaveChanges();
-        myMMId = _testMyMMs[0].MyMMId;
-
+        var myMMId = _testMyMMs[0].MyMMId;
         await _myMMCommandHandler.DeleteMyMMAsync(myMMId);
+
         Func<Task> act = async () => await _myMMQueryHandler.GetMyMMAsync(myMMId);
-        await act.Should().ThrowAsync<ArgumentNullException>();
+        await act.Should().ThrowAsync<KeyNotFoundException>();
     }
 
     [Fact]
     public async Task UpdateMyMM_UpdatesMyMM()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var newTitle = "UpdatedTitle";
 
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[0]);

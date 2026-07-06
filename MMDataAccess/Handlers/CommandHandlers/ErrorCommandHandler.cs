@@ -1,9 +1,10 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class ErrorCommandHandler(ManufacturerManagerContext context) : IErrorCommandHandler
+public class ErrorCommandHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IErrorCommandHandler
 {
     public async Task CreateErrorAsync(Exception ex)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var errorModel = new ErrorModel
         {
             ErrorDate = DateTime.Now,
@@ -18,6 +19,7 @@ public class ErrorCommandHandler(ManufacturerManagerContext context) : IErrorCom
 
     public async Task DeleteErrorAsync(int errorId)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var errorToDelete = context.Errors.SingleOrDefault(e => e.ErrorId == errorId);
         if (errorToDelete is null)
             return;
@@ -27,6 +29,7 @@ public class ErrorCommandHandler(ManufacturerManagerContext context) : IErrorCom
 
     public async Task UpdateErrorAsync(ErrorModel error)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var errorToUpdate = context.Errors.SingleOrDefault(e => e.ErrorId == error.ErrorId);
         if (errorToUpdate is null)
             return;

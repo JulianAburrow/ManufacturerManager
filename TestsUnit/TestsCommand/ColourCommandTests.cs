@@ -2,19 +2,20 @@
 
 public class ColourCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IColourCommandHandler _colourCommandHandler;
     private readonly List<ColourModel> _testColours = ColourObjectFactory.GetTestColours();
 
     public ColourCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _colourCommandHandler = new ColourCommandHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _colourCommandHandler = new ColourCommandHandler(_factory);
     }
 
     [Fact]
     public async Task CreateColour_CreatesColour()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Colours.Count();
 
         await _colourCommandHandler.CreateColourAsync(_testColours[0]);
@@ -29,6 +30,7 @@ public class ColourCommandTests
     public async Task DeleteColour_DeletesColour()
     {
         int colourId;
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.Colours.Add(_testColours[1]);
         _manufacturerManagerContext.SaveChanges();
@@ -45,6 +47,7 @@ public class ColourCommandTests
     public async Task UpdateColour_UpdatesColour()
     {
         var newColourName = "NewColour";
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.Colours.Add(_testColours[0]);
         _manufacturerManagerContext.SaveChanges();

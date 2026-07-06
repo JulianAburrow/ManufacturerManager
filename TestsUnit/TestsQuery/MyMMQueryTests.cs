@@ -2,19 +2,20 @@
 
 public class MyMMQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IMyMMQueryHandler _myMMHandler;
     private readonly List<MyMMModel> _testMyMMs = MyMMObjectFactory.GetTestMyMMs();
 
     public MyMMQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _myMMHandler = new MyMMQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _myMMHandler = new MyMMQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetMyMM_GetsMyMM()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[1]);
         _manufacturerManagerContext.SaveChanges();
 
@@ -31,6 +32,7 @@ public class MyMMQueryTests
     [Fact]
     public async Task GetMyMMs_GetsMyMMs()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.MyMMs.Count();
 
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[1]);
@@ -45,6 +47,8 @@ public class MyMMQueryTests
     [Fact]
     public async Task GetMyMMsForHomePage_GetsOnlyPastAndTodayMyMMs()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+
         _testMyMMs[0].ActionDate = DateTime.Today.AddDays(-1);
         _testMyMMs[0].StatusId = (int)PublicEnums.MyMMStatusEnum.Active;
         _testMyMMs[0].Status = new MyMMStatusModel { StatusId = 1, StatusName = "Active" };

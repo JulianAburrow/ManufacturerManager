@@ -2,21 +2,22 @@
 
 public class MyMMStatusCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IMyMMStatusCommandHandler _myMMStatusCommandHandler;
     private readonly IMyMMStatusQueryHandler _myMMStuStatusQueryHandler;
     private readonly List<MyMMStatusModel> _testMyMMStatuses = MyMMStatusObjectFactory.GetTestMyMMStatuses();
 
     public MyMMStatusCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _myMMStatusCommandHandler = new MyMMStatusCommandHandler(_manufacturerManagerContext);
-        _myMMStuStatusQueryHandler = new MyMMStatusQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _myMMStatusCommandHandler = new MyMMStatusCommandHandler(_factory);
+        _myMMStuStatusQueryHandler = new MyMMStatusQueryHandler(_factory);
     }
 
     [Fact]
     public async Task CreateMyMMStatus_CreatesMyMMStatus()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.MyMMStatuses.Count();
 
         await _myMMStatusCommandHandler.CreateMyMMStatusAsync(_testMyMMStatuses[0]);
@@ -28,20 +29,23 @@ public class MyMMStatusCommandTests
     [Fact]
     public async Task DeleteMyMMStatus_DeletesMyMMStatus()
     {
-        int myMMStatusId;
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        {
+            _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
+            await _manufacturerManagerContext.SaveChangesAsync();
+        }
 
-        _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
-        _manufacturerManagerContext.SaveChanges();
-        myMMStatusId = _testMyMMStatuses[0].StatusId;
-
+        var myMMStatusId = _testMyMMStatuses[0].StatusId;
         await _myMMStatusCommandHandler.DeleteMyMMStatusAsync(myMMStatusId);
+
         Func<Task> act = async () => await _myMMStuStatusQueryHandler.GetMyMMStatusAsync(myMMStatusId);
-        await act.Should().ThrowAsync<ArgumentNullException>();
+        await act.Should().ThrowAsync<KeyNotFoundException>();
     }
 
     [Fact]
     public async Task UpdateMyMMStatus_UpdatesMyMMStatus()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var newStatusName = "UpdatedStatus";
 
         _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);

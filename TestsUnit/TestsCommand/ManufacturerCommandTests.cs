@@ -1,22 +1,25 @@
-﻿namespace TestsUnit.TestsCommand;
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace TestsUnit.TestsCommand;
 
 public class ManufacturerCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IManufacturerCommandHandler _manufacturerCommandHandler;
     private readonly IManufacturerQueryHandler _manufacturerQueryHandler;
     private readonly List<ManufacturerModel> _testManufacturers = ManufacturerObjectFactory.GetTestManufacturers();
 
     public ManufacturerCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _manufacturerCommandHandler = new ManufacturerCommandHandler(_manufacturerManagerContext);
-        _manufacturerQueryHandler = new ManufacturerQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _manufacturerCommandHandler = new ManufacturerCommandHandler(_factory);
+        _manufacturerQueryHandler = new ManufacturerQueryHandler(_factory);
     }
 
     [Fact]
     public async Task CreateManufacturer_CreatesManufacturer()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 
         await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[0]);
@@ -30,41 +33,56 @@ public class ManufacturerCommandTests
     [Fact]
     public async Task DeleteManufacturer_DeletesManufacturer()
     {
-        _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        {
+            _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
+            await _manufacturerManagerContext.SaveChangesAsync();
+        }
+
         var manufacturerId = _testManufacturers[0].ManufacturerId;
         await _manufacturerCommandHandler.DeleteManufacturerAsync(manufacturerId);
 
         Func<Task> act = async () => await _manufacturerQueryHandler.GetManufacturerAsync(manufacturerId);
-        await act.Should().ThrowAsync<ArgumentNullException>();
+        await act.Should().ThrowAsync<KeyNotFoundException>();
     }
 
     [Fact]
     public async Task SetManufacturerInactive_SetsWidgetsForManufacturerInactive()
     {
-        _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
-        _manufacturerManagerContext.SaveChanges();
-        var widget1 = new WidgetModel
+        // Arrange: seed manufacturer and widget using a fresh context
+        await using (var seedContext = await _factory.CreateDbContextAsync())
         {
-            Name = "Widget1",
-            ManufacturerId = _testManufacturers[0].ManufacturerId,
-            ColourId = 1,
-            StatusId = (int)PublicEnums.WidgetStatusEnum.Active
-        };
-        _manufacturerManagerContext.Widgets.Add(widget1);
-        _manufacturerManagerContext.SaveChanges();
+            seedContext.Manufacturers.Add(_testManufacturers[0]);
+            await seedContext.SaveChangesAsync();
+
+            var widget1 = new WidgetModel
+            {
+                Name = "Widget1",
+                ManufacturerId = _testManufacturers[0].ManufacturerId,
+                ColourId = 1,
+                StatusId = (int)PublicEnums.WidgetStatusEnum.Active
+            };
+
+            seedContext.Widgets.Add(widget1);
+            await seedContext.SaveChangesAsync();
+        }
+
+        // Act: update manufacturer (handler uses its own fresh context)
         _testManufacturers[0].StatusId = (int)PublicEnums.ManufacturerStatusEnum.Inactive;
         await _manufacturerCommandHandler.UpdateManufacturerAsync(_testManufacturers[0]);
-        var updatedWidgets = _manufacturerManagerContext.Widgets.Where(w => w.WidgetId == widget1.WidgetId);
-        foreach (var updatedWidget in updatedWidgets)
-        {
-            updatedWidget.StatusId.Should().Be((int)PublicEnums.WidgetStatusEnum.Inactive);
-        }
+
+        // Assert: read using a NEW fresh context
+        await using var assertContext = await _factory.CreateDbContextAsync();
+        var updatedWidget = assertContext.Widgets
+            .Single(w => w.ManufacturerId == _testManufacturers[0].ManufacturerId);
+
+        updatedWidget.StatusId.Should().Be((int)PublicEnums.WidgetStatusEnum.Inactive);
     }
 
     [Fact]
     public async Task UpdateManufacturer_UpdatesManufacturer()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var newManufacturer = "AceWidgets";
 
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[2]);

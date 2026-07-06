@@ -2,19 +2,20 @@
 
 public class ErrorQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IErrorQueryHandler _errorQueryHandler;
     private readonly List<ErrorModel> _testErrors = ErrorObjectFactory.GetTestErrors();
 
     public ErrorQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _errorQueryHandler = new ErrorQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _errorQueryHandler = new ErrorQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetError_GetsError()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         _manufacturerManagerContext.Errors.Add(_testErrors[0]);
         _manufacturerManagerContext.SaveChanges();
 
@@ -26,6 +27,7 @@ public class ErrorQueryTests
     [Fact]
     public async Task GetErrors_GetsErrors()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Errors.Count();
 
         _manufacturerManagerContext.Errors.Add(_testErrors[0]);

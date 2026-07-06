@@ -1,9 +1,11 @@
 ﻿namespace MMDataAccess.Handlers.QueryHandlers;
 
-public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IManufacturerQueryHandler
+public class ManufacturerQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IManufacturerQueryHandler
 {
-    public async Task<ManufacturerModel> GetManufacturerAsync(int manufacturerId) =>
-        await context.Manufacturers
+    public async Task<ManufacturerModel> GetManufacturerAsync(int manufacturerId)
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.Manufacturers
             .Include(m => m.Widgets)
                 .ThenInclude(w => w.Colour)
             .Include(m => m.Widgets)
@@ -11,10 +13,14 @@ public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IMan
             .Include(m => m.Status)
             .AsNoTracking()
             .SingleOrDefaultAsync(m => m.ManufacturerId == manufacturerId)
-            ?? throw new ArgumentNullException(nameof(manufacturerId), "Manufacturer not found.");
+            ?? throw new KeyNotFoundException($"Manufacturer with ID {manufacturerId} not found.");
 
-    public async Task<List<ManufacturerSummary>> GetManufacturersAsync() =>
-        await context.Manufacturers
+    }
+        
+    public async Task<List<ManufacturerSummary>> GetManufacturersAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.Manufacturers
             .Select(m => new ManufacturerSummary
             {
                 ManufacturerId = m.ManufacturerId,
@@ -25,10 +31,14 @@ public class ManufacturerQueryHandler(ManufacturerManagerContext context) : IMan
             .OrderBy(m => m.Name)
             .AsNoTracking()
             .ToListAsync();
+    }        
 
-    public async Task<int> GetManufacturerStatusByManufacturerId(int manufacturerId) =>
-        await context.Manufacturers
+    public async Task<int> GetManufacturerStatusByManufacturerId(int manufacturerId)
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.Manufacturers
             .Where(m => m.ManufacturerId == manufacturerId)
             .Select(s => s.StatusId)
             .SingleOrDefaultAsync();
+    }        
 }

@@ -2,20 +2,21 @@
 
 public class ErrorCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IErrorCommandHandler _errorCommandHandler;
     private readonly List<Exception> _testExceptions = ErrorObjectFactory.GetTestExceptions();
     private readonly List<ErrorModel> _testErrors = ErrorObjectFactory.GetTestErrors();
 
     public ErrorCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _errorCommandHandler = new ErrorCommandHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _errorCommandHandler = new ErrorCommandHandler(_factory);
     }
 
     [Fact]
     public async Task CreateError_CreatesError()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Errors.Count();
 
         await _errorCommandHandler.CreateErrorAsync(_testExceptions[0]);
@@ -28,6 +29,7 @@ public class ErrorCommandTests
     public async Task DeleteError_DeletesError()
     {
         int errorId;
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.Errors.Add(_testErrors[1]);
         _manufacturerManagerContext.SaveChanges();
@@ -43,6 +45,7 @@ public class ErrorCommandTests
     [Fact]
     public async Task UpdateError_UpdatesError()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var newErrorMessage = "UpdatedError1";
         var resolvedDate = DateTime.Now;
 

@@ -1,15 +1,17 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class ColourJustificationCommandHandler(ManufacturerManagerContext context) : IColourJustificationCommandHandler
+public class ColourJustificationCommandHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IColourJustificationCommandHandler
 {
     public async Task CreateColourJustificationAsync(ColourJustificationModel colourJustification)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         context.ColourJustifications.Add(colourJustification);
         await context.SaveChangesAsync();
     }
 
     public async Task DeleteColourJustificationAsync(int colourJustificationId)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var colourJustificationToDelete = context.ColourJustifications.SingleOrDefault(c => c.ColourJustificationId == colourJustificationId);
         if (colourJustificationToDelete is null)
             return;
@@ -19,6 +21,7 @@ public class ColourJustificationCommandHandler(ManufacturerManagerContext contex
 
     public async Task UpdateColourJustificationAsync(ColourJustificationModel colourJustification)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var colourJustificationToUpdate = context.ColourJustifications.SingleOrDefault(c => c.ColourJustificationId == colourJustification.ColourJustificationId);
         if (colourJustificationToUpdate is null)
             return;

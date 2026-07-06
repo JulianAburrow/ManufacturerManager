@@ -1,15 +1,17 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class AdhocQueryCommandHandler(ManufacturerManagerContext context) : IAdhocQueryCommandHandler
+public class AdhocQueryCommandHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IAdhocQueryCommandHandler
 {
     public async Task CreateAdhocQueryAsync(AdhocQueryModel adhocQueryModel)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         context.AdhocQueries.Add(adhocQueryModel);
         await context.SaveChangesAsync();
     }
 
     public async Task DeleteAdhocQueryAsync(int adhocQueryId)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var adhocQueryToDelete = context.AdhocQueries.SingleOrDefault(a => a.AdhocQueryId == adhocQueryId);
         if (adhocQueryToDelete is null)
             return;

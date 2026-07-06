@@ -1,15 +1,21 @@
 ﻿namespace MMDataAccess.Handlers.QueryHandlers;
 
-public class MyMMStatusQueryHandler(ManufacturerManagerContext context) : IMyMMStatusQueryHandler
+public class MyMMStatusQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IMyMMStatusQueryHandler
 {
-    public async Task<List<MyMMStatusModel>> GetMyMMStatusesAsync() =>
-        await context.MyMMStatuses
+    public async Task<List<MyMMStatusModel>> GetMyMMStatusesAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.MyMMStatuses
             .AsNoTracking()
             .ToListAsync();
+    }
 
-    public async Task<MyMMStatusModel> GetMyMMStatusAsync(int myMMStatusId) =>
-        await context.MyMMStatuses
+    public async Task<MyMMStatusModel> GetMyMMStatusAsync(int myMMStatusId)
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.MyMMStatuses
             .AsNoTracking()
             .SingleOrDefaultAsync(m => m.StatusId == myMMStatusId)
-            ?? throw new ArgumentNullException(nameof(myMMStatusId), "MyMMStatus not found.");
+            ?? throw new KeyNotFoundException($"MyMMStatus with ID {myMMStatusId} not found.");
+    }
 }

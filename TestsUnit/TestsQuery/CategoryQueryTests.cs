@@ -2,19 +2,20 @@
 
 public class CategoryQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly ICategoryQueryHandler _categoryQueryHandler;
     private readonly List<CategoryModel> _testCategories = CategoryObjectFactory.GetTestCategories();
     
     public CategoryQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _categoryQueryHandler = new CategoryQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _categoryQueryHandler = new CategoryQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetCategories_GetsCategories()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Categories.Count();
 
         _manufacturerManagerContext.Categories.Add(_testCategories[0]);

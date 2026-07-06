@@ -1,21 +1,28 @@
 ﻿namespace MMDataAccess.Handlers.QueryHandlers;
 
-public class AdhocQueryQueryHandler(ManufacturerManagerContext context) : IAdhocQueryQueryHandler
+public class AdhocQueryQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IAdhocQueryQueryHandler
 {
-    public async Task<List<AdhocQueryModel>> GetAdhocQueriesAsync() =>
-        await context.AdhocQueries
-        .OrderByDescending(a => a.WhenRun)
-        .AsNoTracking()
-        .ToListAsync();
+    public async Task<List<AdhocQueryModel>> GetAdhocQueriesAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.AdhocQueries
+            .OrderByDescending(a => a.WhenRun)
+            .AsNoTracking()
+            .ToListAsync();
+    }
 
-    public async Task<AdhocQueryModel> GetAdhocQueryAsync(int adhocQueryId) =>
-        await context.AdhocQueries
-        .AsNoTracking()
+    public async Task<AdhocQueryModel> GetAdhocQueryAsync(int adhocQueryId)
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.AdhocQueries
+            .AsNoTracking()
         .SingleOrDefaultAsync(a => a.AdhocQueryId == adhocQueryId)
-        ?? throw new ArgumentNullException(nameof(adhocQueryId), "Ad hoc query not found.");
+        ?? throw new KeyNotFoundException($"Ad hoc query with ID {adhocQueryId} not found.");
+    }
 
     public async Task<List<AdhocQueryListModel>> GetLastXSuccessfulAdhocQueries(int numberOfQueriesRequired)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         return await context.AdhocQueries
             .Where(a => a.IsSuccessful)
             .GroupBy(a => a.NaturalLanguageQuery)

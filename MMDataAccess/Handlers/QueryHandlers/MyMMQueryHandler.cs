@@ -1,23 +1,32 @@
 ﻿namespace MMDataAccess.Handlers.QueryHandlers;
 
-public class MyMMQueryHandler(ManufacturerManagerContext context) : IMyMMQueryHandler
+public class MyMMQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IMyMMQueryHandler
 {
-    public async Task<MyMMModel> GetMyMMAsync(int myMMId) =>
-        await context.MyMMs
+    public async Task<MyMMModel> GetMyMMAsync(int myMMId)
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.MyMMs
             .Include(m => m.Status)
             .AsNoTracking()
             .SingleOrDefaultAsync(m => m.MyMMId == myMMId)
-            ?? throw new ArgumentNullException(nameof(myMMId), "MyMM not found.");
+            ?? throw new KeyNotFoundException($"MyMM with ID {myMMId} not found.");
+    }
+        
 
-    public async Task<List<MyMMModel>> GetMyMMsAsync() =>
-        await context.MyMMs
+    public async Task<List<MyMMModel>> GetMyMMsAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.MyMMs
             .Include(m => m.Status)
             .OrderBy(m => m.ActionDate)
             .AsNoTracking()
             .ToListAsync();
+    }
 
-    public async Task<List<MyMMModel>> GetMyMMsForHomePageAsync() =>
-        await context.MyMMs
+    public async Task<List<MyMMModel>> GetMyMMsForHomePageAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.MyMMs
             .Include(m => m.Status)
             .OrderBy(m => m.ActionDate)
             .AsNoTracking()
@@ -26,4 +35,5 @@ public class MyMMQueryHandler(ManufacturerManagerContext context) : IMyMMQueryHa
                 (m.StatusId == (int)PublicEnums.MyMMStatusEnum.Active ||
                 m.StatusId == (int)PublicEnums.MyMMStatusEnum.Pending))
             .ToListAsync();
+    }
 }

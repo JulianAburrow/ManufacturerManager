@@ -4,19 +4,20 @@ namespace TestsUnit.TestsQuery;
 
 public class ColourJustificationQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IColourJustificationQueryHandler _colourJustificationQueryHandler;
     private readonly List<ColourJustificationModel> _testColourJustifications = ColourJustificationObjectFactory.GetTestColourJustifications();
 
     public ColourJustificationQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _colourJustificationQueryHandler = new ColourJustificationQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _colourJustificationQueryHandler = new ColourJustificationQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetColourJustification_GetsColourJustification()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[0]);
         _manufacturerManagerContext.SaveChanges();
 
@@ -28,6 +29,7 @@ public class ColourJustificationQueryTests
     [Fact]
     public async Task GetColourJustifications_GetsColourJustifications()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
 
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[0]);
