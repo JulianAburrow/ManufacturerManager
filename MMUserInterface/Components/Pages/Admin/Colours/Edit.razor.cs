@@ -24,7 +24,7 @@ public partial class Edit
         CopyDisplayModelToModel();
 
        await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ColourCommandHandler.UpdateColourAsync(ColourModel, true),
+            async () => await ColourCommandHandler.UpdateColourAsync(ColourModel),
             $"Colour {ColourModel.Name} successfully updated.",
             $"An error occurred updating colour {ColourModel.Name}. Please try again."
         );

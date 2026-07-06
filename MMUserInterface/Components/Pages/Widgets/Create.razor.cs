@@ -51,7 +51,7 @@ public partial class Create
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await WidgetCommandHandler.CreateWidgetAsync(WidgetModel, true),
+            async () => await WidgetCommandHandler.CreateWidgetAsync(WidgetModel),
             $"Widget {WidgetModel.Name} successfully created.",
             $"An error occurred creating Widget {WidgetModel.Name}. Please try again."
         );

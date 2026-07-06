@@ -18,7 +18,7 @@ public partial class Create
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ColourJustificationCommandHandler.CreateColourJustificationAsync(ColourJustificationModel, true),
+            async () => await ColourJustificationCommandHandler.CreateColourJustificationAsync(ColourJustificationModel),
             $"Colour Justification {ColourJustificationModel.Justification} successfully created.",
             $"An error occurred creating Colour Justification {ColourJustificationModel.Justification}. Please try again"
         );

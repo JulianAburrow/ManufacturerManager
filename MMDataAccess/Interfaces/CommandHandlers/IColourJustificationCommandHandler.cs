@@ -2,11 +2,9 @@
 
 public interface IColourJustificationCommandHandler
 {
-    Task CreateColourJustificationAsync(ColourJustificationModel colourJustification, bool callSaveChanges);
+    Task CreateColourJustificationAsync(ColourJustificationModel colourJustification);
 
-    Task UpdateColourJustificationAsync(ColourJustificationModel colourJustification, bool callSaveChanges);
+    Task UpdateColourJustificationAsync(ColourJustificationModel colourJustification);
 
-    Task DeleteColourJustificationAsync(int colourJustificationId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteColourJustificationAsync(int colourJustificationId);
 }

@@ -2,11 +2,9 @@
 
 public interface IMyMMCommandHandler
 {
-    Task CreateMyMMAsync(MyMMModel myMM, bool callSaveChanges);
+    Task CreateMyMMAsync(MyMMModel myMM);
 
-    Task UpdateMyMMAsync(MyMMModel myMM, bool callSaveChanges);
+    Task UpdateMyMMAsync(MyMMModel myMM);
 
-    Task DeleteMyMMAsync(int myMMid, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteMyMMAsync(int myMMid);
 }

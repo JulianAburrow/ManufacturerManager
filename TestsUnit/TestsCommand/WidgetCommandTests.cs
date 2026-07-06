@@ -19,8 +19,8 @@ public class WidgetCommandTests
     {
         var initialCount = _manufacturerManagerContext.Widgets.Count();
 
-        await _widgetCommandHandler.CreateWidgetAsync(_testWidgets[0], false);
-        await _widgetCommandHandler.CreateWidgetAsync(_testWidgets[1], true);
+        await _widgetCommandHandler.CreateWidgetAsync(_testWidgets[0]);
+        await _widgetCommandHandler.CreateWidgetAsync(_testWidgets[1]);
 
         _manufacturerManagerContext.Widgets.Count().Should().Be(initialCount + 2);
     }
@@ -34,7 +34,7 @@ public class WidgetCommandTests
         _manufacturerManagerContext.SaveChanges();
         widgetId = _testWidgets[0].WidgetId;
 
-        await _widgetCommandHandler.DeleteWidgetAsync(widgetId, true);
+        await _widgetCommandHandler.DeleteWidgetAsync(widgetId);
         Func<Task> act = async () => await _widgetQueryHandler.GetWidgetAsync(widgetId);
         await act.Should().ThrowAsync<ArgumentNullException>();
     }
@@ -49,7 +49,7 @@ public class WidgetCommandTests
 
         var widgetToUpdate = _manufacturerManagerContext.Widgets.First(w => w.WidgetId == _testWidgets[0].WidgetId);
         widgetToUpdate.Name = newWidget;
-        await _widgetCommandHandler.UpdateWidgetAsync(widgetToUpdate, true);
+        await _widgetCommandHandler.UpdateWidgetAsync(widgetToUpdate);
 
         var updatedWidget = _manufacturerManagerContext.Widgets.First(w => w.WidgetId == _testWidgets[0].WidgetId);
         updatedWidget.Name.Should().Be(newWidget);

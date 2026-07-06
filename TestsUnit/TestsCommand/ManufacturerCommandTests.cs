@@ -19,10 +19,10 @@ public class ManufacturerCommandTests
     {
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 
-        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[0], false);
-        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[1], false);
-        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[2], false);
-        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[3], true);
+        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[0]);
+        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[1]);
+        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[2]);
+        await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[3]);
 
         _manufacturerManagerContext.Manufacturers.Count().Should().Be(initialCount + 4);
     }
@@ -33,7 +33,7 @@ public class ManufacturerCommandTests
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
         _manufacturerManagerContext.SaveChanges();
         var manufacturerId = _testManufacturers[0].ManufacturerId;
-        await _manufacturerCommandHandler.DeleteManufacturerAsync(manufacturerId, true);
+        await _manufacturerCommandHandler.DeleteManufacturerAsync(manufacturerId);
 
         Func<Task> act = async () => await _manufacturerQueryHandler.GetManufacturerAsync(manufacturerId);
         await act.Should().ThrowAsync<ArgumentNullException>();
@@ -54,7 +54,7 @@ public class ManufacturerCommandTests
         _manufacturerManagerContext.Widgets.Add(widget1);
         _manufacturerManagerContext.SaveChanges();
         _testManufacturers[0].StatusId = (int)PublicEnums.ManufacturerStatusEnum.Inactive;
-        await _manufacturerCommandHandler.UpdateManufacturerAsync(_testManufacturers[0], true);
+        await _manufacturerCommandHandler.UpdateManufacturerAsync(_testManufacturers[0]);
         var updatedWidgets = _manufacturerManagerContext.Widgets.Where(w => w.WidgetId == widget1.WidgetId);
         foreach (var updatedWidget in updatedWidgets)
         {
@@ -72,7 +72,7 @@ public class ManufacturerCommandTests
 
         var manufacturerToUpdate = _manufacturerManagerContext.Manufacturers.First(m => m.ManufacturerId == _testManufacturers[2].ManufacturerId);
         manufacturerToUpdate.Name = newManufacturer;
-        await _manufacturerCommandHandler.UpdateManufacturerAsync(manufacturerToUpdate, true);
+        await _manufacturerCommandHandler.UpdateManufacturerAsync(manufacturerToUpdate);
 
         var updatedManufacturer = _manufacturerManagerContext.Manufacturers.First(m => m.ManufacturerId == _testManufacturers[2].ManufacturerId);
         updatedManufacturer.Name.Should().Be(newManufacturer);

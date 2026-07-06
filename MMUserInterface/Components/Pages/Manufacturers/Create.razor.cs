@@ -31,7 +31,7 @@ public partial class Create
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ManufacturerCommandHandler.CreateManufacturerAsync(ManufacturerModel, true),
+            async () => await ManufacturerCommandHandler.CreateManufacturerAsync(ManufacturerModel),
             $"Manufacturer {ManufacturerModel.Name} successfully created.",
             $"An error occurred creating manufacturer {ManufacturerModel.Name}. Please try again."
         );

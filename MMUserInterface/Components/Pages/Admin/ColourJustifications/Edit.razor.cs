@@ -24,7 +24,7 @@ public partial class Edit
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ColourJustificationCommandHandler.UpdateColourJustificationAsync(ColourJustificationModel, true),
+            async () => await ColourJustificationCommandHandler.UpdateColourJustificationAsync(ColourJustificationModel),
             $"Colour Justification {ColourJustificationModel.Justification} successfully updated.",
             $"An error occurred updating Colour Justification {ColourJustificationModel.Justification}. Please try again."
         );

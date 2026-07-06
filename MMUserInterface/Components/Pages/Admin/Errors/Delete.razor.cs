@@ -21,7 +21,7 @@ public partial class Delete
     private async Task DeleteError()
     {
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ErrorCommandHandler.DeleteErrorAsync(ErrorId, true),
+            async () => await ErrorCommandHandler.DeleteErrorAsync(ErrorId),
             $"Error {ErrorModel.ErrorMessage} successfully deleted",
             $"An error occurred deleting error {ErrorModel.ErrorMessage}. Please try again"
         );

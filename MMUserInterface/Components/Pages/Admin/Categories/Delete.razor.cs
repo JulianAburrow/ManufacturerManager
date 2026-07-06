@@ -24,7 +24,7 @@ public partial class Delete
     private async Task DeleteCategory()
     {
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await CategoryCommandHandler.DeleteCategoryAsync(CategoryId, true),
+            async () => await CategoryCommandHandler.DeleteCategoryAsync(CategoryId),
             $"Category {CategoryModel.Name} successfully deleted.",
             $"An error occurred deleting category {CategoryModel.Name}. Please try again."
         );

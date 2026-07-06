@@ -2,11 +2,9 @@
 
 public interface IWidgetCommandHandler
 {
-    Task CreateWidgetAsync(WidgetModel widget, bool callSaveChanges);
+    Task CreateWidgetAsync(WidgetModel widget);
 
-    Task UpdateWidgetAsync(WidgetModel widget, bool callSaveChanges);
+    Task UpdateWidgetAsync(WidgetModel widget);
 
-    Task DeleteWidgetAsync(int widgetId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteWidgetAsync(int widgetId);
 }

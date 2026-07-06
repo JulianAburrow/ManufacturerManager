@@ -103,7 +103,7 @@ public partial class Help
         catch (Exception ex)
         {
             Response = $"❌ An error occurred: it may be the case that you do not have Ollama and / or {ChatSearchModel.SearchModel}.";
-            await ErrorCommandHandler.CreateErrorAsync(new Exception($"An error occurred in Help.razor.cs OnSearchClicked method. Suspect lack of Ollama/{ChatSearchModel.SearchModel}. {ex.Message}"), true);
+            await ErrorCommandHandler.CreateErrorAsync(new Exception($"An error occurred in Help.razor.cs OnSearchClicked method. Suspect lack of Ollama/{ChatSearchModel.SearchModel}. {ex.Message}"));
         }
         finally
         {

@@ -27,7 +27,7 @@ public partial class Edit
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await ManufacturerCommandHandler.UpdateManufacturerAsync(ManufacturerModel, true),
+            async () => await ManufacturerCommandHandler.UpdateManufacturerAsync(ManufacturerModel),
             $"Manufacturer {ManufacturerModel.Name} successfully updated.",
             $"An error occurred updating manufacturer {ManufacturerModel.Name}. Please try again."
         );

@@ -21,7 +21,7 @@ public partial class Delete
     private async Task DeleteMyMM()
     {
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await MyMMCommandHandler.DeleteMyMMAsync(MyMMId, true),
+            async () => await MyMMCommandHandler.DeleteMyMMAsync(MyMMId),
             $"MyMM {MyMMModel.Title} successfully deleted.",
             $"An error occurred deleting MyMM {MyMMModel.Title}. Please try again."
         );

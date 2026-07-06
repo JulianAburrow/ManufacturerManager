@@ -2,11 +2,9 @@
 
 public interface IManufacturerCommandHandler
 {
-    Task CreateManufacturerAsync(ManufacturerModel manufacturer, bool callSaveChanges);
+    Task CreateManufacturerAsync(ManufacturerModel manufacturer);
 
-    Task UpdateManufacturerAsync(ManufacturerModel manufacturer, bool callSaveChanges);
+    Task UpdateManufacturerAsync(ManufacturerModel manufacturer);
 
-    Task DeleteManufacturerAsync(int manufacturerId, bool callSaveChanges);
-
-    Task SaveChangesAsync();
+    Task DeleteManufacturerAsync(int manufacturerId);
 }

@@ -19,10 +19,10 @@ public class ColourJustificationCommandTests
     {
         var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
 
-        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[0], false);
-        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[1], false);
-        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[2], false);
-        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[3], true);
+        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[0]);
+        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[1]);
+        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[2]);
+        await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[3]);
 
         _manufacturerManagerContext.ColourJustifications.Count().Should().Be(initialCount + 4);
     }
@@ -36,7 +36,7 @@ public class ColourJustificationCommandTests
         _manufacturerManagerContext.SaveChanges();
         colourJustificationId = _testColourJustifications[2].ColourJustificationId;
 
-        await _colourJustificationCommandHandler.DeleteColourJustificationAsync(colourJustificationId, true);
+        await _colourJustificationCommandHandler.DeleteColourJustificationAsync(colourJustificationId);
 
         var deletedColourJustification = _manufacturerManagerContext.ColourJustifications.FirstOrDefault(c => c.ColourJustificationId == colourJustificationId);
 
@@ -53,7 +53,7 @@ public class ColourJustificationCommandTests
 
         var colourJustificationToUpdate = _manufacturerManagerContext.ColourJustifications.First(c => c.ColourJustificationId == _testColourJustifications[3].ColourJustificationId);
         colourJustificationToUpdate.Justification = newJustification;
-        await _colourJustificationCommandHandler.UpdateColourJustificationAsync(_testColourJustifications[3], true);
+        await _colourJustificationCommandHandler.UpdateColourJustificationAsync(_testColourJustifications[3]);
 
         var updatedColourJustification = _manufacturerManagerContext.ColourJustifications.First(c => c.ColourJustificationId == _testColourJustifications[3].ColourJustificationId);
         updatedColourJustification.Justification.Should().Be(newJustification);

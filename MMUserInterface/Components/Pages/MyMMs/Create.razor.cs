@@ -29,7 +29,7 @@ public partial class Create
         CopyDisplayModelToModel();
 
         await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(
-            async () => await MyMMCommandHandler.CreateMyMMAsync(MyMMModel, true),
+            async () => await MyMMCommandHandler.CreateMyMMAsync(MyMMModel),
             $"MyMM {MyMMModel.Title} successfully created.",
             $"An error occurred creating MyMM {MyMMModel.Title}. Please try again."
         );
