@@ -12,7 +12,6 @@ public class ColourJustificationQueryHandler(IDbContextFactory<ManufacturerManag
             ?? throw new KeyNotFoundException($"Colour Justification with ID {colourJustificationId} not found.");
     }
 
-
     public async Task<List<ColourJustificationModel>> GetColourJustificationsAsync()
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();

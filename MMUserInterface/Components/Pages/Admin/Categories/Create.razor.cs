@@ -17,7 +17,7 @@ public partial class Create
     {
         CopyDisplayModelToModel();
 
-        CategoryExists = CategoryQueryHandler.CategoryExists(CategoryModel.Name);
+        CategoryExists = await CategoryQueryHandler.CategoryExistsAsync(CategoryModel.Name);
 
         if (CategoryExists)
         {

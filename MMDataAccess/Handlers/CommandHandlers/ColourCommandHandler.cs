@@ -12,7 +12,7 @@ public class ColourCommandHandler(IDbContextFactory<ManufacturerManagerContext> 
     public async Task DeleteColourAsync(int colourId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var colourToDelete = context.Colours.SingleOrDefault(c => c.ColourId == colourId);
+        var colourToDelete = await context.Colours.SingleOrDefaultAsync(c => c.ColourId == colourId);
         if (colourToDelete is null)
             return;
         context.Colours.Remove(colourToDelete);
@@ -22,7 +22,7 @@ public class ColourCommandHandler(IDbContextFactory<ManufacturerManagerContext> 
     public async Task UpdateColourAsync(ColourModel colour)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var colourToUpdate = context.Colours.SingleOrDefault(c => c.ColourId == colour.ColourId);
+        var colourToUpdate = await context.Colours.SingleOrDefaultAsync(c => c.ColourId == colour.ColourId);
         if (colourToUpdate is null)
             return;
 

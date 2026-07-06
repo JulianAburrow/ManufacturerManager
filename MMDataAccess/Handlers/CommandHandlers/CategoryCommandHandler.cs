@@ -13,7 +13,7 @@ public class CategoryCommandHandler(IDbContextFactory<ManufacturerManagerContext
     public async Task DeleteCategoryAsync(int categoryId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var categoryToDelete = context.Categories.SingleOrDefault(c => c.CategoryId == categoryId);
+        var categoryToDelete = await context.Categories.SingleOrDefaultAsync(c => c.CategoryId == categoryId);
         if (categoryToDelete is null)
             return;
         context.Categories.Remove(categoryToDelete);
@@ -24,7 +24,7 @@ public class CategoryCommandHandler(IDbContextFactory<ManufacturerManagerContext
     public async Task UpdateCategoryAsync(CategoryModel category)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var categoryToUpdate = context.Categories.SingleOrDefault(c => c.CategoryId == category.CategoryId);
+        var categoryToUpdate = await context.Categories.SingleOrDefaultAsync(c => c.CategoryId == category.CategoryId);
         if (categoryToUpdate is null)
             return;
 

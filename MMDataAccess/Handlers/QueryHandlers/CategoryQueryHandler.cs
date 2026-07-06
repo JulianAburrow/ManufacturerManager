@@ -2,10 +2,10 @@
 
 public class CategoryQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : ICategoryQueryHandler
 {
-    public bool CategoryExists(string categoryName)
+    public async Task<bool> CategoryExistsAsync(string categoryName)
     {
-        using var context = manufacturerManagerContextFactory.CreateDbContext();
-        return context.Categories.Any(c => c.Name == categoryName);
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.Categories.AnyAsync(c => c.Name == categoryName);
     }
 
     public async Task<List<CategoryModel>> GetCategoriesAsync()

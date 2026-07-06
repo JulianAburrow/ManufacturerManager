@@ -2,7 +2,7 @@
 
 public interface ICategoryQueryHandler
 {
-    public bool CategoryExists(string categoryName);
+    public Task<bool> CategoryExistsAsync(string categoryName);
 
     Task<List<CategoryModel>> GetCategoriesAsync();
 

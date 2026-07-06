@@ -20,7 +20,7 @@ public class ErrorCommandHandler(IDbContextFactory<ManufacturerManagerContext> m
     public async Task DeleteErrorAsync(int errorId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var errorToDelete = context.Errors.SingleOrDefault(e => e.ErrorId == errorId);
+        var errorToDelete = await context.Errors.SingleOrDefaultAsync(e => e.ErrorId == errorId);
         if (errorToDelete is null)
             return;
         context.Errors.Remove(errorToDelete);
@@ -30,7 +30,7 @@ public class ErrorCommandHandler(IDbContextFactory<ManufacturerManagerContext> m
     public async Task UpdateErrorAsync(ErrorModel error)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var errorToUpdate = context.Errors.SingleOrDefault(e => e.ErrorId == error.ErrorId);
+        var errorToUpdate = await context.Errors.SingleOrDefaultAsync(e => e.ErrorId == error.ErrorId);
         if (errorToUpdate is null)
             return;
 
