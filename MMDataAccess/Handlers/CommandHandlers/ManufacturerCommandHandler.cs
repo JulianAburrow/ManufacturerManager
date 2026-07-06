@@ -12,7 +12,7 @@ public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerCon
     public async Task DeleteManufacturerAsync(int manufacturerId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var manufacturerToDelete = context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturerId);
+        var manufacturerToDelete = await context.Manufacturers.SingleOrDefaultAsync(m => m.ManufacturerId == manufacturerId);
         if (manufacturerToDelete is null)
             return;
         context.Manufacturers.Remove(manufacturerToDelete);
@@ -24,7 +24,7 @@ public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerCon
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        var manufacturerToUpdate = context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturer.ManufacturerId);
+        var manufacturerToUpdate = await context.Manufacturers.SingleOrDefaultAsync(m => m.ManufacturerId == manufacturer.ManufacturerId);
         if (manufacturerToUpdate is null)
             return;
 
@@ -33,8 +33,9 @@ public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerCon
 
         if (manufacturer.StatusId == (int)PublicEnums.ManufacturerStatusEnum.Inactive)
         {
-            var widgets = context.Widgets
-                .Where(w => w.ManufacturerId == manufacturer.ManufacturerId);
+            var widgets = await context.Widgets
+                .Where(w => w.ManufacturerId == manufacturer.ManufacturerId)
+                .ToListAsync();
             foreach (var widget in widgets)
             {
                 widget.StatusId = (int)PublicEnums.WidgetStatusEnum.Inactive;

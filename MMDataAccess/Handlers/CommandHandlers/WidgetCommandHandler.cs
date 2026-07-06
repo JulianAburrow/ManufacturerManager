@@ -12,7 +12,7 @@ public class WidgetCommandHandler(IDbContextFactory<ManufacturerManagerContext> 
     public async Task DeleteWidgetAsync(int widgetId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var widgetToDelete = context.Widgets.SingleOrDefault(w => w.WidgetId == widgetId);
+        var widgetToDelete = await context.Widgets.SingleOrDefaultAsync(w => w.WidgetId == widgetId);
         if (widgetToDelete is null)
             return;
         context.Widgets.Remove(widgetToDelete);
@@ -22,7 +22,7 @@ public class WidgetCommandHandler(IDbContextFactory<ManufacturerManagerContext> 
     public async Task UpdateWidgetAsync(WidgetModel widget)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var widgetToUpdate = context.Widgets.SingleOrDefault(w => w.WidgetId == widget.WidgetId);
+        var widgetToUpdate = await context.Widgets.SingleOrDefaultAsync(w => w.WidgetId == widget.WidgetId);
         if (widgetToUpdate is null)
             return;
         widgetToUpdate.Name = widget.Name;

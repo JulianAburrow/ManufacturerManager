@@ -12,7 +12,7 @@ public class AdhocQueryCommandHandler(IDbContextFactory<ManufacturerManagerConte
     public async Task DeleteAdhocQueryAsync(int adhocQueryId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var adhocQueryToDelete = context.AdhocQueries.SingleOrDefault(a => a.AdhocQueryId == adhocQueryId);
+        var adhocQueryToDelete = await context.AdhocQueries.SingleOrDefaultAsync(a => a.AdhocQueryId == adhocQueryId);
         if (adhocQueryToDelete is null)
             return;
         context.AdhocQueries.Remove(adhocQueryToDelete);

@@ -13,7 +13,7 @@ public class MyMMCommandHandler(IDbContextFactory<ManufacturerManagerContext> ma
     public async Task DeleteMyMMAsync(int myMMid)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var myMMToDelete = context.MyMMs.SingleOrDefault(m => m.MyMMId == myMMid);
+        var myMMToDelete = await context.MyMMs.SingleOrDefaultAsync(m => m.MyMMId == myMMid);
         if (myMMToDelete is null)
             return;
         context.MyMMs.Remove(myMMToDelete);
@@ -23,7 +23,7 @@ public class MyMMCommandHandler(IDbContextFactory<ManufacturerManagerContext> ma
     public async Task UpdateMyMMAsync(MyMMModel myMM)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var myMMToUpdate = context.MyMMs.SingleOrDefault(m => m.MyMMId == myMM.MyMMId);
+        var myMMToUpdate = await context.MyMMs.SingleOrDefaultAsync(m => m.MyMMId == myMM.MyMMId);
         if (myMMToUpdate is null)
             return;
 

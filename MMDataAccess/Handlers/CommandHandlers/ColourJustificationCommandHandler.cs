@@ -12,7 +12,7 @@ public class ColourJustificationCommandHandler(IDbContextFactory<ManufacturerMan
     public async Task DeleteColourJustificationAsync(int colourJustificationId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var colourJustificationToDelete = context.ColourJustifications.SingleOrDefault(c => c.ColourJustificationId == colourJustificationId);
+        var colourJustificationToDelete = await context.ColourJustifications.SingleOrDefaultAsync(c => c.ColourJustificationId == colourJustificationId);
         if (colourJustificationToDelete is null)
             return;
         context.ColourJustifications.Remove(colourJustificationToDelete);
@@ -22,7 +22,7 @@ public class ColourJustificationCommandHandler(IDbContextFactory<ManufacturerMan
     public async Task UpdateColourJustificationAsync(ColourJustificationModel colourJustification)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        var colourJustificationToUpdate = context.ColourJustifications.SingleOrDefault(c => c.ColourJustificationId == colourJustification.ColourJustificationId);
+        var colourJustificationToUpdate = await context.ColourJustifications.SingleOrDefaultAsync(c => c.ColourJustificationId == colourJustification.ColourJustificationId);
         if (colourJustificationToUpdate is null)
             return;
         colourJustificationToUpdate.Justification = colourJustification.Justification;
