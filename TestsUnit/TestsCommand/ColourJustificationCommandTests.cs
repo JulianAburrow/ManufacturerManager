@@ -2,14 +2,14 @@
 
 public class ColourJustificationCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IColourJustificationCommandHandler _colourJustificationCommandHandler;
     private readonly List<ColourJustificationModel> _testColourJustifications = ColourJustificationObjectFactory.GetTestColourJustifications();
 
     public ColourJustificationCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _colourJustificationCommandHandler = new ColourJustificationCommandHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _colourJustificationCommandHandler = new ColourJustificationCommandHandler(_factory);
     }
 
     
@@ -17,6 +17,7 @@ public class ColourJustificationCommandTests
     [Fact]
     public async Task CreateColourJustification_CreatesColourJustification()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
 
         await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[0]);
@@ -31,6 +32,7 @@ public class ColourJustificationCommandTests
     public async Task DeleteColourJustification_DeletesColourJustification()
     {
         int colourJustificationId;
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[2]);
         _manufacturerManagerContext.SaveChanges();
@@ -47,6 +49,7 @@ public class ColourJustificationCommandTests
     public async Task UpdateColourJustification_UpdatesColourJustification()
     {
         var newJustification = "newJustification";
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[3]);
         _manufacturerManagerContext.SaveChanges();

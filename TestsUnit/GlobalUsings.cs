@@ -1,5 +1,6 @@
 ﻿global using FluentAssertions;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
 global using MMDataAccess.Data;
 global using MMDataAccess.Enums;
 global using MMDataAccess.Handlers.CommandHandlers;

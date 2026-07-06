@@ -1,19 +1,24 @@
 ﻿namespace MMDataAccess.Handlers.QueryHandlers;
 
-public class WidgetQueryHandler(ManufacturerManagerContext context) : IWidgetQueryHandler
+public class WidgetQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IWidgetQueryHandler
 {
-    public async Task<WidgetModel> GetWidgetAsync(int widgetId) =>
-        await context.Widgets
+    public async Task<WidgetModel> GetWidgetAsync(int widgetId)
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.Widgets
             .Include(w => w.Colour)
             .Include(w => w.ColourJustification)
             .Include(w => w.Manufacturer)
             .Include(w => w.Status)
             .AsNoTracking()
             .SingleOrDefaultAsync(w => w.WidgetId == widgetId)
-            ?? throw new ArgumentNullException(nameof(widgetId), "Widget not found.");
+            ?? throw new KeyNotFoundException($"Widget with ID {widgetId} not found.");
+    }
 
-    public async Task<List<WidgetSummary>> GetWidgetsAsync() =>
-        await context.Widgets
+    public async Task<List<WidgetSummary>> GetWidgetsAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.Widgets
             .Select(w => new WidgetSummary
             {
                 WidgetId = w.WidgetId,
@@ -27,4 +32,5 @@ public class WidgetQueryHandler(ManufacturerManagerContext context) : IWidgetQue
         .OrderBy(w => w.Name)
         .AsNoTracking()
         .ToListAsync();
+    }
 }

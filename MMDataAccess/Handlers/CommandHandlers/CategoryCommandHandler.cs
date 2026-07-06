@@ -1,16 +1,18 @@
 ﻿
 namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class CategoryCommandHandler(ManufacturerManagerContext context) : ICategoryCommandHandler
+public class CategoryCommandHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : ICategoryCommandHandler
 {
     public async Task CreateCategoryAsync(CategoryModel category)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         context.Categories.Add(category);
         await context.SaveChangesAsync();
     }
 
     public async Task DeleteCategoryAsync(int categoryId)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var categoryToDelete = context.Categories.SingleOrDefault(c => c.CategoryId == categoryId);
         if (categoryToDelete is null)
             return;
@@ -21,6 +23,7 @@ public class CategoryCommandHandler(ManufacturerManagerContext context) : ICateg
 
     public async Task UpdateCategoryAsync(CategoryModel category)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var categoryToUpdate = context.Categories.SingleOrDefault(c => c.CategoryId == category.CategoryId);
         if (categoryToUpdate is null)
             return;

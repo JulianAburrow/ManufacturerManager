@@ -2,19 +2,20 @@
 
 public class AdhocQueryQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IAdhocQueryQueryHandler _adhocQueryQueryHandler;
     private readonly List<AdhocQueryModel> _testAdhocQueries = AdhocQueryObjectFactory.GetTestAdhocQueries();
 
     public AdhocQueryQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _adhocQueryQueryHandler = new AdhocQueryQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _adhocQueryQueryHandler = new AdhocQueryQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetAdhocQueries_GetsAdhocQueries()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.AdhocQueries.Count();
 
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[0]);
@@ -30,6 +31,8 @@ public class AdhocQueryQueryTests
     [Fact]
     public async Task GetAdhocQuery_GetsAdhocQuery()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[0]);
         _manufacturerManagerContext.SaveChanges();
 
@@ -42,6 +45,7 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsLastXDistinctQueries_InDescendingOrder()
     {
         // Arrange
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.AdhocQueries.Count();
 
         // Add the test data (with unique timestamps + a duplicate)
@@ -71,6 +75,7 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_IgnoresUnsuccessfulQueries()
     {
         // Arrange
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var now = DateTime.UtcNow;
 
         var successful = new AdhocQueryModel
@@ -103,6 +108,7 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsAll_WhenFewerThanRequested()
     {
         // Arrange
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[0]);
         _manufacturerManagerContext.SaveChanges();
 
@@ -117,6 +123,7 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsSingleItem_WhenAllQueriesAreDuplicates()
     {
         // Arrange
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var now = DateTime.UtcNow;
 
         var q1 = new AdhocQueryModel

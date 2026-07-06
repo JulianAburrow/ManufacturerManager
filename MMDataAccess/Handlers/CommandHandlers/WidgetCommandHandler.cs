@@ -1,15 +1,17 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetCommandHandler
+public class WidgetCommandHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IWidgetCommandHandler
 {    
     public async Task CreateWidgetAsync(WidgetModel widget)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         context.Widgets.Add(widget);
         await context.SaveChangesAsync();
     }
 
     public async Task DeleteWidgetAsync(int widgetId)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var widgetToDelete = context.Widgets.SingleOrDefault(w => w.WidgetId == widgetId);
         if (widgetToDelete is null)
             return;
@@ -18,8 +20,8 @@ public class WidgetCommandHandler(ManufacturerManagerContext context) : IWidgetC
     }
 
     public async Task UpdateWidgetAsync(WidgetModel widget)
-
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var widgetToUpdate = context.Widgets.SingleOrDefault(w => w.WidgetId == widget.WidgetId);
         if (widgetToUpdate is null)
             return;

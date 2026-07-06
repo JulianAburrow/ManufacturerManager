@@ -1,11 +1,12 @@
 ﻿namespace MMDataAccess.Handlers.QueryHandlers;
 
-public class WidgetStatusQueryHandler(ManufacturerManagerContext context) : IWidgetStatusQueryHandler
+public class WidgetStatusQueryHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IWidgetStatusQueryHandler
 {
-    private readonly ManufacturerManagerContext _context = context;
-
-    public async Task<List<WidgetStatusModel>> GetWidgetStatusesAsync() =>
-        await _context.WidgetStatuses
+    public async Task<List<WidgetStatusModel>> GetWidgetStatusesAsync()
+    {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
+        return await context.WidgetStatuses
             .AsNoTracking()
             .ToListAsync();
+    }
 }

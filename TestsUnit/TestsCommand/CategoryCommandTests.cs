@@ -2,19 +2,20 @@
 
 public class CategoryCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly ICategoryCommandHandler _categoryCommandHandler;
     private readonly List<CategoryModel> _testCategories = CategoryObjectFactory.GetTestCategories();
 
     public CategoryCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _categoryCommandHandler = new CategoryCommandHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _categoryCommandHandler = new CategoryCommandHandler(_factory);
     }
 
     [Fact]
     public async Task CreateCategory_CreatesCategory()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Categories.Count();
 
         await _categoryCommandHandler.CreateCategoryAsync(_testCategories[0]);
@@ -29,6 +30,7 @@ public class CategoryCommandTests
     public async Task DeleteCategory_DeletesCategory()
     {
         int categoryId;
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.Categories.Add(_testCategories[1]);
         _manufacturerManagerContext.SaveChanges();
@@ -45,6 +47,7 @@ public class CategoryCommandTests
     public async Task UpdateCategory_UpdatesCategory()
     {
         var newCategoryName = "NewCategory";
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
 
         _manufacturerManagerContext.Categories.Add(_testCategories[0]);
         _manufacturerManagerContext.SaveChanges();

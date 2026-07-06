@@ -2,19 +2,20 @@
 
 public class MyMMStatusQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IMyMMStatusQueryHandler _myMMStatusHandler;
     private readonly List<MyMMStatusModel> _testMyMMStatuses = MyMMStatusObjectFactory.GetTestMyMMStatuses();
     
     public MyMMStatusQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _myMMStatusHandler = new MyMMStatusQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _myMMStatusHandler = new MyMMStatusQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetMyMMStatuses_GetsMyMMStatuses()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.MyMMStatuses.Count();
 
         _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
@@ -29,6 +30,8 @@ public class MyMMStatusQueryTests
     [Fact]
     public async Task GetMyMMStatus_GetsMyMMStatus()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+
         _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
         _manufacturerManagerContext.SaveChanges();
         var myMMStatusId = _testMyMMStatuses[0].StatusId;

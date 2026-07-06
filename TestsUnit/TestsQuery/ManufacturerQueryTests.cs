@@ -4,19 +4,20 @@ namespace TestsUnit.TestsQuery;
 
 public class ManufacturerQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IManufacturerQueryHandler _manufacturerHandler;
     private readonly List<ManufacturerModel> _testManufacturers = ManufacturerObjectFactory.GetTestManufacturers();
 
     public ManufacturerQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _manufacturerHandler = new ManufacturerQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _manufacturerHandler = new ManufacturerQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetManufacturer_GetsManufacturer()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[3]);
         _manufacturerManagerContext.SaveChanges();
 
@@ -28,6 +29,7 @@ public class ManufacturerQueryTests
     [Fact]
     public async Task GetManufacturers_GetsManufacturers()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);

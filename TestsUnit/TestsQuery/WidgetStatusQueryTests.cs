@@ -2,19 +2,20 @@
 
 public class WidgetStatusQueryTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IWidgetStatusQueryHandler _widgetStatusHandler;
     private readonly List<WidgetStatusModel> _testWidgetStatues = WidgetStatusObjectFactory.GetTestWidgetStatuses();
 
     public WidgetStatusQueryTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _widgetStatusHandler = new WidgetStatusQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _widgetStatusHandler = new WidgetStatusQueryHandler(_factory);
     }
 
     [Fact]
     public async Task GetWidgetStatuses_GetsWidgetStatuses()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.WidgetStatuses.Count();
 
         _manufacturerManagerContext.WidgetStatuses.Add(_testWidgetStatues[0]);

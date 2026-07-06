@@ -2,21 +2,22 @@
 
 public class WidgetCommandTests
 {
-    private readonly ManufacturerManagerContext _manufacturerManagerContext;
+    private readonly IDbContextFactory<ManufacturerManagerContext> _factory;
     private readonly IWidgetCommandHandler _widgetCommandHandler;
     private readonly IWidgetQueryHandler _widgetQueryHandler;
     private readonly List<WidgetModel> _testWidgets = WidgetObjectFactory.GetTestWidgets();
 
     public WidgetCommandTests()
     {
-        _manufacturerManagerContext = TestsUnitHelper.GetContextWithOptions();
-        _widgetCommandHandler = new WidgetCommandHandler(_manufacturerManagerContext);
-        _widgetQueryHandler = new WidgetQueryHandler(_manufacturerManagerContext);
+        _factory = TestsUnitHelper.GetInMemoryFactory();
+        _widgetCommandHandler = new WidgetCommandHandler(_factory);
+        _widgetQueryHandler = new WidgetQueryHandler(_factory);
     }    
 
     [Fact]
     public async Task CreateWidget_CreatesWidget()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var initialCount = _manufacturerManagerContext.Widgets.Count();
 
         await _widgetCommandHandler.CreateWidgetAsync(_testWidgets[0]);
@@ -28,20 +29,23 @@ public class WidgetCommandTests
     [Fact]
     public async Task DeleteWidget_DeletesWidget()
     {
-        int widgetId;
-
-        _manufacturerManagerContext.Widgets.Add(_testWidgets[0]);
-        _manufacturerManagerContext.SaveChanges();
-        widgetId = _testWidgets[0].WidgetId;
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        {
+            _manufacturerManagerContext.Widgets.Add(_testWidgets[0]);
+            _manufacturerManagerContext.SaveChanges();
+        }
+        
+        var widgetId = _testWidgets[0].WidgetId;
 
         await _widgetCommandHandler.DeleteWidgetAsync(widgetId);
         Func<Task> act = async () => await _widgetQueryHandler.GetWidgetAsync(widgetId);
-        await act.Should().ThrowAsync<ArgumentNullException>();
+        await act.Should().ThrowAsync<KeyNotFoundException>();
     }
 
     [Fact]
     public async Task UpdateWidget_UpdatesWidget()
     {
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
         var newWidget = "AcmeWidget";
 
         _manufacturerManagerContext.Widgets.Add(_testWidgets[0]);

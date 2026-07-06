@@ -1,15 +1,17 @@
 ﻿namespace MMDataAccess.Handlers.CommandHandlers;
 
-public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IManufacturerCommandHandler
+public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerContext> manufacturerManagerContextFactory) : IManufacturerCommandHandler
 {
     public async Task CreateManufacturerAsync(ManufacturerModel manufacturer)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         context.Manufacturers.Add(manufacturer);
-        await SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task DeleteManufacturerAsync(int manufacturerId)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         var manufacturerToDelete = context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturerId);
         if (manufacturerToDelete is null)
             return;
@@ -19,6 +21,7 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
 
     public async Task UpdateManufacturerAsync(ManufacturerModel manufacturer)
     {
+        await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
         using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
         var manufacturerToUpdate = context.Manufacturers.SingleOrDefault(m => m.ManufacturerId == manufacturer.ManufacturerId);
@@ -42,7 +45,4 @@ public class ManufacturerCommandHandler(ManufacturerManagerContext context) : IM
 
         scope.Complete();
     }
-
-    public async Task SaveChangesAsync() =>
-        await context.SaveChangesAsync();
 }
