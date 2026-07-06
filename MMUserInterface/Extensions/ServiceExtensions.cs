@@ -3,7 +3,7 @@
 public static class ServiceExtensions
 {
     public static void ConfigureSqlConnections(this IServiceCollection services, IConfiguration configuration) =>
-        services.AddDbContext<ManufacturerManagerContext>(
+        services.AddDbContextFactory<ManufacturerManagerContext>(
             options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("ManufacturerManager"), sqlOptions =>

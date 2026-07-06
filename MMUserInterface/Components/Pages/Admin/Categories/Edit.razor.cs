@@ -30,7 +30,7 @@ public partial class Edit
     {
         CopyDisplayModelToModel();
 
-        CategoryExists = CategoryQueryHandler.CategoryExists(CategoryDisplayModel.Name);
+        CategoryExists = await CategoryQueryHandler.CategoryExistsAsync(CategoryDisplayModel.Name);
 
         if (CategoryExists)
         {
