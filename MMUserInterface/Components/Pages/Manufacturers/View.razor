@@ -3,37 +3,53 @@
 
 <PageTitle>View Manufacturer</PageTitle>
 
-@if (ManufacturerModel.ManufacturerId == 0 || ManufacturerModel.Status is null)
-{
-    <LoadingMessageComponent ValueToShow="@Manufacturer" />
-    return;
-}
+<MudContainer Class="mt-1 px-8" MaxWidth="MaxWidth.False">
 
-<MudGrid>
-    <MudItem sm="7">
-        <MudCard>
-            <MudCardContent>
-                <MudField Label="Name">@ManufacturerModel.Name</MudField>
-                <MudField Label="Status">@ManufacturerModel.Status.StatusName</MudField>
-            </MudCardContent>
-            <MudCardActions>
-                <a href="/manufacturer/edit/@ManufacturerModel.ManufacturerId" class="btn btn-primary">Edit</a>
-                &nbsp;
-                <a href="/manufacturers/index" class="btn btn-primary">Back to list</a>
-            </MudCardActions>
-        </MudCard>
-    </MudItem>
-</MudGrid>
+    @if (ManufacturerModel.ManufacturerId == 0 || ManufacturerModel.Status is null)
+    {
+        <LoadingMessageComponent ValueToShow="@Manufacturer" />
+        return;
+    }
 
-<br />
-<br />
+    <MudPaper Class="p-4">
 
-@if (!ManufacturerModel.Widgets.Any())
-{
-    <h4>@ManufacturerModel.Name has no widgets.</h4>
-    return;
-}
+        <MudStack Spacing="2">
 
-<h4>Widgets for @ManufacturerModel.Name</h4>
+            <MudText Typo="Typo.h5">Manufacturer Details</MudText>
 
-<WidgetGridViewComponent Widgets="@WidgetsForManufacturer" />
+            <MudText><b>Name:</b> @ManufacturerModel.Name</MudText>
+            <MudText><b>Status:</b> @ManufacturerModel.Status.StatusName</MudText>
+
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Edit"
+                           Href=@($"/manufacturer/edit/{ManufacturerModel.ManufacturerId}")>
+                    Edit
+                </MudButton>
+
+                <MudButton Variant="Variant.Outlined"
+                           Color="Color.Default"
+                           StartIcon="@Icons.Material.Filled.ArrowBack"
+                           Href="/manufacturers/index">
+                    Back to List
+                </MudButton>
+            </MudStack>
+
+        </MudStack>
+
+    </MudPaper>
+
+    <MudDivider Class="my-4" />
+
+    @if (!ManufacturerModel.Widgets.Any())
+    {
+        <MudText Typo="Typo.h6">@ManufacturerModel.Name has no widgets.</MudText>
+        return;
+    }
+
+    <MudText Typo="Typo.h6" GutterBottom="true">Widgets for @ManufacturerModel.Name</MudText>
+
+    <WidgetGridViewComponent Widgets="@WidgetsForManufacturer" />
+
+</MudContainer>

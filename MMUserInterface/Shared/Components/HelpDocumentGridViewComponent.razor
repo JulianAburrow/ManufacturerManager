@@ -22,9 +22,25 @@
                 var link = $"/Documents/{context.DocumentCategory}/{context.DocumentName}.pdf";
                 var documentNameAndCategory = $"{context.DocumentCategory}/{context.DocumentName}";
             }
-            <a class="btn btn-primary" href="@link" target="_blank">Open</a>
-            &nbsp;
-            <a class="btn btn-danger" href="/helpdocument/delete/@context.DocumentCategory/@context.DocumentName">Delete</a>
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.OpenInNew"
+                           Href="@link"
+                           Target="_blank">
+                    Open
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Delete"
+                           Href=@($"/helpdocument/delete/{context.DocumentCategory}/{context.DocumentName}")>
+                    Delete
+                </MudButton>
+
+            </MudStack>
+
         </MudTd>
     </RowTemplate>
     <PagerContent>

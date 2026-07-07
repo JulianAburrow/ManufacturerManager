@@ -35,9 +35,14 @@
     <RowTemplate>
         <MudTd>@context.Title</MudTd>
         <MudTd>
-            <a href="@context.URL" target="@(context.IsExternal ? "_blank" : "_self")">
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Default"
+                       StartIcon="@(context.IsExternal ? Icons.Material.Filled.OpenInNew : null)"
+                       Href="@context.URL"
+                       Target="@(context.IsExternal ? "_blank" : "_self")">
                 @context.URL
-            </a>
+            </MudButton>
+
         </MudTd>
         <MudTd title="@context.Notes">
             @(context.Notes is not null
@@ -50,11 +55,32 @@
         <MudTd>@context.IsExternal</MudTd>
         <MudTd>@context.Status.StatusName</MudTd>
         <MudTd>
-            <a href="/mymm/view/@context.MyMMId" class="btn btn-primary">View</a>
-            &nbsp;
-            <a href="/mymm/edit/@context.MyMMId" class="btn btn-primary">Edit</a>
-            &nbsp;
-            <a href="/mymm/delete/@context.MyMMId" class="btn btn-danger">Delete</a>
+
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Visibility"
+                           Href=@($"/mymm/view/{context.MyMMId}")>
+                    View
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Edit"
+                           Href=@($"/mymm/edit/{context.MyMMId}")>
+                    Edit
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Delete"
+                           Href=@($"/mymm/delete/{context.MyMMId}")>
+                    Delete
+                </MudButton>
+
+            </MudStack>
+
         </MudTd>
     </RowTemplate>
     <PagerContent>

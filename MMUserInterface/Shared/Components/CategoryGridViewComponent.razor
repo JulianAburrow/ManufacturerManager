@@ -15,15 +15,37 @@
     <RowTemplate>
         <MudTd>@context.Name</MudTd>
         <MudTd>
-            <a class="btn btn-primary" href="/category/view/@context.CategoryId">View</a>
-            @if (OkToDeleteOrEdit(context.Name))
-            {
-                @:&nbsp;
-                <a class="btn btn-primary" href="/category/edit/@context.CategoryId">Edit</a>
-                @:&nbsp;
-                <a class="btn btn-danger" href="/category/delete/@context.CategoryId">Delete</a>
-            }            
+
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Visibility"
+                           Href=@($"/category/view/{context.CategoryId}")>
+                    View
+                </MudButton>
+
+                @if (OkToDeleteOrEdit(context.Name))
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Edit"
+                               Href=@($"/category/edit/{context.CategoryId}")>
+                        Edit
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Error"
+                               StartIcon="@Icons.Material.Filled.Delete"
+                               Href=@($"/category/delete/{context.CategoryId}")>
+                        Delete
+                    </MudButton>
+                }
+
+            </MudStack>
+
         </MudTd>
+
     </RowTemplate>
     <PagerContent>
         <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />

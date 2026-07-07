@@ -9,10 +9,14 @@
     return;
 }
 
-<a href="/colour/create" class="btn btn-primary">Create Colour</a>
+<MudButton Variant="Variant.Filled"
+           Color="Color.Primary"
+           StartIcon="@Icons.Material.Filled.Add"
+           Href="/colour/create">
+    Create Colour
+</MudButton>
 
-<br />
-<br />
+<MudDivider Class="my-4" />
 
 @if (Colours.Count == 0)
 {

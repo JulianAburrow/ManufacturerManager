@@ -3,7 +3,7 @@
 
 <PageTitle>Help</PageTitle>
 
-<h1>Help</h1>
+<MudText Typo="Typo.h3" GutterBottom="true">Help</MudText>
 
 @if (HelpCategories is null)
 {
@@ -19,7 +19,8 @@
     return;
 }
 
-Select a category from which you require help and type your question
+<MudText Typo="Typo.body1" GutterBottom="true">Select a category from which you require help and type your question</MudText>
+
 <MudGrid>
     <MudItem sm="7">
         <MudCard>
@@ -74,8 +75,17 @@ Select a category from which you require help and type your question
                 }
             </MudCardContent>                       
             <MudCardActions>
-                <button class="btn btn-primary" onclick="@OnSearchClicked" disabled="@IsThinking">Submit</button>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           OnClick="@OnSearchClicked"
+                           Disabled="@IsThinking"
+                           StartIcon="@Icons.Material.Filled.Check">
+                    Submit
+                </MudButton>
+
             </MudCardActions>
+
         </MudCard>
     </MudItem>
 </MudGrid>
@@ -99,7 +109,13 @@ Select a category from which you require help and type your question
             <MudTr Class="spaced-row">
                 <MudTd>@filename</MudTd>
                 <MudTd>
-                    <a href="@link" class="btn btn-primary" target="_blank">View</a>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.OpenInNew"
+                               Href="@link"
+                               Target="_blank">
+                        View
+                    </MudButton>
                 </MudTd>
             </MudTr>
         </RowTemplate>

@@ -1,5 +1,12 @@
 <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center">
     Cannot delete @ObjectType "@ObjectName" as @WidgetCount @(WidgetCount == 1 ? "Widget has" : "Widgets have") this @ObjectType
 </MudAlert>
-<br />
-<a href="@CancelURL" class="btn btn-primary">Cancel</a>
+
+<MudDivider Class="my-2" />
+
+<MudButton Variant="Variant.Outlined"
+           Color="Color.Default"
+           StartIcon="@Icons.Material.Filled.ArrowBack"
+           Href="@CancelURL">
+    Cancel
+</MudButton>

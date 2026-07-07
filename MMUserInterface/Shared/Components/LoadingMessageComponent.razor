@@ -1,1 +1,16 @@
-﻿<MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading @ValueToShow...</MudAlert>
+﻿@if (IsLoading)
+{
+    <div class="d-flex align-center justify-center pa-4 gap-3">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Small" />
+        <MudText Typo="Typo.body1" Color="Color.Secondary">@ValueToShow</MudText>
+    </div>
+}
+else
+{
+    <div class="d-flex flex-column align-center justify-center pa-8 gap-2">
+        <MudIcon Icon="@Icons.Material.Outlined.SearchOff"
+                 Size="Size.Large"
+                 Color="Color.Default" />
+        <MudText Typo="Typo.body1" Color="Color.Secondary">@ValueToShow</MudText>
+    </div>
+}

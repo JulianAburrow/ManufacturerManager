@@ -11,9 +11,22 @@
 
 <ConfirmDeleteComponent ObjectType="@AdhocQuerySingular" ObjectName="@AdhocQueryModel.NaturalLanguageQuery" />
 
-<br />
-<br />
+<MudDivider Class="my-4" />
 
-<button class="btn btn-danger" @onclick="DeleteAdhocQuery">Delete</button>
-&nbsp;
-<a class="btn btn-primary" href="/adhocqueries/index">Cancel</a>
+<MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Error"
+               StartIcon="@Icons.Material.Filled.Delete"
+               OnClick="DeleteAdhocQuery">
+        Delete
+    </MudButton>
+
+    <MudButton Variant="Variant.Outlined"
+               Color="Color.Default"
+               StartIcon="@Icons.Material.Filled.Cancel"
+               Href="/adhocqueries/index">
+        Cancel
+    </MudButton>
+
+</MudStack>

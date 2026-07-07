@@ -15,15 +15,37 @@
     <RowTemplate>
         <MudTd>@context.Name</MudTd>
         <MudTd>
-            <a class="btn btn-primary" href="/colour/view/@context.ColourId">View</a>
-            &nbsp;
-            <a class="btn btn-primary" href="/colour/edit/@context.ColourId">Edit</a>
-            @if (context.Widgets.Count == 0)
-            {
-                @:&nbsp;
-                <a class="btn btn-danger" href="/colour/delete/@context.ColourId">Delete</a>
-            }
+
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Visibility"
+                           Href=@($"/colour/view/{context.ColourId}")>
+                    View
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Edit"
+                           Href=@($"/colour/edit/{context.ColourId}")>
+                    Edit
+                </MudButton>
+
+                @if (context.Widgets.Count == 0)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Error"
+                               StartIcon="@Icons.Material.Filled.Delete"
+                               Href=@($"/colour/delete/{context.ColourId}")>
+                        Delete
+                    </MudButton>
+                }
+
+            </MudStack>
+
         </MudTd>
+
     </RowTemplate>
     <PagerContent>
         <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />

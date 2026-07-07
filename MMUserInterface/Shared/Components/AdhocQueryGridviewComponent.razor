@@ -32,9 +32,24 @@
         <MudTd>@context.WhenRun</MudTd>
         <MudTd>@context.AiProvider</MudTd>
         <MudTd>
-            <a class="btn btn-primary" href="/adhocquery/view/@context.AdhocQueryId">View</a>
-            &nbsp;
-            <a class="btn btn-danger" href="/adhocquery/delete/@context.AdhocQueryId">Delete</a>
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Visibility"
+                           Href=@($"/adhocquery/view/{context.AdhocQueryId}")>
+                    View
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Delete"
+                           Href=@($"/adhocquery/delete/{context.AdhocQueryId}")>
+                    Delete
+                </MudButton>
+
+            </MudStack>
+
         </MudTd>
     </RowTemplate>
     <PagerContent>

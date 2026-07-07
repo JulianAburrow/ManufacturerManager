@@ -1,8 +1,8 @@
-﻿<h3>Your Query Results</h3>
+﻿<MudText Typo="Typo.h3" GutterBottom="true">Your Query Results</MudText>
 
 @if (AdhocQueryResults is null || AdhocQueryResults.Rows.Count == 0)
 {
-    <p>No results to display.</p>
+    <MudText>No results to display.</MudText>
     return;
 }
 

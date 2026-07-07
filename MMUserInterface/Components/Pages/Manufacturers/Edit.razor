@@ -3,14 +3,19 @@
 
 <PageTitle>Edit Manufacturer</PageTitle>
 
-@if (ManufacturerDisplayModel.ManufacturerId == 0 || ManufacturerStatuses is null)
-{
-    <LoadingMessageComponent ValueToShow="@Manufacturer" />
-    return;
-}
+<MudContainer Class="mt-1 px-8" MaxWidth="MaxWidth.False">
 
-<EditForm Model="@ManufacturerDisplayModel" OnValidSubmit="@UpdateManufacturer">
+    @if (ManufacturerDisplayModel.ManufacturerId == 0 || ManufacturerStatuses is null)
+    {
+        <LoadingMessageComponent ValueToShow="@Manufacturer" />
+        return;
+    }
 
-    <ManufacturerCreateUpdateComponent ManufacturerDisplayModel="ManufacturerDisplayModel" ManufacturerStatuses="ManufacturerStatuses" />
+    <EditForm Model="@ManufacturerDisplayModel" OnValidSubmit="@UpdateManufacturer">
 
-</EditForm>
+        <ManufacturerCreateUpdateComponent ManufacturerDisplayModel="ManufacturerDisplayModel"
+                                           ManufacturerStatuses="ManufacturerStatuses" />
+
+    </EditForm>
+
+</MudContainer>

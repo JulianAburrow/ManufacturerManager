@@ -6,8 +6,6 @@ public partial class Delete
 
     [Parameter] public string DocumentCategory { get; set; } = string.Empty ;
 
-    private string ErrorMessage = string.Empty;
-
     protected override void OnInitialized()
     {
         MainLayout.SetHeaderValue("Delete Document");

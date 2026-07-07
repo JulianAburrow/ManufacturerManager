@@ -9,10 +9,14 @@
     return;
 }
 
-<a href="/colourjustification/create" class="btn btn-primary">Create Colour Justification</a>
+<MudButton Variant="Variant.Filled"
+           Color="Color.Primary"
+           StartIcon="@Icons.Material.Filled.Add"
+           Href="/colourjustification/create">
+    Create Colour Justification
+</MudButton>
 
-<br />
-<br />
+<MudDivider Class="my-4" />
 
 @if (ColourJustifications.Count == 0)
 {

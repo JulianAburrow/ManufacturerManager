@@ -8,12 +8,15 @@ public partial class MainLayout
 
     [Inject] ISnackbar Snackbar { get; set; } = default!;
 
+    private MudThemeProvider _mudThemeProvider = null!;
+
+    private bool _isDarkMode;
+
+    private void ToggleDarkMode() => _isDarkMode = !_isDarkMode;
+
     bool _drawerOpen = true;
 
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
+    private void DrawerToggle() => _drawerOpen = !_drawerOpen;
 
     private readonly List<BreadcrumbItem> BreadCrumbs = [];
 

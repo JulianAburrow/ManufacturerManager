@@ -22,9 +22,10 @@ public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerCon
     public async Task UpdateManufacturerAsync(ManufacturerModel manufacturer)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        var manufacturerToUpdate = await context.Manufacturers.SingleOrDefaultAsync(m => m.ManufacturerId == manufacturer.ManufacturerId);
+        var manufacturerToUpdate = await context.Manufacturers
+            .SingleOrDefaultAsync(m => m.ManufacturerId == manufacturer.ManufacturerId);
+
         if (manufacturerToUpdate is null)
             return;
 
@@ -36,6 +37,7 @@ public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerCon
             var widgets = await context.Widgets
                 .Where(w => w.ManufacturerId == manufacturer.ManufacturerId)
                 .ToListAsync();
+
             foreach (var widget in widgets)
             {
                 widget.StatusId = (int)PublicEnums.WidgetStatusEnum.Inactive;
@@ -43,7 +45,5 @@ public class ManufacturerCommandHandler(IDbContextFactory<ManufacturerManagerCon
         }
 
         await context.SaveChangesAsync();
-
-        scope.Complete();
     }
 }

@@ -9,10 +9,14 @@
     return;
 }
 
-<a href="/category/create" class="btn btn-primary">Create Category</a>
+<MudButton Variant="Variant.Filled"
+           Color="Color.Primary"
+           StartIcon="@Icons.Material.Filled.Add"
+           Href="/category/create">
+    Create Category
+</MudButton>
 
-<br />
-<br />
+<MudDivider Class="my-4" />
 
 @if (Categories.Count == 0)
 {
