@@ -22,9 +22,9 @@
 
         <MudButton Variant="Variant.Filled"
                    Color="Color.Primary"
-                   Type="Submit"
+                   ButtonType="ButtonType.Submit"
                    StartIcon="@Icons.Material.Filled.Check">
-            Submit
+            @(MyMMDisplayModel.MyMMId == 0 ? "Create" : "Update")
         </MudButton>
 
         <MudButton Variant="Variant.Outlined"

@@ -6,10 +6,10 @@
     <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
 
         <MudButton Variant="Variant.Filled"
+                   ButtonType="ButtonType.Submit"
                    Color="Color.Primary"
-                   Type="Submit"
                    StartIcon="@Icons.Material.Filled.Check">
-            Submit
+            @(CategoryDisplayModel.CategoryId == 0 ? "Create" : "Update")
         </MudButton>
 
         <MudButton Variant="Variant.Outlined"
