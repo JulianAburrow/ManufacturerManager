@@ -24,11 +24,28 @@
                 <MudField Label="Retail Price">£@WidgetModel.RetailPrice</MudField>
                 <MudField Label="Stock Level">@WidgetModel.StockLevel</MudField>
                 </MudCardContent>
-                <MudCardActions>
-                    <a href="/widget/edit/@WidgetModel.WidgetId" class="btn btn-primary">Edit</a>
-                    &nbsp;
-                    <a href="/widgets/index" class="btn btn-primary">Back to list</a>
-                </MudCardActions>
+            <MudCardActions>
+
+                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Edit"
+                               Href=@($"/widget/edit/{WidgetModel.WidgetId}")>
+                        Edit
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Default"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               Href="/widgets/index">
+                        Back to list
+                    </MudButton>
+
+                </MudStack>
+
+            </MudCardActions>
+
         </MudCard>
     </MudItem>
 </MudGrid>

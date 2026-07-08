@@ -23,13 +23,35 @@
         <MudTd>@context.ErrorDate</MudTd>
         <MudTd>@context.ErrorMessage</MudTd>
         <MudTd>@context.Resolved</MudTd>
-        <MudTd style="white-space: nowrap;">
-            <a class="btn btn-primary" href="/error/view/@context.ErrorId">View</a>
-            &nbsp;
-            <a class="btn btn-primary" href="/error/edit/@context.ErrorId">Edit</a>
-            &nbsp;
-            <a class="btn btn-danger" href="/error/delete/@context.ErrorId">Delete</a>
+        <MudTd Style="white-space: nowrap;">
+
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Visibility"
+                           Href=@($"/error/view/{context.ErrorId}")>
+                    View
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Edit"
+                           Href=@($"/error/edit/{context.ErrorId}")>
+                    Edit
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Delete"
+                           Href=@($"/error/delete/{context.ErrorId}")>
+                    Delete
+                </MudButton>
+
+            </MudStack>
+
         </MudTd>
+
     </RowTemplate>
     <PagerContent>
         <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />

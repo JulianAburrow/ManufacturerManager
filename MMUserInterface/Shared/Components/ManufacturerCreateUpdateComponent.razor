@@ -17,10 +17,19 @@
                     }
                 </MudSelect>
             </MudCardContent>
-            <MudCardActions>
-                <button type="submit" class="btn btn-primary">Submit</button>
-                &nbsp;
-                <a class="btn btn-primary" href="/manufacturers/index">Cancel</a>
+            <MudCardActions Class="gap-2">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           ButtonType="ButtonType.Submit"
+                           StartIcon="@Icons.Material.Filled.Check">
+                    @(ManufacturerDisplayModel.ManufacturerId == 0 ? "Create" : "Update")
+                </MudButton>
+                <MudButton Variant="Variant.Outlined"
+                           Color="Color.Default"
+                           StartIcon="@Icons.Material.Filled.ArrowBack"
+                           Href="/manufacturers/index">
+                    Cancel
+                </MudButton>
             </MudCardActions>
         </MudCard>
     </MudItem>

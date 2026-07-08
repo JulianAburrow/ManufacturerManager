@@ -9,7 +9,7 @@
     return;
 }
 
-<h1>Ad Hoc Query</h1>
+<MudText Typo="Typo.h3" GutterBottom="true">Ad Hoc Query</MudText>
 
 @if (ShowLastXPanel)
 {
@@ -25,9 +25,6 @@
     @(ShowLastXPanel ? "Hide" : "Show") Last @LastXSuccessfulAdhocQueries.Count @AdhocQueryPlural
 </MudButton>
 
-<br />
-<br />
-
 <MudGrid>
     <MudItem sm="7">
         <MudCard>
@@ -42,14 +39,22 @@
             </MudCardContent>
 
             <MudCardActions>
-                <button class="btn btn-primary" onclick="@OnQueryClicked" disabled="@IsThinking">Submit</button>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           OnClick="@OnQueryClicked"
+                           Disabled="@IsThinking"
+                           StartIcon="@Icons.Material.Filled.Check">
+                    Submit
+                </MudButton>
+
             </MudCardActions>
+
         </MudCard>
     </MudItem>
 </MudGrid>
 
-<br />
-<br />
+<MudDivider Class="my-4" />
 
 @if (IsThinking)
 {

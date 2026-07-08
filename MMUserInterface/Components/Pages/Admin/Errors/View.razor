@@ -22,12 +22,34 @@
                 <MudField Label="Resolved Date">@ErrorModel.ResolvedDate</MudField>
             </MudCardContent>
             <MudCardActions>
-                <a class="btn btn-primary" href="/error/edit/@ErrorModel.ErrorId">Edit</a>
-                &nbsp;
-                <a class="btn btn-danger" href="/error/delete/@ErrorModel.ErrorId">Delete</a>
-                &nbsp;
-                <a class="btn btn-primary" href="/errors/index">Cancel</a>
+
+                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Edit"
+                               Href=@($"/error/edit/{ErrorModel.ErrorId}")>
+                        Edit
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Error"
+                               StartIcon="@Icons.Material.Filled.Delete"
+                               Href=@($"/error/delete/{ErrorModel.ErrorId}")>
+                        Delete
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Default"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               Href="/errors/index">
+                        Cancel
+                    </MudButton>
+
+                </MudStack>
+
             </MudCardActions>
+
         </MudCard>
     </MudItem>
 </MudGrid>

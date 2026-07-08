@@ -12,8 +12,15 @@
 @if (!OkToDeleteOrEdit)
 {
     <CannotDeleteOrEditCategoryComponent />
-    <br />
-    <a href="/categories/index" class="btn btn-primary">Cancel</a>
+
+    <MudDivider Class="my-2" />
+
+    <MudButton Variant="Variant.Outlined"
+               Color="Color.Default"
+               StartIcon="@Icons.Material.Filled.ArrowBack"
+               Href="/categories/index">
+        Cancel
+    </MudButton>
     return;
 }
 
@@ -22,8 +29,7 @@
     <CategeoryExistsComponent CategoryName="@CategoryDisplayModel.Name" />
 }
 
-<br />
-<br />
+<MudDivider Class="my-4" />
 
 <EditForm Model="@CategoryDisplayModel" OnValidSubmit="UpdateCategory">
     <DataAnnotationsValidator />

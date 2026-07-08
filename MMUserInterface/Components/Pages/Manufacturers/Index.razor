@@ -3,27 +3,42 @@
 
 <PageTitle>Manufacturers</PageTitle>
 
-@if (Manufacturers is null)
-{
-    <LoadingMessageComponent ValueToShow="@ManufacturerPlural" />
-    return;
-}
 
-<a href="/manufacturer/create" class="btn btn-primary">Create Manufacturer</a>
+<MudContainer Class="mt-1 px-8" MaxWidth="MaxWidth.False">
 
-@if (Manufacturers.Count > 0)
-{
-    @:&nbsp;
-    <button class="btn btn-success" @onclick="ExportCSV">Download As CSV</button>
-}
+    @if (Manufacturers is null)
+    {
+        <LoadingMessageComponent ValueToShow="@ManufacturerPlural" />
+        return;
+    }
 
-<br />
-<br />
+    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Start">
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.Add"
+                   Href="/manufacturer/create">
+            Create Manufacturer
+        </MudButton>
 
-@if (Manufacturers.Count == 0)
-{
-    <NoResultsComponent ObjectType="@ManufacturerPlural" />
-    return;
-}
+        @if (Manufacturers.Count > 0)
+        {
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Success"
+                       StartIcon="@Icons.Material.Filled.Download"
+                       OnClick="ExportCSV">
+                Download as CSV
+            </MudButton>
+        }
+    </MudStack>
 
-<ManufacturerGridViewComponent Manufacturers="@Manufacturers" />
+    <MudDivider Class="my-4" />
+
+    @if (Manufacturers.Count == 0)
+    {
+        <NoResultsComponent ObjectType="@ManufacturerPlural" />
+        return;
+    }
+
+    <ManufacturerGridViewComponent Manufacturers="@Manufacturers" />
+
+</MudContainer>

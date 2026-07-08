@@ -15,9 +15,13 @@
             <MudCardContent>
                 <MudField Label="Title">@MyMMModel.Title</MudField>
                 <MudField Label="URL">
-                    <a href="@MyMMModel.URL" target="@(MyMMModel.IsExternal ? "_blank" : "_self")">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.OpenInNew"
+                               Href="@MyMMModel.URL"
+                               Target="@(MyMMModel.IsExternal ? "_blank" : "_self")">
                         @MyMMModel.URL
-                    </a>
+                    </MudButton>
                 </MudField>
                 <MudField Label="Notes">@MyMMModel.Notes</MudField>
                 <MudField Label="Action Date">@MyMMModel.ActionDate</MudField>
@@ -25,12 +29,34 @@
                 <MudField Label="Status">@MyMMModel.Status.StatusName</MudField>
             </MudCardContent>
             <MudCardActions>
-                <a class="btn btn-primary" href="/mymm/edit/@MyMMModel.MyMMId">Edit</a>
-                &nbsp;
-                <a class="btn btn-danger" href="/mymm/delete/@MyMMModel.MyMMId">Delete</a>
-                &nbsp;
-                <a class="btn btn-primary" href="/mymms/index">Cancel</a>
+
+                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Edit"
+                               Href=@($"/mymm/edit/{MyMMModel.MyMMId}")>
+                        Edit
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Error"
+                               StartIcon="@Icons.Material.Filled.Delete"
+                               Href=@($"/mymm/delete/{MyMMModel.MyMMId}")>
+                        Delete
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Default"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               Href="/mymms/index">
+                        Cancel
+                    </MudButton>
+
+                </MudStack>
+
             </MudCardActions>
+
         </MudCard>
     </MudItem>
 </MudGrid>
