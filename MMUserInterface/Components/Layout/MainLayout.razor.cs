@@ -1,4 +1,6 @@
-﻿namespace MMUserInterface.Components.Layout;
+﻿using MMUserInterface.Themes;
+
+namespace MMUserInterface.Components.Layout;
 
 public partial class MainLayout
 {
@@ -10,9 +12,9 @@ public partial class MainLayout
 
     private MudThemeProvider _mudThemeProvider = null!;
 
-    private bool _isDarkMode;
+    private string CurrentTheme { get; set; } = ThemeEnum.Standard.ToString();
 
-    private void ToggleDarkMode() => _isDarkMode = !_isDarkMode;
+    private MudTheme ActiveTheme = ManufacturerManagerStandardTheme.Theme;
 
     bool _drawerOpen = true;
 
@@ -48,5 +50,18 @@ public partial class MainLayout
 
         await MyMMCommandHandler.CreateMyMMAsync(myMM);
         Snackbar.Add("Page saved to MyMM successfully.", Severity.Success);
+    }
+
+    private void OnThemeChanged(string theme)
+    {
+        CurrentTheme = theme;
+
+        ActiveTheme = theme switch
+        {
+            nameof(ThemeEnum.Standard) => ManufacturerManagerStandardTheme.Theme,
+            nameof(ThemeEnum.Large) => ManufacturerManagerLargeTheme.Theme,
+            nameof(ThemeEnum.ExtraLarge) => ManufacturerManagerExtraLargeTheme.Theme,
+            _ => ManufacturerManagerStandardTheme.Theme
+        };
     }
 }

@@ -17,6 +17,7 @@ global using MMDataAccess.Models;
 global using MMDataAccess.ModelsSummary;
 global using MMUserInterface.Components;
 global using MMUserInterface.Components.Layout;
+global using MMUserInterface.Shared.Enums;
 global using MMUserInterface.Extensions;
 global using MMUserInterface.Helpers;
 global using MMUserInterface.Interfaces;

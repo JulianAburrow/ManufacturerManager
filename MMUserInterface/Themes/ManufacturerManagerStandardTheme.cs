@@ -1,8 +1,8 @@
-﻿namespace MMUserInterface.Theme;
+﻿namespace MMUserInterface.Themes;
 
-public class ManufacturerManagerTheme
+public class ManufacturerManagerStandardTheme
 {
-    public static MudTheme Theme => new MudTheme
+    public static MudTheme Theme => new()
     {
         PaletteLight = new PaletteLight
         {
@@ -27,31 +27,6 @@ public class ManufacturerManagerTheme
             TextSecondary = "rgba(0,0,0,0.60)",
             ActionDefault = "rgba(0,0,0,0.54)",
             Divider = "rgba(0,0,0,0.12)",
-        },
-
-        PaletteDark = new PaletteDark
-        {
-            Primary = "#90CAF9",   // Blue 200 - readable on dark bg
-            PrimaryDarken = "#5d99c6",
-            PrimaryLighten = "#c3fdff",
-            Secondary = "#FFD54F",   // Amber 300 - gold on dark
-            SecondaryDarken = "#c8a415",
-            SecondaryLighten = "#ffff81",
-            AppbarBackground = "#1A237E",   // Indigo 900 - dark cinematic blue
-            AppbarText = "rgba(255,255,255,0.95)",
-            DrawerBackground = "#1A1A2E",
-            DrawerText = "rgba(255,255,255,0.72)",
-            DrawerIcon = "#90CAF9",
-            Background = "#121212",
-            Surface = "#1E1E1E",
-            Success = "#66BB6A",
-            Error = "#EF5350",
-            Warning = "#FFA726",
-            Info = "#29B6F6",
-            TextPrimary = "rgba(255,255,255,0.87)",
-            TextSecondary = "rgba(255,255,255,0.60)",
-            ActionDefault = "rgba(255,255,255,0.54)",
-            Divider = "rgba(255,255,255,0.12)",
         },
 
         Typography = new Typography
