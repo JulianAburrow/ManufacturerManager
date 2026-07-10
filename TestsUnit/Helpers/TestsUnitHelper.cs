@@ -4,9 +4,12 @@ public static class TestsUnitHelper
 {
     public static IDbContextFactory<ManufacturerManagerContext> GetInMemoryFactory()
     {
-        var options = new DbContextOptionsBuilder<ManufacturerManagerContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-            .Options;
-        return new PooledDbContextFactory<ManufacturerManagerContext>(options);
+        var options = BuildOptions();
+        return new TestDbContextFactory(options);
     }
+
+    private static DbContextOptions<ManufacturerManagerContext> BuildOptions() =>
+        new DbContextOptionsBuilder<ManufacturerManagerContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString()) // unique DB per test
+            .Options;
 }
