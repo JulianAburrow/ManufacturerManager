@@ -3,7 +3,7 @@
 
 <PageTitle>Delete MyMM</PageTitle>
 
-@if (MyMMModel.MyMMId == 0)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@MyMM" />
     return;

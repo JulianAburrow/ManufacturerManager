@@ -30,6 +30,8 @@ public abstract class BasePageClass : ComponentBase
 
     [CascadingParameter] public MainLayout MainLayout { get; set; } = new();
 
+    protected bool _isLoaded;
+
     protected string Values = "Values";
 
     protected BreadcrumbItem GetHomeBreadcrumbItem(bool isDisabled = false)

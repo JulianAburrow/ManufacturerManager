@@ -3,7 +3,7 @@
 
 <PageTitle>Delete Error</PageTitle>
 
-@if (ErrorModel.ErrorId == 0)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@ErrorSingular" />
     return;

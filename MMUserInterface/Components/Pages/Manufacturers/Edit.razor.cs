@@ -10,6 +10,8 @@ public partial class Edit
         ManufacturerDisplayModel.Name = ManufacturerModel.Name;
         ManufacturerDisplayModel.StatusId = ManufacturerModel.StatusId;
         MainLayout.SetHeaderValue("Edit Manufacturer");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

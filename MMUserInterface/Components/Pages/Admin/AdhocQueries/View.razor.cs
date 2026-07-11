@@ -6,6 +6,8 @@ public partial class View
     {
         AdhocQueryModel = await AdhocQueryQueryHandler.GetAdhocQueryAsync(AdhocQueryId);
         MainLayout.SetHeaderValue("View Ad hoc Query");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

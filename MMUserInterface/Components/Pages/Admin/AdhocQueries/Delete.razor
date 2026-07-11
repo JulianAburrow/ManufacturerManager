@@ -3,7 +3,7 @@
 
 <PageTitle>Delete Ad Hoc Query</PageTitle>
 
-@if (AdhocQueryModel.AdhocQueryId == 0)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@AdhocQuerySingular" />
     return;

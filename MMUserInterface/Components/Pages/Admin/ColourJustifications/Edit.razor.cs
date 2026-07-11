@@ -7,6 +7,8 @@ public partial class Edit
         ColourJustificationModel = await ColourJustificationQueryHandler.GetColourJustificationAsync(ColourJustificationId);
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Colour Justification");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

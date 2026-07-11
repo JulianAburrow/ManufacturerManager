@@ -34,6 +34,8 @@ public partial class Create
         WidgetDisplayModel.ColourJustificationId = SharedValues.PleaseSelectValue;
 
         MainLayout.SetHeaderValue("Create Widget");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

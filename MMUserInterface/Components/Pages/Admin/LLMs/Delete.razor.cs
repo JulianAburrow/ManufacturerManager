@@ -6,6 +6,8 @@ public partial class Delete
     {
         OllamaModel = await ModelManagementService.GetModelAsync(LLMName);
         MainLayout.SetHeaderValue("Delete LLM");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

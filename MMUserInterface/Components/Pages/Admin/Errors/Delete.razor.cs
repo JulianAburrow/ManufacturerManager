@@ -6,6 +6,8 @@ public partial class Delete
     {
         ErrorModel = await ErrorQueryHandler.GetErrorAsync(ErrorId);
         MainLayout.SetHeaderValue("Delete Error");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

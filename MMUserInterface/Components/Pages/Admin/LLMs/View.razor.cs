@@ -6,6 +6,8 @@ public partial class View
     {
         OllamaModel = await ModelManagementService.GetModelAsync(LLMName);
         MainLayout.SetHeaderValue("View LLM");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

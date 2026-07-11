@@ -11,6 +11,8 @@ public partial class Create
             StatusName = SharedValues.PleaseSelectText,
         });
         MyMMDisplayModel.StatusId = SharedValues.PleaseSelectValue;
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

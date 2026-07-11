@@ -3,6 +3,12 @@
 
 <PageTitle>Upload Help Document</PageTitle>
 
+@if (!_isLoaded)
+{
+    <LoadingMessageComponent ValueToShow="Categories" />
+    return;
+}
+
 <EditForm Model="@HelpDocumentDisplayModel" OnValidSubmit="CreateFile">
     <DataAnnotationsValidator />
     <ValidationSummary />

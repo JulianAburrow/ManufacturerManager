@@ -6,6 +6,8 @@ public partial class Delete
     {
         AdhocQueryModel = await AdhocQueryQueryHandler.GetAdhocQueryAsync(AdhocQueryId);
         MainLayout.SetHeaderValue("Delete Ad hoc Query");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

@@ -29,6 +29,8 @@ public partial class Edit
         CopyModelToDisplayModel();
 
         MainLayout.SetHeaderValue("Edit Widget");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()
