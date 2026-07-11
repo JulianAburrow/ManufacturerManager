@@ -16,6 +16,8 @@ public partial class Upload
         HelpCategories.Insert(0, SharedValues.PleaseSelectText);
         HelpDocumentDisplayModel.Category = SharedValues.PleaseSelectText;
         MainLayout.SetHeaderValue("Upload Help Document");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

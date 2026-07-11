@@ -7,6 +7,8 @@ public partial class View
     {
         ErrorModel = await ErrorQueryHandler.GetErrorAsync(ErrorId);
         MainLayout.SetHeaderValue("View Error");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

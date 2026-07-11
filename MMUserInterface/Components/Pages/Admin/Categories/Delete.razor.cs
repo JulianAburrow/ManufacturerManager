@@ -9,6 +9,8 @@ public partial class Delete
         MainLayout.SetHeaderValue("Delete Category");
 
         OkToDeleteOrEdit = CategoryHelper.OkToDeleteOrEdit(CategoryModel.Name);
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

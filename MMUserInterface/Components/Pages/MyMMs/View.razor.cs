@@ -6,6 +6,8 @@ public partial class View
     {
         MyMMModel = await MyMMQueryHandler.GetMyMMAsync(MyMMId);
         MainLayout.SetHeaderValue("View MyMM");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

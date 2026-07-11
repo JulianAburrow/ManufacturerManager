@@ -7,6 +7,8 @@ public partial class Edit
         ColourModel = await ColourQueryHandler.GetColourAsync(ColourId);
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Colour");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

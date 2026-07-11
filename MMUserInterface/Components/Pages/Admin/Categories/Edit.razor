@@ -3,7 +3,7 @@
 
 <PageTitle>Edit Category</PageTitle>
 
-@if (CategoryDisplayModel.CategoryId == 0)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@Category" />
     return;

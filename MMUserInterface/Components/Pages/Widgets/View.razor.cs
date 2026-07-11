@@ -6,6 +6,8 @@ public partial class View
     {
         WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
         MainLayout.SetHeaderValue("View Widget");
+        
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

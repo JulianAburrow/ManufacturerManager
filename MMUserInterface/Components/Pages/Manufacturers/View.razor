@@ -5,7 +5,7 @@
 
 <MudContainer Class="mt-1 px-8" MaxWidth="MaxWidth.False">
 
-    @if (ManufacturerModel.ManufacturerId == 0 || ManufacturerModel.Status is null)
+    @if (!_isLoaded)
     {
         <LoadingMessageComponent ValueToShow="@Manufacturer" />
         return;

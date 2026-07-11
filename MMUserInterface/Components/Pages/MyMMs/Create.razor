@@ -3,7 +3,7 @@
 
 <PageTitle>Create MyMM</PageTitle>
 
-@if (MyMMStatuses is null)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@Values" />
     return;

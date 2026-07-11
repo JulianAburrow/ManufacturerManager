@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace MMUserInterface.Components.Pages.Admin.Errors;
 
 public partial class Edit
@@ -9,6 +7,8 @@ public partial class Edit
         ErrorModel = await ErrorQueryHandler.GetErrorAsync(ErrorId);
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Error");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

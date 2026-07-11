@@ -1,5 +1,3 @@
-using MMUserInterface.Shared.CommonValues;
-
 namespace MMUserInterface.Components.Pages.Manufacturers;
 
 public partial class Create

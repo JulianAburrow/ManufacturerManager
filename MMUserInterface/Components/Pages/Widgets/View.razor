@@ -3,9 +3,7 @@
 
 <PageTitle>View Widget</PageTitle>
 
-@if (WidgetModel.WidgetId == 0 ||
-    WidgetModel.Manufacturer is null ||
-    WidgetModel.Status is null)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@Widget" />
     return;

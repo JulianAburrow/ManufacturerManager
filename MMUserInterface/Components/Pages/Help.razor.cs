@@ -62,6 +62,8 @@ public partial class Help
         ChatSearchModel.LanguageRequired = "English";
         ChatSearchModel.SearchModel = AvailableModels.FirstOrDefault()?.Name ?? string.Empty;
         ChatSearchModel.SearchCategory = HelpCategories[0];
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

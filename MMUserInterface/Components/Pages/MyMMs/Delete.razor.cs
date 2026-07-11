@@ -6,6 +6,8 @@ public partial class Delete
     {
         MyMMModel = await MyMMQueryHandler.GetMyMMAsync(MyMMId);
         MainLayout.SetHeaderValue("Delete MyMM");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

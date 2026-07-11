@@ -3,7 +3,7 @@
 
 <PageTitle>Delete LLM</PageTitle>
 
-@if (OllamaModel?.Name == string.Empty)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@LLMSingular" />
     return;

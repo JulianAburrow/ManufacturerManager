@@ -3,10 +3,7 @@
 
 <PageTitle>Create Widget</PageTitle>
 
-@if (Manufacturers is null ||
-    Colours is null ||
-    ColourJustifications is null ||
-    WidgetStatuses is null)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@Widget" />
     return;

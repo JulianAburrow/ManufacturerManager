@@ -21,6 +21,8 @@ public partial class View
             });
         }
         MainLayout.SetHeaderValue("View Manufacturer");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

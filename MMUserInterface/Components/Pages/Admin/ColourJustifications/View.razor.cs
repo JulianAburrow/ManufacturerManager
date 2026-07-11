@@ -7,6 +7,8 @@ public partial class View
         ColourJustificationModel = await ColourJustificationQueryHandler.GetColourJustificationAsync(ColourJustificationId);
         MainLayout.SetHeaderValue("View Colour Justification");
         OkToDelete = ColourJustificationModel.Widgets.Count == 0;
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

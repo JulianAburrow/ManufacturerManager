@@ -3,13 +3,13 @@
 
 <PageTitle>Edit Manufacturer</PageTitle>
 
-<MudContainer Class="mt-1 px-8" MaxWidth="MaxWidth.False">
+@if (!_isLoaded)
+{
+    <LoadingMessageComponent ValueToShow="@Manufacturer" />
+    return;
+}
 
-    @if (ManufacturerDisplayModel.ManufacturerId == 0 || ManufacturerStatuses is null)
-    {
-        <LoadingMessageComponent ValueToShow="@Manufacturer" />
-        return;
-    }
+<MudContainer Class="mt-1 px-8" MaxWidth="MaxWidth.False">
 
     <EditForm Model="@ManufacturerDisplayModel" OnValidSubmit="@UpdateManufacturer">
 

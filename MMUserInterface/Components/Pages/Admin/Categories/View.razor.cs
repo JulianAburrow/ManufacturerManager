@@ -7,5 +7,7 @@ public partial class View
         CategoryModel = await CategoryQueryHandler.GetCategoryAsync(CategoryId);
         MainLayout.SetHeaderValue("View Category");
         OkToDeleteOrEdit = CategoryHelper.OkToDeleteOrEdit(CategoryModel.Name);
+
+        _isLoaded = true;
     }
 }

@@ -8,6 +8,8 @@ public partial class Edit
         MyMMStatuses = await MyMMStatusQueryHandler.GetMyMMStatusesAsync();
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit MyMM");
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

@@ -7,6 +7,8 @@ public partial class Delete
         ColourModel = await ColourQueryHandler.GetColourAsync(ColourId);
         MainLayout.SetHeaderValue("Delete Colour");
         OkToDelete = ColourModel.Widgets.Count == 0;
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()

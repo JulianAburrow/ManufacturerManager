@@ -5,7 +5,7 @@
 
 <MudText Typo="Typo.h3" GutterBottom="true">Help</MudText>
 
-@if (HelpCategories is null)
+@if (!_isLoaded)
 {
     <LoadingMessageComponent ValueToShow="@HelpCategoryPlural" />
     return;

@@ -14,6 +14,8 @@ public partial class Edit
         if (!OkToDeleteOrEdit)
             return;
         OriginalCategoryName = CategoryModel.Name;
+
+        _isLoaded = true;
     }
 
     protected override void OnInitialized()
