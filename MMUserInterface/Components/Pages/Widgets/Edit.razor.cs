@@ -4,6 +4,16 @@ public partial class Edit
 {
     protected override async Task OnInitializedAsync()
     {
+
+        WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
+
+        if (WidgetModel.WidgetId == 0)
+        {
+            MainLayout.SetHeaderValue(WidgetNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         WidgetStatuses = await WidgetStatusQueryHandler.GetWidgetStatusesAsync();
         WidgetStatuses.Insert(0, new WidgetStatusModel
         {
@@ -23,8 +33,6 @@ public partial class Edit
             Justification = SharedValues.NoneText,
         });
         Manufacturers = await ManufacturerHandler.GetManufacturersAsync();
-
-        WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
 
         CopyModelToDisplayModel();
 

@@ -13,9 +13,10 @@ public class MyMMStatusQueryHandler(IDbContextFactory<ManufacturerManagerContext
     public async Task<MyMMStatusModel> GetMyMMStatusAsync(int myMMStatusId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.MyMMStatuses
+        var myMMStatus = await context.MyMMStatuses
             .AsNoTracking()
-            .SingleOrDefaultAsync(m => m.StatusId == myMMStatusId)
-            ?? throw new KeyNotFoundException($"MyMMStatus with ID {myMMStatusId} not found.");
+            .SingleOrDefaultAsync(m => m.StatusId == myMMStatusId);
+
+        return myMMStatus ?? new MyMMStatusModel();
     }
 }

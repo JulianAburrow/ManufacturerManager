@@ -16,6 +16,10 @@ public abstract class ColourBasePageClass : BasePageClass
 
     protected string ColourPlural = "Colours";
 
+    protected string ColourNotFoundMessage = "Colour not found";
+
+    protected string LoadingColourMessage = "Loading colour...";
+
     protected BreadcrumbItem GetColourHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new (ColourPlural, "/colours/index", isDisabled);

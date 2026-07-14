@@ -13,29 +13,54 @@ public class ErrorQueryTests
     }
 
     [Fact]
-    public async Task GetError_GetsError()
+    public async Task GetErrorAsync_ReturnsError_WhenFound()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
-        _manufacturerManagerContext.Errors.Add(_testErrors[0]);
-        _manufacturerManagerContext.SaveChanges();
+        // Arrange
+        await using (var context = await _factory.CreateDbContextAsync())
+        {
+            context.Errors.Add(_testErrors[0]);
+            await context.SaveChangesAsync();
+        }
 
-        var returnedError = await _errorQueryHandler.GetErrorAsync(_testErrors[0].ErrorId);
+        var id = _testErrors[0].ErrorId;
+
+        // Act
+        var returnedError = await _errorQueryHandler.GetErrorAsync(id);
+
+        // Assert
         returnedError.Should().NotBeNull();
+        returnedError.ErrorId.Should().Be(id);
         returnedError.ErrorMessage.Should().Be(_testErrors[0].ErrorMessage);
     }
 
     [Fact]
-    public async Task GetErrors_GetsErrors()
+    public async Task GetErrorAsync_ReturnsEmptyModel_WhenNotFound()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
-        var initialCount = _manufacturerManagerContext.Errors.Count();
+        // Act
+        var returnedError = await _errorQueryHandler.GetErrorAsync(-1);
 
-        _manufacturerManagerContext.Errors.Add(_testErrors[0]);
-        _manufacturerManagerContext.Errors.Add(_testErrors[1]);
-        _manufacturerManagerContext.SaveChanges();
+        // Assert
+        returnedError.Should().NotBeNull();
+        returnedError.Should().BeOfType<ErrorModel>();
+        returnedError.ErrorId.Should().Be(0);
+        returnedError.ErrorMessage.Should().BeNullOrEmpty();
+    }
 
+    [Fact]
+    public async Task GetErrorsAsync_ReturnsAllErrors()
+    {
+        // Arrange
+        await using (var context = await _factory.CreateDbContextAsync())
+        {
+            context.Errors.AddRange(_testErrors);
+            await context.SaveChangesAsync();
+        }
+
+        // Act
         var errors = await _errorQueryHandler.GetErrorsAsync();
 
-        errors.Count.Should().Be(initialCount + 2);
+        // Assert
+        errors.Should().NotBeNull();
+        errors.Should().HaveCount(_testErrors.Count);
     }
 }

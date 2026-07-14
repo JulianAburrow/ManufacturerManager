@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@ErrorSingular" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? ErrorNotFoundMessage
+                                                : LoadingErrorMessage)"
+                             IsLoading="@(ErrorModel.ErrorId != 0)" />
     return;
 }
 

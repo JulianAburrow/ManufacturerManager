@@ -14,12 +14,14 @@ public class AdhocQueryBasePageClass : BasePageClass
 
     protected string AdhocQuerySingular = "Ad hoc query";
 
-
     protected string AdhocQueryPlural = "Ad hoc queries";
-
     
+    protected string AdhocQueryNotFoundMessage = "Ad hoc query not found";
+
+    protected string LoadingAdhocQueryMessage = "Loading ad hoc query...";
+
     protected BreadcrumbItem GetAdhocQueryHomeBreadcrumbItem(bool isDisabled = false)
     {
-        return new(AdhocQueryPlural, "/admin/adhocqueries/index", isDisabled);
+        return new(AdhocQueryPlural, "/adhocqueries/index", isDisabled);
     }
 }

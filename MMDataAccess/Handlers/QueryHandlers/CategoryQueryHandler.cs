@@ -20,9 +20,10 @@ public class CategoryQueryHandler(IDbContextFactory<ManufacturerManagerContext> 
     public async Task<CategoryModel> GetCategoryAsync(int categoryId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.Categories
+        var category = await context.Categories
             .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.CategoryId == categoryId)
-            ?? throw new KeyNotFoundException($"Category with ID {categoryId} not found.");
+            .SingleOrDefaultAsync(c => c.CategoryId == categoryId);
+
+        return category ?? new CategoryModel(); ;
     }        
 }

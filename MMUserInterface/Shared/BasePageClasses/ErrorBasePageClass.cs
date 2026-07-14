@@ -12,6 +12,10 @@ public abstract class ErrorBasePageClass : BasePageClass
 
     protected string ErrorPlural = "Errors";
 
+    protected string ErrorNotFoundMessage = "Error not found.";
+
+    protected string LoadingErrorMessage = "Loading error details...";
+
     protected BreadcrumbItem GetErrorHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new(ErrorPlural, "/errors/index", isDisabled);

@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@ColourJustification" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? ColourJustificationNotFoundMessage
+                                                : LoadingColourJustificationMessage)"
+                             IsLoading="@(ColourJustificationModel.ColourJustificationId != 0)" />
     return;
 }
 

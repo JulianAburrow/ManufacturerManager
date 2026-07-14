@@ -6,6 +6,14 @@ public partial class Edit
     {
         ManufacturerStatuses = await ManufacturerStatusQueryHandler.GetManufacturerStatusesAsync();
         ManufacturerModel = await ManufacturerQueryHandler.GetManufacturerAsync(ManufacturerId);
+
+        if (ManufacturerModel.ManufacturerId == 0)
+        {
+            MainLayout.SetHeaderValue(ManufacturerNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         ManufacturerDisplayModel.ManufacturerId = ManufacturerId;
         ManufacturerDisplayModel.Name = ManufacturerModel.Name;
         ManufacturerDisplayModel.StatusId = ManufacturerModel.StatusId;

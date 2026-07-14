@@ -5,6 +5,14 @@ public partial class View
     protected override async Task OnInitializedAsync()
     {
         WidgetModel = await WidgetQueryHandler.GetWidgetAsync(WidgetId);
+
+        if (WidgetModel.WidgetId == 0)
+        {
+            MainLayout.SetHeaderValue(WidgetNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         MainLayout.SetHeaderValue("View Widget");
         
         _isLoaded = true;

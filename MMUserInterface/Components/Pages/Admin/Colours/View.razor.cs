@@ -5,6 +5,14 @@ public partial class View
     protected override async Task OnInitializedAsync()
     {
         ColourModel = await ColourQueryHandler.GetColourAsync(ColourId);
+
+        if (ColourModel.ColourId == 0)
+        {
+            MainLayout.SetHeaderValue(ColourNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         MainLayout.SetHeaderValue("View Colour");
         OkToDelete = ColourModel.Widgets.Count == 0;
 

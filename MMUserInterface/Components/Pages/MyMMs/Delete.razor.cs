@@ -5,6 +5,14 @@ public partial class Delete
     protected override async Task OnInitializedAsync()
     {
         MyMMModel = await MyMMQueryHandler.GetMyMMAsync(MyMMId);
+
+        if (MyMMModel.MyMMId == 0)
+        {
+            MainLayout.SetHeaderValue(MyMMNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         MainLayout.SetHeaderValue("Delete MyMM");
 
         _isLoaded = true;

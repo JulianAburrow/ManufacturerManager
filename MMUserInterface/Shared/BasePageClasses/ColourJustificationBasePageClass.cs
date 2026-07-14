@@ -16,6 +16,10 @@ public abstract class ColourJustificationBasePageClass : BasePageClass
 
     protected string ColourJustificationPlural = "Colour Justifications";
 
+    protected string ColourJustificationNotFoundMessage = "Colour justification not found";
+
+    protected string LoadingColourJustificationMessage = "Loading colour justification...";
+
     protected BreadcrumbItem GetColourJustificationHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new (ColourJustificationPlural, "/colourjustifications/index", isDisabled);

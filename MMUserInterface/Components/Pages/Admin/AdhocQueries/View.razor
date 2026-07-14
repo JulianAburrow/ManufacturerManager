@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@AdhocQuerySingular" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? AdhocQueryNotFoundMessage
+                                                : LoadingAdhocQueryMessage)"
+                             IsLoading="@(AdhocQueryModel.AdhocQueryId != 0)" />
     return;
 }
 

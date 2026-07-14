@@ -42,8 +42,12 @@ public class ManufacturerCommandTests
         var manufacturerId = _testManufacturers[0].ManufacturerId;
         await _manufacturerCommandHandler.DeleteManufacturerAsync(manufacturerId);
 
-        Func<Task> act = async () => await _manufacturerQueryHandler.GetManufacturerAsync(manufacturerId);
-        await act.Should().ThrowAsync<KeyNotFoundException>();
+        var returnedManufacturer = await _manufacturerQueryHandler.GetManufacturerAsync(manufacturerId);
+
+        returnedManufacturer.Should().NotBeNull();
+        returnedManufacturer.ManufacturerId.Should().Be(0);
+        returnedManufacturer.Name.Should().BeNullOrEmpty();
+        returnedManufacturer.Widgets.Should().BeNull();
     }
 
     [Fact]

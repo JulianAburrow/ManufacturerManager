@@ -32,6 +32,8 @@ public abstract class BasePageClass : ComponentBase
 
     protected bool _isLoaded;
 
+    protected bool _entityNotFound;
+
     protected string Values = "Values";
 
     protected BreadcrumbItem GetHomeBreadcrumbItem(bool isDisabled = false)

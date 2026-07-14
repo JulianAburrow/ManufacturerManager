@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@ColourSingular" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? ColourNotFoundMessage
+                                                : LoadingColourMessage)"
+                             IsLoading="@(ColourModel.ColourId != 0)" />
     return;
 }
 

@@ -40,4 +40,22 @@ public class WidgetQueryTests
 
         widgetsReturned.Count.Should().Be(initialCount + 2);
     }
+
+    [Fact]
+    public async Task GetWidgetAsync_ReturnsEmptyModel_WhenNotFound()
+    {
+        // Act
+        var returnedWidget = await _widgetHandler.GetWidgetAsync(-1);
+
+        // Assert
+        returnedWidget.Should().NotBeNull();
+        returnedWidget.Should().BeOfType<WidgetModel>();
+        returnedWidget.WidgetId.Should().Be(0);
+        returnedWidget.Name.Should().BeNullOrEmpty();
+        returnedWidget.ManufacturerId.Should().Be(0);
+        returnedWidget.CostPrice.Should().Be(0);
+        returnedWidget.RetailPrice.Should().Be(0);
+        returnedWidget.StockLevel.Should().Be(0);
+    }
+
 }

@@ -119,6 +119,7 @@ public class AdhocQueryQueryTests
         result.Count.Should().Be(1);
         result[0].NaturalLanguageQuery.Should().Be(_testAdhocQueries[0].NaturalLanguageQuery);
     }
+
     [Fact]
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsSingleItem_WhenAllQueriesAreDuplicates()
     {
@@ -156,5 +157,15 @@ public class AdhocQueryQueryTests
         // Assert
         result.Count.Should().Be(1);
         result[0].NaturalLanguageQuery.Should().Be("Duplicate");
+    }
+
+    [Fact]
+    public async Task GetAdhocQuery_ReturnsEmptyModel_WhenNotFound()
+    {
+        var returnedAdhocQuery = await _adhocQueryQueryHandler.GetAdhocQueryAsync(-1);
+        returnedAdhocQuery.Should().NotBeNull();
+        returnedAdhocQuery.Should().BeOfType<AdhocQueryModel>();
+        returnedAdhocQuery.AdhocQueryId.Should().Be(0);
+        returnedAdhocQuery.NaturalLanguageQuery.Should().BeNullOrEmpty();
     }
 }

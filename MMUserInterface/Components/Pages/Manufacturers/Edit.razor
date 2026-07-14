@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@Manufacturer" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? ManufacturerNotFoundMessage
+                                                : LoadingManufacturerMessage)"
+                             IsLoading="@(ManufacturerModel.ManufacturerId != 0)" />
     return;
 }
 

@@ -13,31 +13,54 @@ public class ColourQueryTests
     }
 
     [Fact]
-    public async Task GetColour_GetsColour()
+    public async Task GetColourAsync_ReturnsColour_WhenFound()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
-        _manufacturerManagerContext.Colours.Add(_testColours[3]);
-        _manufacturerManagerContext.SaveChanges();
+        // Arrange
+        await using (var context = await _factory.CreateDbContextAsync())
+        {
+            context.Colours.Add(_testColours[3]);
+            await context.SaveChangesAsync();
+        }
 
-        var returnedColour = await _colourQueryHandler.GetColourAsync(_testColours[3].ColourId);
+        var id = _testColours[3].ColourId;
+
+        // Act
+        var returnedColour = await _colourQueryHandler.GetColourAsync(id);
+
+        // Assert
         returnedColour.Should().NotBeNull();
+        returnedColour.ColourId.Should().Be(id);
         returnedColour.Name.Should().Be(_testColours[3].Name);
     }
 
     [Fact]
-    public async Task GetColours_GetsColours()
+    public async Task GetColourAsync_ReturnsEmptyModel_WhenNotFound()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
-        var initialCount = _manufacturerManagerContext.Colours.Count();
+        // Act
+        var returnedColour = await _colourQueryHandler.GetColourAsync(-1);
 
-        _manufacturerManagerContext.Colours.Add(_testColours[0]);
-        _manufacturerManagerContext.Colours.Add(_testColours[1]);
-        _manufacturerManagerContext.Colours.Add(_testColours[2]);
-        _manufacturerManagerContext.Colours.Add(_testColours[3]);
-        _manufacturerManagerContext.SaveChanges();
+        // Assert
+        returnedColour.Should().NotBeNull();
+        returnedColour.Should().BeOfType<ColourModel>();
+        returnedColour.ColourId.Should().Be(0);
+        returnedColour.Name.Should().BeNullOrEmpty();
+    }
 
+    [Fact]
+    public async Task GetColoursAsync_ReturnsAllColours()
+    {
+        // Arrange
+        await using (var context = await _factory.CreateDbContextAsync())
+        {
+            context.Colours.AddRange(_testColours);
+            await context.SaveChangesAsync();
+        }
+
+        // Act
         var colours = await _colourQueryHandler.GetColoursAsync();
 
-        colours.Count.Should().Be(initialCount + 4);
+        // Assert
+        colours.Should().NotBeNull();
+        colours.Should().HaveCount(_testColours.Count);
     }
 }
