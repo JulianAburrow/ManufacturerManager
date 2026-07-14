@@ -5,14 +5,15 @@ public class WidgetQueryHandler(IDbContextFactory<ManufacturerManagerContext> ma
     public async Task<WidgetModel> GetWidgetAsync(int widgetId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.Widgets
+        var widget = await context.Widgets
             .Include(w => w.Colour)
             .Include(w => w.ColourJustification)
             .Include(w => w.Manufacturer)
             .Include(w => w.Status)
             .AsNoTracking()
-            .SingleOrDefaultAsync(w => w.WidgetId == widgetId)
-            ?? throw new KeyNotFoundException($"Widget with ID {widgetId} not found.");
+            .SingleOrDefaultAsync(w => w.WidgetId == widgetId);
+
+        return widget ?? new WidgetModel();
     }
 
     public async Task<List<WidgetSummary>> GetWidgetsAsync()

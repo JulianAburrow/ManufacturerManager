@@ -5,11 +5,11 @@ public class MyMMQueryHandler(IDbContextFactory<ManufacturerManagerContext> manu
     public async Task<MyMMModel> GetMyMMAsync(int myMMId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.MyMMs
+        var myMM = await context.MyMMs
             .Include(m => m.Status)
             .AsNoTracking()
-            .SingleOrDefaultAsync(m => m.MyMMId == myMMId)
-            ?? throw new KeyNotFoundException($"MyMM with ID {myMMId} not found.");
+            .SingleOrDefaultAsync(m => m.MyMMId == myMMId);
+        return myMM ?? new MyMMModel();
     }
         
 

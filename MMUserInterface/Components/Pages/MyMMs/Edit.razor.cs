@@ -5,6 +5,14 @@ public partial class Edit
     protected override async Task OnInitializedAsync()
     {
         MyMMModel = await MyMMQueryHandler.GetMyMMAsync(MyMMId);
+
+        if (MyMMModel.MyMMId == 0)
+        {
+            MainLayout.SetHeaderValue(MyMMNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         MyMMStatuses = await MyMMStatusQueryHandler.GetMyMMStatusesAsync();
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit MyMM");

@@ -20,6 +20,10 @@ public abstract class ManufacturerBasePageClass : BasePageClass
 
     protected string ManufacturerPlural = "Manufacturers";
 
+    protected string LoadingManufacturerMessage = "Loading manufacturer...";
+
+    protected string ManufacturerNotFoundMessage = "Manufacturer not found";
+
     protected void CopyDisplayModelToModel()
     {
         ManufacturerModel.Name = ManufacturerDisplayModel.Name;

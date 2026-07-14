@@ -38,8 +38,12 @@ public class WidgetCommandTests
         var widgetId = _testWidgets[0].WidgetId;
 
         await _widgetCommandHandler.DeleteWidgetAsync(widgetId);
-        Func<Task> act = async () => await _widgetQueryHandler.GetWidgetAsync(widgetId);
-        await act.Should().ThrowAsync<KeyNotFoundException>();
+
+        var returnedWidget = await _widgetQueryHandler.GetWidgetAsync(widgetId);
+        
+        returnedWidget.Should().NotBeNull();
+        returnedWidget.WidgetId.Should().Be(0);
+        returnedWidget.Name.Should().BeNullOrEmpty();
     }
 
     [Fact]

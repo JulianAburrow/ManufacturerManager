@@ -5,6 +5,14 @@ public partial class Delete
     protected override async Task OnInitializedAsync()
     {
         ColourJustificationModel = await ColourJustificationQueryHandler.GetColourJustificationAsync(ColourJustificationId);
+
+        if (ColourJustificationModel.ColourJustificationId == 0)
+        {
+            MainLayout.SetHeaderValue(ColourJustificationNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         MainLayout.SetHeaderValue("Delete Colour Justification");
         OkToDelete = ColourJustificationModel.Widgets.Count == 0;
 

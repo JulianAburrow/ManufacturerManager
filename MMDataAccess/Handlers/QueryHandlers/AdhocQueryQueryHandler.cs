@@ -14,10 +14,11 @@ public class AdhocQueryQueryHandler(IDbContextFactory<ManufacturerManagerContext
     public async Task<AdhocQueryModel> GetAdhocQueryAsync(int adhocQueryId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.AdhocQueries
+        var adhocQuery = await context.AdhocQueries
             .AsNoTracking()
-        .SingleOrDefaultAsync(a => a.AdhocQueryId == adhocQueryId)
-        ?? throw new KeyNotFoundException($"Ad hoc query with ID {adhocQueryId} not found.");
+            .SingleOrDefaultAsync(a => a.AdhocQueryId == adhocQueryId);
+
+        return adhocQuery ?? new AdhocQueryModel();
     }
 
     public async Task<List<AdhocQueryListModel>> GetLastXSuccessfulAdhocQueries(int numberOfQueriesRequired)

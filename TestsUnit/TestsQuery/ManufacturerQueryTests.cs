@@ -42,4 +42,14 @@ public class ManufacturerQueryTests
 
         manufacturersReturned.Count.Should().Be(initialCount + 4);
     }
+
+    [Fact]
+    public async Task GetManufacturer_ReturnsEmptyModel_WhenNotFound()
+    {
+        var returnedManufacturer = await _manufacturerHandler.GetManufacturerAsync(-1);
+        returnedManufacturer.Should().NotBeNull();
+        returnedManufacturer.Should().BeOfType<ManufacturerModel>();
+        returnedManufacturer.ManufacturerId.Should().Be(0);
+        returnedManufacturer.Name.Should().BeNullOrEmpty();
+    }
 }

@@ -34,6 +34,10 @@ public abstract class WidgetBasePageClass : BasePageClass
 
     protected string WidgetPlural = "Widgets";
 
+    protected string WidgetNotFoundMessage = "Widget not found";
+
+    protected string LoadingWidgetMessage = "loading Widget";
+
     protected bool ManufacturerIsInactive;
 
     protected void CopyDisplayModelToModel()

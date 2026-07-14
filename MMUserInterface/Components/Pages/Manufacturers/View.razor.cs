@@ -7,6 +7,13 @@ public partial class View
     protected override async Task OnInitializedAsync()
     {
         ManufacturerModel = await ManufacturerQueryHandler.GetManufacturerAsync(ManufacturerId);
+
+        if (ManufacturerModel.ManufacturerId == 0)
+        {
+            MainLayout.SetHeaderValue(ManufacturerNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
         foreach (var widget in ManufacturerModel.Widgets)
         {
             WidgetsForManufacturer.Add(new WidgetSummary

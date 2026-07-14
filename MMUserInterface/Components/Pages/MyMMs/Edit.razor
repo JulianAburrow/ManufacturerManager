@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@MyMM" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? MyMMNotFoundMessage
+                                                : LoadingMyMMMessage)"
+                             IsLoading="@(MyMMModel.MyMMId!= 0)" />
     return;
 }
 

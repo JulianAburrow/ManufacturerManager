@@ -5,6 +5,14 @@ public partial class Delete
     protected override async Task OnInitializedAsync()
     {
         CategoryModel = await CategoryQueryHandler.GetCategoryAsync(CategoryId);
+
+        if (CategoryModel.CategoryId == 0)
+        {
+            MainLayout.SetHeaderValue(CategoryNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Delete Category");
 

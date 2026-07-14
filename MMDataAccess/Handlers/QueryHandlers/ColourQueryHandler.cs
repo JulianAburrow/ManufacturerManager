@@ -5,11 +5,11 @@ public class ColourQueryHandler(IDbContextFactory<ManufacturerManagerContext> ma
     public async Task<ColourModel> GetColourAsync(int colourId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.Colours
+        var colour = await context.Colours
             .Include(c => c.Widgets)
             .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.ColourId == colourId)
-            ?? throw new KeyNotFoundException($"Colour with ID {colourId} not found.");
+            .SingleOrDefaultAsync(c => c.ColourId == colourId);
+        return colour ?? new ColourModel();
     }
 
     public async Task<List<ColourModel>> GetColoursAsync()

@@ -5,16 +5,15 @@ public class ManufacturerQueryHandler(IDbContextFactory<ManufacturerManagerConte
     public async Task<ManufacturerModel> GetManufacturerAsync(int manufacturerId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.Manufacturers
+        var manufacturer = await context.Manufacturers
             .Include(m => m.Widgets)
                 .ThenInclude(w => w.Colour)
             .Include(m => m.Widgets)
                 .ThenInclude(w => w.Status)
             .Include(m => m.Status)
             .AsNoTracking()
-            .SingleOrDefaultAsync(m => m.ManufacturerId == manufacturerId)
-            ?? throw new KeyNotFoundException($"Manufacturer with ID {manufacturerId} not found.");
-
+            .SingleOrDefaultAsync(m => m.ManufacturerId == manufacturerId);
+        return manufacturer ?? new ManufacturerModel();
     }
         
     public async Task<List<ManufacturerSummary>> GetManufacturersAsync()

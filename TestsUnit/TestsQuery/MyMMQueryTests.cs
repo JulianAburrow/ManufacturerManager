@@ -81,4 +81,13 @@ public class MyMMQueryTests
              m.StatusId == (int)PublicEnums.MyMMStatusEnum.Pending));
     }
 
+    [Fact]
+    public async Task GetMyMM_ReturnsEmptyModel_WhenNotFound()
+    {
+        var returnedMyMM = await _myMMHandler.GetMyMMAsync(-1);
+        returnedMyMM.Should().NotBeNull();
+        returnedMyMM.Should().BeOfType<MyMMModel>();
+        returnedMyMM.MyMMId.Should().Be(0);
+        returnedMyMM.Title.Should().BeNullOrEmpty();
+    }
 }

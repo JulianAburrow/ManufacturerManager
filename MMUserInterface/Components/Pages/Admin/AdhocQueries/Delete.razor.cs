@@ -5,6 +5,14 @@ public partial class Delete
     protected override async Task OnInitializedAsync()
     {
         AdhocQueryModel = await AdhocQueryQueryHandler.GetAdhocQueryAsync(AdhocQueryId);
+
+        if (AdhocQueryModel.AdhocQueryId == 0)
+        {
+            MainLayout.SetHeaderValue(AdhocQueryNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         MainLayout.SetHeaderValue("Delete Ad hoc Query");
 
         _isLoaded = true;

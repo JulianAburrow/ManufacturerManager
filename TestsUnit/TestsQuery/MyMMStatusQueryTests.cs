@@ -41,4 +41,18 @@ public class MyMMStatusQueryTests
         myMMStatusReturned.Should().NotBeNull();
         myMMStatusReturned.StatusId.Should().Be(myMMStatusId);
     }
+
+    [Fact]
+    public async Task GetMyMMStatusAsync_ReturnsEmptyModel_WhenNotFound()
+    {
+        // Act
+        var returnedStatus = await _myMMStatusHandler.GetMyMMStatusAsync(-1);
+
+        // Assert
+        returnedStatus.Should().NotBeNull();
+        returnedStatus.Should().BeOfType<MyMMStatusModel>();
+        returnedStatus.StatusId.Should().Be(0);
+        returnedStatus.StatusName.Should().BeNullOrEmpty();
+    }
+
 }

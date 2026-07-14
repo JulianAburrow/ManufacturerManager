@@ -38,8 +38,11 @@ public class MyMMCommandTests
         var myMMId = _testMyMMs[0].MyMMId;
         await _myMMCommandHandler.DeleteMyMMAsync(myMMId);
 
-        Func<Task> act = async () => await _myMMQueryHandler.GetMyMMAsync(myMMId);
-        await act.Should().ThrowAsync<KeyNotFoundException>();
+        var returnedMyMM = await _myMMQueryHandler.GetMyMMAsync(myMMId);
+
+        returnedMyMM.Should().NotBeNull();
+        returnedMyMM.MyMMId.Should().Be(0);
+        returnedMyMM.Title.Should().BeNullOrEmpty();
     }
 
     [Fact]

@@ -5,11 +5,12 @@ public class ColourJustificationQueryHandler(IDbContextFactory<ManufacturerManag
     public async Task<ColourJustificationModel> GetColourJustificationAsync(int colourJustificationId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.ColourJustifications
+        var colourJustification = await context.ColourJustifications
             .Include(c => c.Widgets)
             .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.ColourJustificationId == colourJustificationId)
-            ?? throw new KeyNotFoundException($"Colour Justification with ID {colourJustificationId} not found.");
+            .SingleOrDefaultAsync(c => c.ColourJustificationId == colourJustificationId);
+
+        return colourJustification ?? new ColourJustificationModel();
     }
 
     public async Task<List<ColourJustificationModel>> GetColourJustificationsAsync()

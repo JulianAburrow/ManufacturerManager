@@ -15,6 +15,10 @@ public abstract class CategoryBasePageClass : BasePageClass
 
     protected string CategoryPlural = "Categories";
 
+    protected string CategoryNotFoundMessage = "Category not found";
+
+    protected string LoadingCategoryMessage = "Loading category...";
+
     protected bool CategoryExists { get; set; }
 
     protected bool OkToDeleteOrEdit { get; set; }

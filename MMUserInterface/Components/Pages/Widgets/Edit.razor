@@ -5,7 +5,10 @@
 
 @if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@Widget" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? WidgetNotFoundMessage
+                                                : LoadingWidgetMessage)"
+                             IsLoading="@(WidgetModel.WidgetId!= 0)" />
     return;
 }
 

@@ -7,15 +7,24 @@ public partial class Edit
     protected override async Task OnInitializedAsync()
     {
         CategoryModel = await CategoryQueryHandler.GetCategoryAsync(CategoryId);
+
+        if (CategoryModel.CategoryId == 0)
+        {
+            MainLayout.SetHeaderValue(CategoryNotFoundMessage);
+            _entityNotFound = true;
+            return;
+        }
+
         CopyModelToDisplayModel();
         MainLayout.SetHeaderValue("Edit Category");
 
         OkToDeleteOrEdit = CategoryHelper.OkToDeleteOrEdit(CategoryModel.Name);
+        _isLoaded = true;
+
         if (!OkToDeleteOrEdit)
             return;
-        OriginalCategoryName = CategoryModel.Name;
 
-        _isLoaded = true;
+        OriginalCategoryName = CategoryModel.Name;
     }
 
     protected override void OnInitialized()

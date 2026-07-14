@@ -22,6 +22,10 @@ public abstract class MyMMBasePageClass : BasePageClass
 
     protected string MyMMPlural = "MyMMs";
 
+    protected string MyMMNotFoundMessage = "MyMM not found";
+
+    protected string LoadingMyMMMessage = "Loading MyMM";
+
     protected void CopyDisplayModelToModel()
     {
         MyMMModel.Title = MyMMDisplayModel.Title;

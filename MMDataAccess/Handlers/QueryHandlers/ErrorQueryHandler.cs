@@ -5,10 +5,10 @@ public class ErrorQueryHandler(IDbContextFactory<ManufacturerManagerContext> man
     public async Task<ErrorModel> GetErrorAsync(int errorId)
     {
         await using var context = await manufacturerManagerContextFactory.CreateDbContextAsync();
-        return await context.Errors
+        var error = await context.Errors
             .AsNoTracking()
-        .SingleOrDefaultAsync(e => e.ErrorId == errorId)
-        ?? throw new KeyNotFoundException($"Error with ID {errorId} not found.");
+            .SingleOrDefaultAsync(e => e.ErrorId == errorId);
+        return error ?? new ErrorModel();
     }
 
     public async Task<List<ErrorModel>> GetErrorsAsync()

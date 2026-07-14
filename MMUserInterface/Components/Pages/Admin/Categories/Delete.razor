@@ -3,9 +3,12 @@
 
 <PageTitle>Delete Category</PageTitle>
 
-@if  (!_isLoaded)
+@if (!_isLoaded)
 {
-    <LoadingMessageComponent ValueToShow="@Category" />
+    <LoadingMessageComponent ValueToShow="@(_entityNotFound
+                                                ? CategoryNotFoundMessage
+                                                : LoadingCategoryMessage)"
+                             IsLoading="@(CategoryModel.CategoryId != 0)" />
     return;
 }
 

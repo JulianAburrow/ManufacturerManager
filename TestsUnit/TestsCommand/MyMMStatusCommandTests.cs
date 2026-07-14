@@ -38,8 +38,10 @@ public class MyMMStatusCommandTests
         var myMMStatusId = _testMyMMStatuses[0].StatusId;
         await _myMMStatusCommandHandler.DeleteMyMMStatusAsync(myMMStatusId);
 
-        Func<Task> act = async () => await _myMMStuStatusQueryHandler.GetMyMMStatusAsync(myMMStatusId);
-        await act.Should().ThrowAsync<KeyNotFoundException>();
+        var returnedMyMMStatus = await _myMMStuStatusQueryHandler.GetMyMMStatusAsync(myMMStatusId);
+        returnedMyMMStatus.Should().NotBeNull();
+        returnedMyMMStatus.StatusId.Should().Be(0);
+        returnedMyMMStatus.StatusName.Should().BeNullOrEmpty();
     }
 
     [Fact]

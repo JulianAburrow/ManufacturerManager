@@ -15,31 +15,54 @@ public class ColourJustificationQueryTests
     }
 
     [Fact]
-    public async Task GetColourJustification_GetsColourJustification()
+    public async Task GetColourJustificationAsync_ReturnsColourJustification_WhenFound()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
-        _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[0]);
-        _manufacturerManagerContext.SaveChanges();
+        // Arrange
+        await using (var context = await _factory.CreateDbContextAsync())
+        {
+            context.ColourJustifications.Add(_testColourJustifications[0]);
+            await context.SaveChangesAsync();
+        }
 
-        var returnedColourJustification = await _colourJustificationQueryHandler.GetColourJustificationAsync(_testColourJustifications[0].ColourJustificationId);
+        var id = _testColourJustifications[0].ColourJustificationId;
+
+        // Act
+        var returnedColourJustification = await _colourJustificationQueryHandler.GetColourJustificationAsync(id);
+
+        // Assert
         returnedColourJustification.Should().NotBeNull();
+        returnedColourJustification.ColourJustificationId.Should().Be(id);
         returnedColourJustification.Justification.Should().Be(_testColourJustifications[0].Justification);
     }
 
     [Fact]
-    public async Task GetColourJustifications_GetsColourJustifications()
+    public async Task GetColourJustificationAsync_ReturnsEmptyModel_WhenNotFound()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
-        var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
+        // Act
+        var returnedColourJustification = await _colourJustificationQueryHandler.GetColourJustificationAsync(-1);
 
-        _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[0]);
-        _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[1]);
-        _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[2]);
-        _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[3]);
-        _manufacturerManagerContext.SaveChanges();
+        // Assert
+        returnedColourJustification.Should().NotBeNull();
+        returnedColourJustification.Should().BeOfType<ColourJustificationModel>();
+        returnedColourJustification.ColourJustificationId.Should().Be(0);
+        returnedColourJustification.Justification.Should().BeNullOrEmpty();
+    }
 
+    [Fact]
+    public async Task GetColourJustificationsAsync_ReturnsAllColourJustifications()
+    {
+        // Arrange
+        await using (var context = await _factory.CreateDbContextAsync())
+        {
+            context.ColourJustifications.AddRange(_testColourJustifications);
+            await context.SaveChangesAsync();
+        }
+
+        // Act
         var colourJustifications = await _colourJustificationQueryHandler.GetColourJustificationsAsync();
 
-        colourJustifications.Count.Should().Be(initialCount + 4);
+        // Assert
+        colourJustifications.Should().NotBeNull();
+        colourJustifications.Should().HaveCount(_testColourJustifications.Count);
     }
 }
