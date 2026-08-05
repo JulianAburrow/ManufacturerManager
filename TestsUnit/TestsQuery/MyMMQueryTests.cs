@@ -15,9 +15,9 @@ public class MyMMQueryTests
     [Fact]
     public async Task GetMyMM_GetsMyMM()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var returnedMyMM = await _myMMHandler.GetMyMMAsync(_testMyMMs[1].MyMMId);
         returnedMyMM.Should().NotBeNull();
@@ -32,12 +32,12 @@ public class MyMMQueryTests
     [Fact]
     public async Task GetMyMMs_GetsMyMMs()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.MyMMs.Count();
 
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[1]);
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[2]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var myMMsReturned = await _myMMHandler.GetMyMMsAsync();
 
@@ -47,7 +47,7 @@ public class MyMMQueryTests
     [Fact]
     public async Task GetMyMMsForHomePage_GetsOnlyPastAndTodayMyMMs()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _testMyMMs[0].ActionDate = DateTime.Today.AddDays(-1);
         _testMyMMs[0].StatusId = (int)PublicEnums.MyMMStatusEnum.Active;
@@ -65,7 +65,7 @@ public class MyMMQueryTests
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[1]);
         _manufacturerManagerContext.MyMMs.Add(_testMyMMs[2]);
 
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var myMMsReturned = await _myMMHandler.GetMyMMsForHomePageAsync();
 

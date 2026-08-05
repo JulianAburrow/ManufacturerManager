@@ -15,13 +15,13 @@ public class AdhocQueryQueryTests
     [Fact]
     public async Task GetAdhocQueries_GetsAdhocQueries()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.AdhocQueries.Count();
 
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[0]);
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[1]);
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[2]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var adhocQueries = await _adhocQueryQueryHandler.GetAdhocQueriesAsync();
 
@@ -31,10 +31,10 @@ public class AdhocQueryQueryTests
     [Fact]
     public async Task GetAdhocQuery_GetsAdhocQuery()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var returnedAdhocQuery = await _adhocQueryQueryHandler.GetAdhocQueryAsync(_testAdhocQueries[0].AdhocQueryId);
         returnedAdhocQuery.Should().NotBeNull();
@@ -45,14 +45,14 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsLastXDistinctQueries_InDescendingOrder()
     {
         // Arrange
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.AdhocQueries.Count();
 
         // Add the test data (with unique timestamps + a duplicate)
         foreach (var q in _testAdhocQueries)
             _manufacturerManagerContext.AdhocQueries.Add(q);
 
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var adhocQueries = await _adhocQueryQueryHandler.GetLastXSuccessfulAdhocQueries(2);
@@ -75,7 +75,7 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_IgnoresUnsuccessfulQueries()
     {
         // Arrange
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var now = DateTime.UtcNow;
 
         var successful = new AdhocQueryModel
@@ -94,7 +94,7 @@ public class AdhocQueryQueryTests
 
         _manufacturerManagerContext.AdhocQueries.Add(successful);
         _manufacturerManagerContext.AdhocQueries.Add(unsuccessful);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = await _adhocQueryQueryHandler.GetLastXSuccessfulAdhocQueries(5);
@@ -108,9 +108,9 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsAll_WhenFewerThanRequested()
     {
         // Arrange
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = await _adhocQueryQueryHandler.GetLastXSuccessfulAdhocQueries(5);
@@ -124,7 +124,7 @@ public class AdhocQueryQueryTests
     public async Task GetLastXSuccessfulAdhocQueries_ReturnsSingleItem_WhenAllQueriesAreDuplicates()
     {
         // Arrange
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var now = DateTime.UtcNow;
 
         var q1 = new AdhocQueryModel
@@ -149,7 +149,7 @@ public class AdhocQueryQueryTests
         };
 
         _manufacturerManagerContext.AdhocQueries.AddRange(q1, q2, q3);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = await _adhocQueryQueryHandler.GetLastXSuccessfulAdhocQueries(5);

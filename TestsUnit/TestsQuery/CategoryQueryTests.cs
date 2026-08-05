@@ -16,10 +16,10 @@ public class CategoryQueryTests
     public async Task GetCategoriesAsync_ReturnsAllCategories_OrderedByName()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Categories.AddRange(_testCategories);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act
@@ -37,10 +37,10 @@ public class CategoryQueryTests
     public async Task GetCategoryAsync_ReturnsCategory_WhenFound()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Categories.Add(_testCategories[0]);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         var id = _testCategories[0].CategoryId;
@@ -71,10 +71,10 @@ public class CategoryQueryTests
     public async Task CategoryExistsAsync_ReturnsTrue_WhenCategoryExists()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Categories.Add(_testCategories[0]);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act

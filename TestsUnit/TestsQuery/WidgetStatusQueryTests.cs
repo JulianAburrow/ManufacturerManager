@@ -15,12 +15,12 @@ public class WidgetStatusQueryTests
     [Fact]
     public async Task GetWidgetStatuses_GetsWidgetStatuses()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.WidgetStatuses.Count();
 
         _manufacturerManagerContext.WidgetStatuses.Add(_testWidgetStatues[0]);
         _manufacturerManagerContext.WidgetStatuses.Add(_testWidgetStatues[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var widgetStatusesReturned = await _widgetStatusHandler.GetWidgetStatusesAsync();
 

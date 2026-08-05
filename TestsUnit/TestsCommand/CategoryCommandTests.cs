@@ -15,7 +15,7 @@ public class CategoryCommandTests
     [Fact]
     public async Task CreateCategory_CreatesCategory()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.Categories.Count();
 
         await _categoryCommandHandler.CreateCategoryAsync(_testCategories[0]);
@@ -30,10 +30,10 @@ public class CategoryCommandTests
     public async Task DeleteCategory_DeletesCategory()
     {
         int categoryId;
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.Categories.Add(_testCategories[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         categoryId = _testCategories[1].CategoryId;
 
         await _categoryCommandHandler.DeleteCategoryAsync(categoryId);
@@ -47,10 +47,10 @@ public class CategoryCommandTests
     public async Task UpdateCategory_UpdatesCategory()
     {
         var newCategoryName = "NewCategory";
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.Categories.Add(_testCategories[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         
         var categoryToUpdate = _manufacturerManagerContext.Categories.First(c => c.CategoryId == _testCategories[0].CategoryId);
         categoryToUpdate.Name = newCategoryName;

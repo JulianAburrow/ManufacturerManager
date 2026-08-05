@@ -17,7 +17,7 @@ public class MyMMStatusCommandTests
     [Fact]
     public async Task CreateMyMMStatus_CreatesMyMMStatus()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.MyMMStatuses.Count();
 
         await _myMMStatusCommandHandler.CreateMyMMStatusAsync(_testMyMMStatuses[0]);
@@ -29,10 +29,10 @@ public class MyMMStatusCommandTests
     [Fact]
     public async Task DeleteMyMMStatus_DeletesMyMMStatus()
     {
-        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
-            await _manufacturerManagerContext.SaveChangesAsync();
+            await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         var myMMStatusId = _testMyMMStatuses[0].StatusId;
@@ -47,11 +47,11 @@ public class MyMMStatusCommandTests
     [Fact]
     public async Task UpdateMyMMStatus_UpdatesMyMMStatus()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var newStatusName = "UpdatedStatus";
 
         _manufacturerManagerContext.MyMMStatuses.Add(_testMyMMStatuses[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var myMMStatusToUpdate = _manufacturerManagerContext.MyMMStatuses.First(m => m.StatusId == _testMyMMStatuses[0].StatusId);
         myMMStatusToUpdate.StatusName = newStatusName;

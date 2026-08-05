@@ -18,10 +18,10 @@ public class ColourJustificationQueryTests
     public async Task GetColourJustificationAsync_ReturnsColourJustification_WhenFound()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.ColourJustifications.Add(_testColourJustifications[0]);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         var id = _testColourJustifications[0].ColourJustificationId;
@@ -52,10 +52,10 @@ public class ColourJustificationQueryTests
     public async Task GetColourJustificationsAsync_ReturnsAllColourJustifications()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.ColourJustifications.AddRange(_testColourJustifications);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act

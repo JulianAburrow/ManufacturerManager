@@ -16,10 +16,10 @@ public class ColourQueryTests
     public async Task GetColourAsync_ReturnsColour_WhenFound()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Colours.Add(_testColours[3]);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         var id = _testColours[3].ColourId;
@@ -50,10 +50,10 @@ public class ColourQueryTests
     public async Task GetColoursAsync_ReturnsAllColours()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Colours.AddRange(_testColours);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act

@@ -15,7 +15,7 @@ public class ColourCommandTests
     [Fact]
     public async Task CreateColour_CreatesColour()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.Colours.Count();
 
         await _colourCommandHandler.CreateColourAsync(_testColours[0]);
@@ -30,10 +30,10 @@ public class ColourCommandTests
     public async Task DeleteColour_DeletesColour()
     {
         int colourId;
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.Colours.Add(_testColours[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         colourId = _testColours[1].ColourId;
 
         await _colourCommandHandler.DeleteColourAsync(colourId);
@@ -47,10 +47,10 @@ public class ColourCommandTests
     public async Task UpdateColour_UpdatesColour()
     {
         var newColourName = "NewColour";
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.Colours.Add(_testColours[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var colourToUpdate = _manufacturerManagerContext.Colours.First(c => c.ColourId == _testColours[0].ColourId);
         colourToUpdate.Name = newColourName;

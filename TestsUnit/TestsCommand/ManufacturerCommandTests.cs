@@ -19,7 +19,7 @@ public class ManufacturerCommandTests
     [Fact]
     public async Task CreateManufacturer_CreatesManufacturer()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 
         await _manufacturerCommandHandler.CreateManufacturerAsync(_testManufacturers[0]);
@@ -33,10 +33,10 @@ public class ManufacturerCommandTests
     [Fact]
     public async Task DeleteManufacturer_DeletesManufacturer()
     {
-        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
-            await _manufacturerManagerContext.SaveChangesAsync();
+            await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         var manufacturerId = _testManufacturers[0].ManufacturerId;
@@ -54,10 +54,10 @@ public class ManufacturerCommandTests
     public async Task SetManufacturerInactive_SetsWidgetsForManufacturerInactive()
     {
         // Arrange: seed manufacturer and widget using a fresh context
-        await using (var seedContext = await _factory.CreateDbContextAsync())
+        await using (var seedContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             seedContext.Manufacturers.Add(_testManufacturers[0]);
-            await seedContext.SaveChangesAsync();
+            await seedContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
             var widget1 = new WidgetModel
             {
@@ -68,7 +68,7 @@ public class ManufacturerCommandTests
             };
 
             seedContext.Widgets.Add(widget1);
-            await seedContext.SaveChangesAsync();
+            await seedContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act: update manufacturer (handler uses its own fresh context)
@@ -76,7 +76,7 @@ public class ManufacturerCommandTests
         await _manufacturerCommandHandler.UpdateManufacturerAsync(_testManufacturers[0]);
 
         // Assert: read using a NEW fresh context
-        await using var assertContext = await _factory.CreateDbContextAsync();
+        await using var assertContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var updatedWidget = assertContext.Widgets
             .Single(w => w.ManufacturerId == _testManufacturers[0].ManufacturerId);
 
@@ -86,11 +86,11 @@ public class ManufacturerCommandTests
     [Fact]
     public async Task UpdateManufacturer_UpdatesManufacturer()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var newManufacturer = "AceWidgets";
 
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[2]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var manufacturerToUpdate = _manufacturerManagerContext.Manufacturers.First(m => m.ManufacturerId == _testManufacturers[2].ManufacturerId);
         manufacturerToUpdate.Name = newManufacturer;

@@ -17,7 +17,7 @@ public class WidgetCommandTests
     [Fact]
     public async Task CreateWidget_CreatesWidget()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.Widgets.Count();
 
         await _widgetCommandHandler.CreateWidgetAsync(_testWidgets[0]);
@@ -29,10 +29,10 @@ public class WidgetCommandTests
     [Fact]
     public async Task DeleteWidget_DeletesWidget()
     {
-        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync())
+        await using (var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             _manufacturerManagerContext.Widgets.Add(_testWidgets[0]);
-            _manufacturerManagerContext.SaveChanges();
+            await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
         
         var widgetId = _testWidgets[0].WidgetId;
@@ -49,11 +49,11 @@ public class WidgetCommandTests
     [Fact]
     public async Task UpdateWidget_UpdatesWidget()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var newWidget = "AcmeWidget";
 
         _manufacturerManagerContext.Widgets.Add(_testWidgets[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var widgetToUpdate = _manufacturerManagerContext.Widgets.First(w => w.WidgetId == _testWidgets[0].WidgetId);
         widgetToUpdate.Name = newWidget;

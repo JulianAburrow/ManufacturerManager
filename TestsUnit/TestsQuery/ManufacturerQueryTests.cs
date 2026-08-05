@@ -17,9 +17,9 @@ public class ManufacturerQueryTests
     [Fact]
     public async Task GetManufacturer_GetsManufacturer()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[3]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var returnedManufacturer = await _manufacturerHandler.GetManufacturerAsync(_testManufacturers[3].ManufacturerId);
         returnedManufacturer.Should().NotBeNull();
@@ -29,14 +29,14 @@ public class ManufacturerQueryTests
     [Fact]
     public async Task GetManufacturers_GetsManufacturers()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.Manufacturers.Count();
 
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[0]);
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[1]);
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[2]);
         _manufacturerManagerContext.Manufacturers.Add(_testManufacturers[3]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var manufacturersReturned = await _manufacturerHandler.GetManufacturersAsync();
 
