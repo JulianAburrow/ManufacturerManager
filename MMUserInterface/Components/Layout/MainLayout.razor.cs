@@ -10,8 +10,6 @@ public partial class MainLayout
 
     [Inject] ISnackbar Snackbar { get; set; } = default!;
 
-    private MudThemeProvider _mudThemeProvider = null!;
-
     private string CurrentTheme { get; set; } = ThemeEnum.Standard.ToString();
 
     private MudTheme ActiveTheme = ManufacturerManagerStandardTheme.Theme;
