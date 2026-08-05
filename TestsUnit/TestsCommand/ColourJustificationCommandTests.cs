@@ -17,7 +17,7 @@ public class ColourJustificationCommandTests
     [Fact]
     public async Task CreateColourJustification_CreatesColourJustification()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.ColourJustifications.Count();
 
         await _colourJustificationCommandHandler.CreateColourJustificationAsync(_testColourJustifications[0]);
@@ -32,10 +32,10 @@ public class ColourJustificationCommandTests
     public async Task DeleteColourJustification_DeletesColourJustification()
     {
         int colourJustificationId;
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[2]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         colourJustificationId = _testColourJustifications[2].ColourJustificationId;
 
         await _colourJustificationCommandHandler.DeleteColourJustificationAsync(colourJustificationId);
@@ -49,10 +49,10 @@ public class ColourJustificationCommandTests
     public async Task UpdateColourJustification_UpdatesColourJustification()
     {
         var newJustification = "newJustification";
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.ColourJustifications.Add(_testColourJustifications[3]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var colourJustificationToUpdate = _manufacturerManagerContext.ColourJustifications.First(c => c.ColourJustificationId == _testColourJustifications[3].ColourJustificationId);
         colourJustificationToUpdate.Justification = newJustification;

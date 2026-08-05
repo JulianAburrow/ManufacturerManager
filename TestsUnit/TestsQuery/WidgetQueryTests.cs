@@ -15,9 +15,9 @@ public class WidgetQueryTests
     [Fact]
     public async Task GetWidget_GetsWidget()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         _manufacturerManagerContext.Widgets.Add(_testWidgets[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var returnedWidget = await _widgetHandler.GetWidgetAsync(_testWidgets[1].WidgetId);
         returnedWidget.Should().NotBeNull();
@@ -28,13 +28,13 @@ public class WidgetQueryTests
     [Fact]
     public async Task GetWidgets_GetsWidgets()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         var initialCount = _manufacturerManagerContext.Widgets.Count();
 
         _manufacturerManagerContext.Widgets.Add(_testWidgets[0]);
         _manufacturerManagerContext.Widgets.Add(_testWidgets[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var widgetsReturned = await _widgetHandler.GetWidgetsAsync();
 

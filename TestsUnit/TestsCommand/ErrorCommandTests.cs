@@ -16,7 +16,7 @@ public class ErrorCommandTests
     [Fact]
     public async Task CreateError_CreatesError()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.Errors.Count();
 
         await _errorCommandHandler.CreateErrorAsync(_testExceptions[0]);
@@ -29,10 +29,10 @@ public class ErrorCommandTests
     public async Task DeleteError_DeletesError()
     {
         int errorId;
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         _manufacturerManagerContext.Errors.Add(_testErrors[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         errorId = _testErrors[1].ErrorId;
 
         await _errorCommandHandler.DeleteErrorAsync(errorId);
@@ -45,12 +45,12 @@ public class ErrorCommandTests
     [Fact]
     public async Task UpdateError_UpdatesError()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var newErrorMessage = "UpdatedError1";
         var resolvedDate = DateTime.Now;
 
         _manufacturerManagerContext.Errors.Add(_testErrors[0]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var errorToUpdate = _manufacturerManagerContext.Errors.First(e => e.ErrorId == _testErrors[0].ErrorId);
         errorToUpdate.ErrorMessage = newErrorMessage;

@@ -15,7 +15,7 @@ public class AdhocQueryCommandTests
     [Fact]
     public async Task CreateAdhocQuery_CreatesAdhocQuery()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.AdhocQueries.Count();
 
         await _adhocQueryCommandHandler.CreateAdhocQueryAsync(_testAdhocQueries[0]);
@@ -31,9 +31,9 @@ public class AdhocQueryCommandTests
     {
         int adhocQueryId;
 
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         _manufacturerManagerContext.AdhocQueries.Add(_testAdhocQueries[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         adhocQueryId = _testAdhocQueries[1].AdhocQueryId;
 
         await _adhocQueryCommandHandler.DeleteAdhocQueryAsync(adhocQueryId);
@@ -46,7 +46,7 @@ public class AdhocQueryCommandTests
     [Fact]
     public async Task CreateAdhocQueryAsync_AddsEntity_AndSavesWhenRequested()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
 
         var model = new AdhocQueryModel
         {
@@ -69,18 +69,18 @@ public class AdhocQueryCommandTests
         var handler = new AdhocQueryCommandHandler(_factory);
 
         // Seed the database
-        await using (var seedContext = await _factory.CreateDbContextAsync())
+        await using (var seedContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             var model = _testAdhocQueries[0];
             seedContext.AdhocQueries.Add(model);
-            await seedContext.SaveChangesAsync();
+            await seedContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act
         await handler.DeleteAdhocQueryAsync(_testAdhocQueries[0].AdhocQueryId);
 
         // Assert
-        await using (var assertContext = await _factory.CreateDbContextAsync())
+        await using (var assertContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             assertContext.AdhocQueries.Count().Should().Be(0);
         }
@@ -96,7 +96,7 @@ public class AdhocQueryCommandTests
         await handler.DeleteAdhocQueryAsync(9999);
 
         // Assert
-        await using (var assertContext = await _factory.CreateDbContextAsync())
+        await using (var assertContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             assertContext.AdhocQueries.Count().Should().Be(0);
         }

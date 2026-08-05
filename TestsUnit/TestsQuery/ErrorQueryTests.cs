@@ -16,10 +16,10 @@ public class ErrorQueryTests
     public async Task GetErrorAsync_ReturnsError_WhenFound()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Errors.Add(_testErrors[0]);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         var id = _testErrors[0].ErrorId;
@@ -50,10 +50,10 @@ public class ErrorQueryTests
     public async Task GetErrorsAsync_ReturnsAllErrors()
     {
         // Arrange
-        await using (var context = await _factory.CreateDbContextAsync())
+        await using (var context = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken))
         {
             context.Errors.AddRange(_testErrors);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
 
         // Act

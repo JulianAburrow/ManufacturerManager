@@ -15,12 +15,12 @@ public class ManufacturerStatusQueryTests
     [Fact]
     public async Task GetManufacturerStatuses_GetsManufacturerStatuses()
     {
-        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync();
+        await using var _manufacturerManagerContext = await _factory.CreateDbContextAsync(TestContext.Current.CancellationToken);
         var initialCount = _manufacturerManagerContext.ManufacturerStatuses.Count();
 
         _manufacturerManagerContext.ManufacturerStatuses.Add(_testManufacturerStatuses[0]);
         _manufacturerManagerContext.ManufacturerStatuses.Add(_testManufacturerStatuses[1]);
-        _manufacturerManagerContext.SaveChanges();
+        await _manufacturerManagerContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var manufacturerStatusesReturned = await _manufacturerStatusHandler.GetManufacturerStatusesAsync();
 
