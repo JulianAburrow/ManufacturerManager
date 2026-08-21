@@ -25,7 +25,7 @@ public class TogetherAiService : ILlmClient
         return await GenerateInternalAsync(prompt, _defaultModel);
     }
 
-    public async Task<string> GenerateAsync(string prompt, string? model, bool useStreaming)
+    public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken, string? model, bool useStreaming)
     {
         // TogetherAI doesn't support streaming via this endpoint.
         var chosenModel = string.IsNullOrWhiteSpace(model) ? _defaultModel : model;

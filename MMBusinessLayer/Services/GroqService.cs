@@ -21,7 +21,7 @@ public class GroqService : ILlmClient
         return await GenerateInternalAsync(prompt, _defaultModel);
     }
 
-    public async Task<string> GenerateAsync(string prompt, string? model, bool useStreaming)
+    public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken, string? model, bool useStreaming)
     {
         // Groq doesn't support streaming via this endpoint, so ignore useStreaming.
         var chosenModel = string.IsNullOrWhiteSpace(model) ? _defaultModel : model;

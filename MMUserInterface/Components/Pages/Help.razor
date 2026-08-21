@@ -76,13 +76,25 @@
             </MudCardContent>                       
             <MudCardActions>
 
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Primary"
-                           OnClick="@OnSearchClicked"
-                           Disabled="@IsThinking"
-                           StartIcon="@Icons.Material.Filled.Check">
-                    Submit
-                </MudButton>
+                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="@OnSearchClicked"
+                               Disabled="@IsThinking"
+                               StartIcon="@Icons.Material.Filled.Check">
+                        Submit
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Default"
+                               OnClick="@OnCancelClicked"
+                               Disabled="!IsThinking"
+                               StartIcon="@Icons.Material.Outlined.Cancel">
+                        Cancel Request
+                    </MudButton>
+
+                </MudStack>
 
             </MudCardActions>
 

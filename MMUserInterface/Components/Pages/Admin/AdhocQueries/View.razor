@@ -17,7 +17,8 @@
         <MudCard>
             <MudCardContent>
                 <MudField Label="Name">@AdhocQueryModel.NaturalLanguageQuery</MudField>
-                <MudField Label="Message or Sql Returned">@AdhocQueryModel.MessageOrSqlReturned</MudField>
+                <MudField Label="Message">@AdhocQueryModel.Message</MudField>
+                <MudField Label="Sql Returned">@AdhocQueryModel.SqlReturned</MudField>
                 <MudField Label="When Run">@AdhocQueryModel.WhenRun</MudField>
                 <MudField Label="Is Successful">@AdhocQueryModel.IsSuccessful</MudField>
                 <MudField Label="AI Provider">@AdhocQueryModel.AiProvider</MudField>
@@ -32,13 +33,13 @@
                                Href=@($"/adhocquery/delete/{AdhocQueryModel.AdhocQueryId}")>
                         Delete
                     </MudButton>
-
-                    @if (AdhocQueryModel.IsSuccessful)
+                    
+                    @if (AdhocQueryModel.SqlReturned is not null)
                     {
                         <MudButton Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   StartIcon="@Icons.Material.Filled.ContentCopy"
-                                   OnClick="CopySql">
+                                    Color="Color.Primary"
+                                    StartIcon="@Icons.Material.Filled.ContentCopy"
+                                    OnClick="CopySql">
                             Copy SQL
                         </MudButton>
                     }

@@ -30,7 +30,7 @@ public partial class View
 
     private async Task CopySql()
     {
-        await JS.InvokeVoidAsync("navigator.clipboard.writeText", AdhocQueryModel.MessageOrSqlReturned);
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", AdhocQueryModel.SqlReturned);
         Snackbar.Add("SQL copied to clipboard", Severity.Success);
     }
 }

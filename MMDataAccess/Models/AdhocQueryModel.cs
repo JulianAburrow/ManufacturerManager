@@ -6,7 +6,9 @@ public class AdhocQueryModel
 
     public string NaturalLanguageQuery { get; set; } = string.Empty;
 
-    public string MessageOrSqlReturned { get; set; } = string.Empty;
+    public string? Message { get; set; }
+
+    public string? SqlReturned { get; set; } = string.Empty;
 
     public DateTime WhenRun { get; set; }
 

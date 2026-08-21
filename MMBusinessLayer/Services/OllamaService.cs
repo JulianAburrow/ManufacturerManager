@@ -12,13 +12,13 @@ public class OllamaService : ILlmClient
     }
 
     // NL→SQL offline mode uses this
-    public Task<string> GenerateAsync(string prompt)
+    public Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken)
     {
-        return GenerateAsync(prompt, _defaultmodel, useStreaming: false);
+        return GenerateAsync(prompt, cancellationToken, _defaultmodel, useStreaming: false);
     }
 
     // RAG offline mode uses this
-    public async Task<string> GenerateAsync(string prompt, string? model, bool useStreaming)
+    public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken, string? model, bool useStreaming)
     {
         try
         {
@@ -51,16 +51,7 @@ public class OllamaService : ILlmClient
                     var fragment = JsonSerializer.Deserialize<OllamaResponse>(line);
                     if (!string.IsNullOrWhiteSpace(fragment?.Response))
                     {
-                        string text = fragment.Response;
-
-                        if (outputBuilder.Length > 0 &&
-                            char.IsLetterOrDigit(outputBuilder[^1]) &&
-                            char.IsLetterOrDigit(text[0]))
-                        {
-                            outputBuilder.Append(' ');
-                        }
-
-                        outputBuilder.Append(text);
+                        outputBuilder.Append(fragment.Response);
                     }
                 }
                 catch

@@ -2,5 +2,5 @@
 
 public interface INaturalLanguageService
 {
-    Task<string> GetSqlStringFromNaturalQuery(string query);
+    Task<string> GetSqlStringFromNaturalQuery(string query, CancellationToken cancellationToken);
 }
