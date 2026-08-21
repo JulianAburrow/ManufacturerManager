@@ -1,5 +1,10 @@
 ﻿<MudText Typo="Typo.body1" Class="fw-bold">
-    Last @LastXSuccessfulAdhocQueries.Count Successful Queries
+    @{
+        var textToShow = LastXSuccessfulAdhocQueries.Count == 1
+                                    ? "Last successful query"
+                                    : $"Last {LastXSuccessfulAdhocQueries.Count} successful queries";
+    }
+    @textToShow
 </MudText>
 
 
