@@ -28,7 +28,7 @@ public class OpenRouterService : ILlmClient
         return await GenerateInternalAsync(prompt, _defaultModel);
     }
 
-    public async Task<string> GenerateAsync(string prompt, string? model, bool useStreaming)
+    public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken, string? model, bool useStreaming)
     {
         // We ignore streaming here — OpenRouter supports it, but your interface doesn't require it.
         var chosenModel = string.IsNullOrWhiteSpace(model) ? _defaultModel : model;

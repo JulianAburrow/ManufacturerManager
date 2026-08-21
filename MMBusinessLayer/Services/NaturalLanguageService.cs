@@ -2,9 +2,9 @@
 
 public class NaturalLanguageService(ILlmClient service) : INaturalLanguageService
 {
-    public Task<string> GetSqlStringFromNaturalQuery(string query)
+    public Task<string> GetSqlStringFromNaturalQuery(string query, CancellationToken cancellationToken)
     {
         var prompt = $"{PromptHelper.Load(PromptEnum.SqlPrompt)}\n\nUser query: {query}";
-        return service.GenerateAsync(prompt);
+        return service.GenerateAsync(prompt, cancellationToken);
     }
 }

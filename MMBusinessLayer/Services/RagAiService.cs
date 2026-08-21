@@ -24,9 +24,16 @@ public class RagAiService(ILlmClient aiService, IDocumentService documentService
         return builder.ToString();
     }
 
-    public async Task<string> AskQuestionAsync(string category, string question, string model, string languageRequired, bool strictMode = true)
+    public async Task<string> AskQuestionAsync(
+        string category,
+        string question,
+        string model,
+        string languageRequired,
+        CancellationToken cancellationToken,
+        bool strictMode = true)
     {
         var files = documentService.GetMatchingFiles(category);
+
         if (files.Count == 0)
             return $"📂 No documents found for category '{category}'.";
 
@@ -37,6 +44,6 @@ public class RagAiService(ILlmClient aiService, IDocumentService documentService
         }
 
         string prompt = BuildPrompt($"{category} {combinedText}", question, languageRequired, strictMode);
-        return await aiService.GenerateAsync(prompt, model, true);
+        return await aiService.GenerateAsync(prompt, cancellationToken, model, true);
     }
 }

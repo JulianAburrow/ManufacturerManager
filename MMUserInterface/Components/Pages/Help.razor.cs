@@ -26,6 +26,8 @@ public partial class Help
 
     private bool OfflineMode;
 
+    private CancellationTokenSource? _cts;
+
     protected override async Task OnInitializedAsync()
     {
         OfflineMode = config.GetValue<bool>("AiModeOffline");
@@ -81,6 +83,9 @@ public partial class Help
         Response = string.Empty;
         IsThinking = true;
 
+        _cts?.Cancel();
+        _cts = new CancellationTokenSource();
+
         if (ChatSearchModel.SearchCategory == SharedValues.PleaseSelectText || string.IsNullOrWhiteSpace(ChatSearchModel.SearchQuestion))
         {
             Response = "❌ Please select a category and enter a question.";
@@ -98,7 +103,12 @@ public partial class Help
                 return;
             }
 
-            Response = await RagAiService.AskQuestionAsync(ChatSearchModel.SearchCategory, ChatSearchModel.SearchQuestion, ChatSearchModel.SearchModel, ChatSearchModel.LanguageRequired, strictMode: true);
+            Response = await RagAiService.AskQuestionAsync(ChatSearchModel.SearchCategory,
+                                                            ChatSearchModel.SearchQuestion,
+                                                            ChatSearchModel.SearchModel,
+                                                            ChatSearchModel.LanguageRequired,
+                                                            cancellationToken: _cts.Token,
+                                                            strictMode: true);
             if (string.IsNullOrWhiteSpace(Response))
                 Response = "❌ Could not get an answer from this model. Please try a different model.";
         }
@@ -126,5 +136,12 @@ public partial class Help
             return "Detailed";
 
         return "Very detailed";
+    }
+
+    protected void OnCancelClicked()
+    {
+        _cts?.Cancel();
+        IsThinking = false;
+        MatchingFiles = [];
     }
 }
