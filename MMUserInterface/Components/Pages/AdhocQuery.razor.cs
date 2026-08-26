@@ -22,7 +22,11 @@ public partial class AdhocQuery
 
     private CancellationTokenSource? _cts;
 
+    private bool IsRecording = false;
+
     private List<AdhocQueryListModel> LastXSuccessfulAdhocQueries { get; set; } = null!;
+
+    private static AdhocQuery? _instance;
 
     protected async override Task OnInitializedAsync()
     {
@@ -37,6 +41,14 @@ public partial class AdhocQuery
             GetHomeBreadcrumbItem(),
             new BreadcrumbItem("Ad Hoc Query", "/adhocquery", true)
         ]);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _instance = this;
+        }
     }
 
     protected async Task OnQueryClicked()
@@ -142,5 +154,29 @@ public partial class AdhocQuery
         IsThinking = false;
         ShowLastXPanel = true;
         SqlReturned = null;
+    }
+
+    protected void OnClearClicked()
+    {
+        QueryText = string.Empty;
+    }
+
+    private async Task StartSpeechRecognition()
+    {
+        await JS.InvokeVoidAsync("speech.start");
+    }
+
+    [JSInvokable("ReceiveAudioFromJs")]
+    public static void ReceiveAudioFromJs(string payload)
+    {
+        _instance.QueryText = payload;
+        _instance.InvokeAsync(() => _instance.StateHasChanged());
+    }
+
+    [JSInvokable("SetRecordingState")]
+    public static void SetRecordingState(bool isRecording)
+    {
+        _instance.IsRecording = isRecording;
+        _instance.InvokeAsync(() => _instance.StateHasChanged());
     }
 }
