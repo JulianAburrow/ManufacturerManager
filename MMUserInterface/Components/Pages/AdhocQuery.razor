@@ -24,7 +24,7 @@
            Class="my-3"
            OnClick="@(() => ShowLastXPanel = !ShowLastXPanel)"
            Disabled="@IsThinking">
-        @(ShowLastXPanel ? "Hide" : "Show") Last @(LastXSuccessfulAdhocQueries.Count == 1 ? AdhocQuerySingular : @AdhocQueryPlural)
+        @(ShowLastXPanel ? "Hide" : "Show") Last @LastXSuccessfulAdhocQueries.Count @(LastXSuccessfulAdhocQueries.Count == 1 ? AdhocQuerySingular : AdhocQueryPlural)
     </MudButton>
 }
 
@@ -41,9 +41,30 @@
                     @bind-Value="QueryText" />
             </MudCardContent>
 
+            @if (IsRecording)
+            {
+                <div class="mic-pulse"></div>
+            }
+
             <MudCardActions>
 
                 <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+
+                    <MudButton Color="Color.Info"
+                               Variant="Variant.Filled"
+                               OnClick="@StartSpeechRecognition"
+                               Disabled="@(IsRecording || IsThinking)">
+                        <MudIcon Icon="@Icons.Material.Filled.Mic" />
+                        Speak Query
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="@OnClearClicked"
+                               Disabled="@IsThinking"
+                               StartIcon="@Icons.Material.Filled.Check">
+                        Clear
+                    </MudButton>
 
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Primary"
