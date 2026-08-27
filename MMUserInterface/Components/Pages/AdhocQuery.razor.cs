@@ -10,7 +10,7 @@ public partial class AdhocQuery
 
     private string QueryText = string.Empty;
 
-    private string SqlReturned = string.Empty;
+    private string? SqlReturned = string.Empty;
 
     private string? ErrorMessage = null;
 
@@ -78,7 +78,7 @@ public partial class AdhocQuery
                 var strippedMessage = SqlReturned.Substring("CANCELLATION".Length).TrimStart();
                 MessageToDisplay = strippedMessage;
                 ErrorMessage = strippedMessage;
-                SqlReturned = null;
+                SqlReturned = string.Empty;
                 await LogAdhocQuery();
                 return;
             }
@@ -89,7 +89,7 @@ public partial class AdhocQuery
             {
                 MessageToDisplay = SqlReturned;
                 ErrorMessage = SqlReturned;
-                SqlReturned = null;
+                SqlReturned = string.Empty;
                 await LogAdhocQuery();
                 return;
             }
@@ -103,14 +103,12 @@ public partial class AdhocQuery
         {
             MessageToDisplay = "There was an error executing the command.";
             ErrorMessage = ex.Message;
-            SqlReturned = SqlReturned;
             await LogAdhocQuery();       // log failure
         }
         catch (Exception ex)
         {
             MessageToDisplay = "An error occurred while processing the query.";
             ErrorMessage = ex.Message;
-            SqlReturned = SqlReturned;
             await LogAdhocQuery();       // log failure
         }
         finally
@@ -153,7 +151,7 @@ public partial class AdhocQuery
         _cts?.Cancel();
         IsThinking = false;
         ShowLastXPanel = true;
-        SqlReturned = null;
+        SqlReturned = string.Empty;
     }
 
     protected void OnClearClicked()
@@ -169,6 +167,9 @@ public partial class AdhocQuery
     [JSInvokable("ReceiveAudioFromJs")]
     public static void ReceiveAudioFromJs(string payload)
     {
+        if (_instance is null)
+            return;
+
         _instance.QueryText = payload;
         _instance.InvokeAsync(() => _instance.StateHasChanged());
     }
@@ -176,6 +177,9 @@ public partial class AdhocQuery
     [JSInvokable("SetRecordingState")]
     public static void SetRecordingState(bool isRecording)
     {
+        if (_instance is null)
+            return;
+
         _instance.IsRecording = isRecording;
         _instance.InvokeAsync(() => _instance.StateHasChanged());
     }

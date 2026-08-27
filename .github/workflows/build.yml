@@ -36,4 +36,4 @@ jobs:
 
     - name: Run unit tests
       working-directory: TestsUnit
-      run: dotnet test TestsUnit.csproj --no-build --configuration Debug
+      run: dotnet build TestsUnit.csproj -t:test --configuration Debug
