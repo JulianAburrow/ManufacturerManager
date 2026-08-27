@@ -183,4 +183,14 @@ public partial class AdhocQuery
         _instance.IsRecording = isRecording;
         _instance.InvokeAsync(() => _instance.StateHasChanged());
     }
+
+    private async Task ExportCSV()
+    {
+        var csvString = CSVStringHelper.CreateAdhocQueryCSVString(ResultsDataTable);
+        var fileBytes = SharedMethods.GetUTF8Bytes(csvString);
+        var base64 = SharedMethods.GetBase64String(fileBytes);
+        var fileName = $"AdhocQueryResults_{DateTime.UtcNow:yyyyMMdd_HHmmss}.csv";
+
+        await JS.InvokeVoidAsync(DownloadFile, base64, ContentType, fileName);
+    }
 }

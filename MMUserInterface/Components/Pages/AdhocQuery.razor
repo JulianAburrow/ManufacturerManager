@@ -106,5 +106,15 @@
 
 @if (ResultsDataTable is not null && !IsThinking)
 {
+    if (ResultsDataTable.Rows.Count > 0)
+    {
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   OnClick="ExportCSV"
+                   StartIcon="@Icons.Material.Outlined.Download">
+            Download as CSV
+        </MudButton>
+    }    
+
     <AdHocQueryResultsComponent AdhocQueryResults="ResultsDataTable" />
 }

@@ -44,4 +44,37 @@ public class CSVStringHelper : ICSVStringHelper
         
         return myMMCSVSB.ToString();
     }
+
+    public string CreateAdhocQueryCSVString(DataTable dataTable)
+    {
+        var sb = new StringBuilder();
+
+        var header = string.Join(",",Enumerable.Range(0, dataTable.Columns.Count)
+            .Select(i =>
+            {
+                var name = dataTable.Columns[i].ColumnName;
+                if (string.IsNullOrWhiteSpace(name))
+                    name = $"Unknown_{i + 1}";
+
+                name = name.Replace("\"", "\"\"");
+                return $"\"{name}\"";
+            }));
+
+        sb.AppendLine(header);
+
+        foreach (DataRow row in dataTable.Rows)
+        {
+            var line = string.Join(",",
+                row.ItemArray.Select(v =>
+                {
+                    var value = v?.ToString() ?? string.Empty;
+                    value = value.Replace("\"", "\"\"");
+                    return $"\"{value}\"";
+                }));
+
+            sb.AppendLine(line);
+        }
+
+        return sb.ToString();
+    }
 }
