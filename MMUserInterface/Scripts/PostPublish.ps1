@@ -37,7 +37,8 @@ try {
 # Run xUnit tests
 try {
     Log "Running xUnit tests..."
-    dotnet test "C:\JuliansWork\Study\ManufacturerManager\TestsUnit\TestsUnit.csproj"
+    # dotnet test "C:\JuliansWork\Study\ManufacturerManager\TestsUnit\TestsUnit.csproj" --use-new-test-platform
+    dotnet build "C:\JuliansWork\Study\ManufacturerManager\TestsUnit\TestsUnit.csproj" -t:test
     if ($LASTEXITCODE -ne 0) {
         Log "xUnit tests failed with exit code $LASTEXITCODE"
         $ScriptFailed = $true
