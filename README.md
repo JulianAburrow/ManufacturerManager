@@ -16,6 +16,7 @@ A scalable, modern .NET 10 solution for managing manufacturers, built with Blazo
 - **Error Logging**: Centralized error handling and logging to the database for diagnostics.
 - **Document-aware RAG AI Assistant**: Search documents for help with functionality, with built‑in language selection and translation.
 - **Natural‑Language‑to‑SQL Engine**: Safe, read‑only NL→SQL query generation using local LLMs, with schema‑aware reasoning, strict refusal rules, and full query logging for auditability.
+- **Voice Input for NL->SQL**: Use your microphone to speak a natural‑language query; the recognized text is inserted automatically into the query box.
 - **Config key** to switch between local and cloud LLM providers.
 
 ---
@@ -68,6 +69,6 @@ This solution contains a database project, which when run will create a seeded d
 
 Create the database, adjust your connection strings and run the application.
 
-If you wish to use the AI-Assistant in the Help page you will need to install Ollama and the TinyLlama model. Alternatively you can choose a model of your own and adjust the code accordingly, but be aware that this has only been tested using TinyLlama.
+If you wish to use the AI-Assistant in the Help page you will need to install Ollama and at least one model. I recommend Qwen2.5:14b, but alternatively you can choose a model of your own and adjust the code accordingly, but be aware that this has only been tested using phi3:mini, mistral-nemo:12b, qwen2.5:14B, gemma2:9b, llama3.1:8b, qwen2.5:7b, gemma3:1b, qwen2.5:3b and tinyllama:latest.
 
 ---
