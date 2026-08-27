@@ -7,4 +7,6 @@ public interface ICSVStringHelper
     string CreateManufacturerCSVString(List<ManufacturerSummary> manufacturers);
 
     string CreateMyMMCSVString(List<MyMMModel> myMMs);
+
+    string CreateAdhocQueryCSVString(DataTable dataTable);
 }
