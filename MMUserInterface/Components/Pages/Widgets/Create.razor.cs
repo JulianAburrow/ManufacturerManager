@@ -1,4 +1,6 @@
-﻿namespace MMUserInterface.Components.Pages.Widgets;
+﻿using UglyToad.PdfPig.Fonts.TrueType.Names;
+
+namespace MMUserInterface.Components.Pages.Widgets;
 
 public partial class Create
 {
@@ -50,6 +52,14 @@ public partial class Create
 
     private async Task CreateWidget()
     {
+        OkToProceed = !ColourJustificationMissingWhenRequired(WidgetDisplayModel);
+
+        if (!OkToProceed)
+        {
+            IsColourJustificationError = true;
+            return;
+        }
+
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(

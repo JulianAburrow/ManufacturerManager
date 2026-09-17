@@ -53,6 +53,14 @@ public partial class Edit
 
     private async Task UpdateWidget()
     {
+        OkToProceed = !ColourJustificationMissingWhenRequired(WidgetDisplayModel);
+
+        if (!OkToProceed)
+        {
+            IsColourJustificationError = true;
+            return;
+        }
+
         CopyDisplayModelToModel();
 
         var actionSuccessful = await CrudWithErrorHandlingHelper.ExecuteWithErrorHandling(

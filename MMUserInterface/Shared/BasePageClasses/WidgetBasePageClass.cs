@@ -14,6 +14,8 @@ public abstract class WidgetBasePageClass : BasePageClass
 
     [Inject] protected IManufacturerQueryHandler ManufacturerHandler { get; set; } = default!;
 
+    [Inject] protected IConfiguration Configuration { get; set; } = default!;
+
     [Parameter] public int WidgetId { get; set; }
 
     protected WidgetModel WidgetModel = new();
@@ -39,6 +41,12 @@ public abstract class WidgetBasePageClass : BasePageClass
     protected string LoadingWidgetMessage = "loading Widget";
 
     protected bool ManufacturerIsInactive;
+
+    protected string WidgetColourRequiresJustification = "Widget colour requires justification";
+
+    protected bool IsColourJustificationError;
+
+    protected bool OkToProceed = true;
 
     protected void CopyDisplayModelToModel()
     {
@@ -77,5 +85,40 @@ public abstract class WidgetBasePageClass : BasePageClass
     protected BreadcrumbItem GetWidgetHomeBreadcrumbItem(bool isDisabled = false)
     {
         return new BreadcrumbItem(WidgetPlural, "/widgets/index", isDisabled);
+    }
+
+    protected bool ColourJustificationMissingWhenRequired(WidgetDisplayModel widget)
+    {
+        // If no colour selected → no problem
+        if (widget.ColourId == SharedValues.NoneValue)
+            return false;
+
+        // If justification already provided → no problem
+        if (widget.ColourJustificationId != SharedValues.NoneValue)
+            return false;
+
+        // Colours list is already in the base class
+        if (Colours is null)
+            return false;
+
+        // Find the selected colour
+        var colour = Colours.FirstOrDefault(c => c.ColourId == widget.ColourId);
+        if (colour is null)
+            return false;
+
+        // If colour requires justification AND justification is missing → true
+        return ColourRequiresJustification(colour);
+    }
+
+
+    protected bool ColourRequiresJustification(ColourModel colour)
+    {
+        var coloursRequiringJustification =
+            Configuration.GetSection("WidgetRules:ColoursRequiringJustification")
+                         .Get<List<string>>() ?? [];
+
+        return coloursRequiringJustification.Contains(
+            colour.Name,
+            StringComparer.OrdinalIgnoreCase);
     }
 }
