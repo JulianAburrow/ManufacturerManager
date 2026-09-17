@@ -12,6 +12,13 @@
     return;
 }
 
+@if (IsColourJustificationError)
+{
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-4">
+        Colour requires justification
+    </MudAlert>
+}
+
 <EditForm Model="@WidgetDisplayModel" OnValidSubmit="UpdateWidget">
     <DataAnnotationsValidator />
     <ValidationSummary />
